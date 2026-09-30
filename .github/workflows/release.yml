@@ -6,7 +6,7 @@ on:
     branches: [main]
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: public-release-${{ github.event.pull_request.merge_commit_sha }}
@@ -21,21 +21,10 @@ jobs:
     runs-on: [self-hosted, fargate, default]
     timeout-minutes: 15
     steps:
-      - name: Create a release token
-        id: release-token
-        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
-        with:
-          app-id: ${{ secrets.OSS_RELEASE_APP_ID }}
-          private-key: ${{ secrets.OSS_RELEASE_APP_PRIVATE_KEY }}
-          owner: dynamic-labs-oss
-          repositories: mobile-sdks
-          permission-contents: write
-
       - name: Check out the release commit
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           ref: ${{ github.event.pull_request.merge_commit_sha }}
-          token: ${{ steps.release-token.outputs.token }}
 
       - name: Verify release metadata
         env:
@@ -52,7 +41,7 @@ jobs:
         env:
           RELEASE_SHA: ${{ github.event.pull_request.merge_commit_sha }}
         with:
-          github-token: ${{ steps.release-token.outputs.token }}
+          github-token: ${{ github.token }}
           script: |
             const { readFileSync } = require('node:fs');
             const manifest = JSON.parse(readFileSync('RELEASE-MANIFEST.json', 'utf8'));

@@ -1,12 +1,12 @@
 {
   "version": "2.0.0-beta.1",
-  "sourceCommit": "0364a0066aa2864049e9bbfdbbf60738a0006598",
+  "sourceCommit": "1cc38297146cdcb4f17fe69e9e194dcc9255d966",
   "sourceTreeDirty": false,
   "files": [
     {
       "path": ".github/workflows/release.yml",
-      "size": 4156,
-      "sha256": "2f45e09dd1f34cf5e344371665a0f94123627355f9a34b23fe8a5b5f9a9ba776"
+      "size": 3679,
+      "sha256": "8b6ab11e5c06e87a0d18fb79c26c326c3add14d3caa466e0445d093b7e2d5914"
     },
     {
       "path": "CHANGELOG.md",
