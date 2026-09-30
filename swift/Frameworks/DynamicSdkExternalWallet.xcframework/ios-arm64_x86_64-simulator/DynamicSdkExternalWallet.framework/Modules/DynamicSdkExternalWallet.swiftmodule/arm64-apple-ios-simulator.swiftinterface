@@ -1,0 +1,211 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.3 effective-5.10 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+// swift-module-flags: -target arm64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -module-name DynamicSdkExternalWallet
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.3
+import Combine
+import DynamicSdkCore
+import Foundation
+import Swift
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@_Concurrency.MainActor public protocol ExternalWalletMechanism : AnyObject, Swift.Sendable {
+  @_Concurrency.MainActor var walletKey: Swift.String { get }
+  @_Concurrency.MainActor func initialize(appName: Swift.String?, appIconUrl: Swift.String?, nativeLink: Swift.String?, universalLink: Swift.String?) async throws
+  @_Concurrency.MainActor func beginConnect(chains: [Swift.String]) async throws -> Swift.String
+  @_Concurrency.MainActor func awaitConnection() async throws -> [DynamicSdkCore.ExternalWalletAccount]
+  @_Concurrency.MainActor func signMessage(accountAddress: Swift.String, message: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor func signTransaction(accountAddress: Swift.String, transaction: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor func disconnect() async
+  @_Concurrency.MainActor func handleRedirect(uri: Swift.String) -> Swift.Bool
+}
+@_Concurrency.MainActor final public class ExternalWalletProviderAdapter : DynamicSdkExternalWallet.ExternalWalletProvider {
+  @_Concurrency.MainActor public init(groupIdentifier: Swift.String, mechanisms: [any DynamicSdkExternalWallet.ExternalWalletMechanism] = [])
+  @discardableResult
+  @_Concurrency.MainActor final public func handleRedirect(uri: Swift.String) -> Swift.Bool
+  @_Concurrency.MainActor final public func initialize(projectId: Swift.String, appName: Swift.String?, appIconUrl: Swift.String?, nativeLink: Swift.String?, universalLink: Swift.String?) async throws
+  @_Concurrency.MainActor final public func isSupported() async throws -> Swift.Bool
+  @_Concurrency.MainActor final public func listWallets() async throws -> [DynamicSdkExternalWallet.ExternalWalletOption]
+  @_Concurrency.MainActor final public func beginConnect(chains: [Swift.String], walletKey: Swift.String?) async throws -> DynamicSdkExternalWallet.ExternalWalletConnectionHandle
+  @_Concurrency.MainActor final public func awaitConnection() async throws -> [DynamicSdkCore.ExternalWalletAccount]
+  @_Concurrency.MainActor final public func disconnect(address: Swift.String) async throws
+  @_Concurrency.MainActor final public func signMessage(chain: Swift.String, accountAddress: Swift.String, message: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func signTransaction(chain: Swift.String, accountAddress: Swift.String, transaction: Swift.String, chainId: Swift.String?, signingIndexes: [Swift.Int]?, allowedSighash: [Swift.Int]?) async throws -> Swift.String
+  @_Concurrency.MainActor final public func getActiveNetworkId(chain: Swift.String, accountAddress: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func addNetwork(chain: Swift.String, accountAddress: Swift.String, network: DynamicSdkCore.NetworkConfiguration) async throws
+  @_Concurrency.MainActor final public func switchActiveNetwork(chain: Swift.String, accountAddress: Swift.String, networkId: Swift.String) async throws
+  @objc deinit
+}
+extension DynamicSdkCore.DynamicClient {
+  @discardableResult
+  @_Concurrency.MainActor final public func useExternalWallet(_ externalWalletProvider: any DynamicSdkExternalWallet.ExternalWalletProvider) -> DynamicSdkCore.DynamicClient
+}
+@_Concurrency.MainActor public protocol ExternalWalletClient {
+  @_Concurrency.MainActor func listExternalWallets() async throws -> [DynamicSdkExternalWallet.ExternalWalletOption]
+  @_Concurrency.MainActor func beginExternalWalletConnect(chains: [Swift.String], walletKey: Swift.String?) async throws -> DynamicSdkExternalWallet.ExternalWalletConnectionHandle
+  @_Concurrency.MainActor func awaitExternalWalletConnection() async throws -> [DynamicSdkCore.Wallet]
+  @_Concurrency.MainActor var externalWallets: [DynamicSdkCore.Wallet] { get throws }
+  @_Concurrency.MainActor func disconnectExternalWallet(address: Swift.String) async throws
+  @_Concurrency.MainActor func signMessage(chain: Swift.String, accountAddress: Swift.String, message: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor func signTransaction(chain: Swift.String, accountAddress: Swift.String, transaction: Swift.String, chainId: Swift.String?, signingIndexes: [Swift.Int]?, allowedSighash: [Swift.Int]?) async throws -> Swift.String
+  @_Concurrency.MainActor func getActiveNetworkId(chain: Swift.String, accountAddress: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor func addNetwork(chain: Swift.String, accountAddress: Swift.String, network: DynamicSdkCore.NetworkConfiguration) async throws
+  @_Concurrency.MainActor func switchActiveNetwork(chain: Swift.String, accountAddress: Swift.String, networkId: Swift.String) async throws
+  @_Concurrency.MainActor func isProgrammaticNetworkSwitchAvailable(chain: Swift.String) throws -> Swift.Bool
+  @_Concurrency.MainActor func getActiveNetworkData(chain: Swift.String, accountAddress: Swift.String) async throws -> DynamicSdkCore.NetworkConfiguration?
+  @_Concurrency.MainActor func signInWithExternalWallet(address: Swift.String) async throws -> DynamicSdkCore.SdkUser
+  @_Concurrency.MainActor func linkExternalWallet(address: Swift.String) async throws -> DynamicSdkCore.SdkUser
+  @_Concurrency.MainActor func transferWalletAccount(address: Swift.String) async throws -> DynamicSdkCore.SdkUser
+  @_Concurrency.MainActor func removeWalletAccount(chain: Swift.String, accountAddress: Swift.String) async throws
+}
+@_hasMissingDesignatedInitializers @_Concurrency.MainActor final public class ExternalWalletClientImpl : DynamicSdkExternalWallet.ExternalWalletClient, DynamicSdkCore.DynamicExtension, DynamicSdkCore.ExternalWalletSigner {
+  @_Concurrency.MainActor final public let name: Swift.String
+  @_Concurrency.MainActor final public func install(client: DynamicSdkCore.DynamicClient)
+  @_Concurrency.MainActor final public func listExternalWallets() async throws -> [DynamicSdkExternalWallet.ExternalWalletOption]
+  @_Concurrency.MainActor final public func beginExternalWalletConnect(chains: [Swift.String], walletKey: Swift.String? = nil) async throws -> DynamicSdkExternalWallet.ExternalWalletConnectionHandle
+  @_Concurrency.MainActor final public func awaitExternalWalletConnection() async throws -> [DynamicSdkCore.Wallet]
+  @_Concurrency.MainActor final public var externalWallets: [DynamicSdkCore.Wallet] {
+    get throws
+  }
+  @_Concurrency.MainActor final public func disconnectExternalWallet(address: Swift.String) async throws
+  @_Concurrency.MainActor final public func signMessage(chain: Swift.String, accountAddress: Swift.String, message: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func signTransaction(chain: Swift.String, accountAddress: Swift.String, transaction: Swift.String, chainId: Swift.String?, signingIndexes: [Swift.Int]? = nil, allowedSighash: [Swift.Int]? = nil) async throws -> Swift.String
+  @_Concurrency.MainActor final public func getActiveNetworkId(chain: Swift.String, accountAddress: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func addNetwork(chain: Swift.String, accountAddress: Swift.String, network: DynamicSdkCore.NetworkConfiguration) async throws
+  @_Concurrency.MainActor final public func switchActiveNetwork(chain: Swift.String, accountAddress: Swift.String, networkId: Swift.String) async throws
+  @_Concurrency.MainActor final public func isProgrammaticNetworkSwitchAvailable(chain: Swift.String) throws -> Swift.Bool
+  @_Concurrency.MainActor final public func getActiveNetworkData(chain: Swift.String, accountAddress: Swift.String) async throws -> DynamicSdkCore.NetworkConfiguration?
+  @_Concurrency.MainActor final public func signInWithExternalWallet(address: Swift.String) async throws -> DynamicSdkCore.SdkUser
+  @_Concurrency.MainActor final public func linkExternalWallet(address: Swift.String) async throws -> DynamicSdkCore.SdkUser
+  @_Concurrency.MainActor final public func transferWalletAccount(address: Swift.String) async throws -> DynamicSdkCore.SdkUser
+  @_Concurrency.MainActor final public func removeWalletAccount(chain: Swift.String, accountAddress: Swift.String) async throws
+  @objc deinit
+}
+@_Concurrency.MainActor final public class ExternalWalletExtension : DynamicSdkCore.DynamicExtension {
+  @_Concurrency.MainActor final public let name: Swift.String
+  @_Concurrency.MainActor public init(externalWalletProvider: any DynamicSdkExternalWallet.ExternalWalletProvider)
+  @_Concurrency.MainActor final public func install(client: DynamicSdkCore.DynamicClient)
+  @objc deinit
+}
+extension DynamicSdkCore.DynamicClient {
+  @_Concurrency.MainActor final public var externalWallet: DynamicSdkExternalWallet.ExternalWalletClientImpl {
+    get throws
+  }
+}
+public struct ExternalWalletConnectionHandle : Swift.Codable, Swift.Sendable {
+  public let uri: Swift.String?
+  public init(uri: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct ExternalWalletOption : Swift.Codable, Swift.Sendable {
+  public let key: Swift.String
+  public let name: Swift.String
+  public let chain: Swift.String
+  public let iconUrl: Swift.String?
+  public let primaryColor: Swift.String?
+  public let nativeLink: Swift.String?
+  public let universalLink: Swift.String?
+  public let androidStoreUrl: Swift.String?
+  public let iosStoreUrl: Swift.String?
+  public init(key: Swift.String, name: Swift.String, chain: Swift.String, iconUrl: Swift.String? = nil, primaryColor: Swift.String? = nil, nativeLink: Swift.String? = nil, universalLink: Swift.String? = nil, androidStoreUrl: Swift.String? = nil, iosStoreUrl: Swift.String? = nil)
+  public func connectionDeeplink(connectionUri: Swift.String) -> Swift.String?
+  public func chainsForConnect(chains: [Swift.String]) -> [Swift.String]
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct WalletBookBrand : Swift.Codable, Swift.Sendable {
+  public let spriteId: Swift.String?
+  public let primaryColor: Swift.String?
+  public init(spriteId: Swift.String? = nil, primaryColor: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct WalletBookGroup : Swift.Codable, Swift.Sendable {
+  public let name: Swift.String?
+  public let brand: DynamicSdkExternalWallet.WalletBookBrand?
+  public init(name: Swift.String? = nil, brand: DynamicSdkExternalWallet.WalletBookBrand? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct WalletBookWalletConnect : Swift.Codable, Swift.Sendable {
+  public let sdks: [Swift.String]?
+  public init(sdks: [Swift.String]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct WalletBookInjectedConfig : Swift.Codable, Swift.Sendable {
+  public let chain: Swift.String?
+  public init(chain: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct WalletBookMobileLinks : Swift.Codable, Swift.Sendable {
+  public let native: Swift.String?
+  public let universal: Swift.String?
+  public let androidId: Swift.String?
+  public let iosId: Swift.String?
+  public init(native: Swift.String? = nil, universal: Swift.String? = nil, androidId: Swift.String? = nil, iosId: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct WalletBookDesktopLinks : Swift.Codable, Swift.Sendable {
+  public let chromeId: Swift.String?
+  public let edgeId: Swift.String?
+  public let firefoxId: Swift.String?
+  public let operaId: Swift.String?
+  public let safariId: Swift.String?
+  public let universal: Swift.String?
+  public init(chromeId: Swift.String? = nil, edgeId: Swift.String? = nil, firefoxId: Swift.String? = nil, operaId: Swift.String? = nil, safariId: Swift.String? = nil, universal: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct WalletBookEntry : Swift.Codable, Swift.Sendable {
+  public let name: Swift.String?
+  public let group: Swift.String?
+  public let chains: [Swift.String]?
+  public let walletConnect: DynamicSdkExternalWallet.WalletBookWalletConnect?
+  public let injectedConfig: [DynamicSdkExternalWallet.WalletBookInjectedConfig]?
+  public let mobile: DynamicSdkExternalWallet.WalletBookMobileLinks?
+  public let desktop: DynamicSdkExternalWallet.WalletBookDesktopLinks?
+  public let brand: DynamicSdkExternalWallet.WalletBookBrand?
+  public init(name: Swift.String? = nil, group: Swift.String? = nil, chains: [Swift.String]? = nil, walletConnect: DynamicSdkExternalWallet.WalletBookWalletConnect? = nil, injectedConfig: [DynamicSdkExternalWallet.WalletBookInjectedConfig]? = nil, mobile: DynamicSdkExternalWallet.WalletBookMobileLinks? = nil, desktop: DynamicSdkExternalWallet.WalletBookDesktopLinks? = nil, brand: DynamicSdkExternalWallet.WalletBookBrand? = nil)
+  public func isOffered(key: Swift.String, mechanismKeys: [Swift.String]) -> Swift.Bool
+  public func chainCode() -> Swift.String
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct WalletBookGroupedEntry : Swift.Codable, Swift.Sendable {
+  public let key: Swift.String
+  public let wallet: DynamicSdkExternalWallet.WalletBookEntry
+  public let group: DynamicSdkExternalWallet.WalletBookGroup?
+  public init(key: Swift.String, wallet: DynamicSdkExternalWallet.WalletBookEntry, group: DynamicSdkExternalWallet.WalletBookGroup? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct WalletBook : Swift.Codable, Swift.Sendable {
+  public let wallets: [Swift.String : DynamicSdkExternalWallet.WalletBookEntry]?
+  public let groups: [Swift.String : DynamicSdkExternalWallet.WalletBookGroup]?
+  public let priority: [Swift.String]?
+  public init(wallets: [Swift.String : DynamicSdkExternalWallet.WalletBookEntry]? = nil, groups: [Swift.String : DynamicSdkExternalWallet.WalletBookGroup]? = nil, priority: [Swift.String]? = nil)
+  public func options(mechanismKeys: [Swift.String]) -> [DynamicSdkExternalWallet.ExternalWalletOption]
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+@_Concurrency.MainActor public protocol ExternalWalletProvider : Swift.Sendable {
+  @_Concurrency.MainActor func isSupported() async throws -> Swift.Bool
+  @_Concurrency.MainActor func initialize(projectId: Swift.String, appName: Swift.String?, appIconUrl: Swift.String?, nativeLink: Swift.String?, universalLink: Swift.String?) async throws
+  @_Concurrency.MainActor func listWallets() async throws -> [DynamicSdkExternalWallet.ExternalWalletOption]
+  @_Concurrency.MainActor func beginConnect(chains: [Swift.String], walletKey: Swift.String?) async throws -> DynamicSdkExternalWallet.ExternalWalletConnectionHandle
+  @_Concurrency.MainActor func awaitConnection() async throws -> [DynamicSdkCore.ExternalWalletAccount]
+  @_Concurrency.MainActor func disconnect(address: Swift.String) async throws
+  @_Concurrency.MainActor func signMessage(chain: Swift.String, accountAddress: Swift.String, message: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor func signTransaction(chain: Swift.String, accountAddress: Swift.String, transaction: Swift.String, chainId: Swift.String?, signingIndexes: [Swift.Int]?, allowedSighash: [Swift.Int]?) async throws -> Swift.String
+  @_Concurrency.MainActor func getActiveNetworkId(chain: Swift.String, accountAddress: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor func addNetwork(chain: Swift.String, accountAddress: Swift.String, network: DynamicSdkCore.NetworkConfiguration) async throws
+  @_Concurrency.MainActor func switchActiveNetwork(chain: Swift.String, accountAddress: Swift.String, networkId: Swift.String) async throws
+}
+extension DynamicSdkExternalWallet.ExternalWalletProvider {
+  @_Concurrency.MainActor public func signTransaction(chain: Swift.String, accountAddress: Swift.String, transaction: Swift.String, chainId: Swift.String?) async throws -> Swift.String
+}

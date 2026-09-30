@@ -1,0 +1,1652 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.3 effective-5.10 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+// swift-module-flags: -target arm64-apple-ios15.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -module-name DynamicSdkCore
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.3
+import AuthenticationServices
+import Combine
+import CryptoKit
+import Foundation
+import Security
+import Swift
+import UIKit
+import WebKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@_hasMissingDesignatedInitializers @_Concurrency.MainActor final public class AuthClient {
+  @_Concurrency.MainActor final public func verifyEmailIdentity(verificationUuid: Swift.String, code: Swift.String, requestedScopes: [Swift.String]? = nil) async throws -> DynamicSdkCore.VerifyResponse
+  @_Concurrency.MainActor final public func verifySmsIdentity(verificationUuid: Swift.String, code: Swift.String, requestedScopes: [Swift.String]? = nil) async throws -> DynamicSdkCore.VerifyResponse
+  @_Concurrency.MainActor final public func getMfaDevices() async throws -> [DynamicSdkCore.MfaDevice]
+  @_Concurrency.MainActor final public func getMfaMethods() async throws -> DynamicSdkCore.MfaMethodsResponse
+  @_Concurrency.MainActor final public func registerTotpMfaDevice() async throws -> DynamicSdkCore.MfaTotpRegistration
+  @_Concurrency.MainActor final public func setDefaultMfaDevice(deviceId: Swift.String) async throws
+  @_Concurrency.MainActor final public func deleteMfaDevice(deviceId: Swift.String, mfaAuthToken: Swift.String? = nil) async throws
+  @_Concurrency.MainActor final public func authenticateTotpMfaDevice(code: Swift.String, deviceId: Swift.String? = nil, requestedScopes: [Swift.String]? = nil) async throws -> DynamicSdkCore.VerifyResponse
+  @_Concurrency.MainActor final public func isUserMissingMfaAuth() throws -> Swift.Bool
+  @_Concurrency.MainActor final public func isMfaRequiredForAction(action: Swift.String) async throws -> Swift.Bool
+  @_Concurrency.MainActor final public func consumeMfaToken() -> Swift.String?
+  @_Concurrency.MainActor final public func refreshAuth() async throws -> DynamicSdkCore.VerifyResponse
+  @_Concurrency.MainActor final public func deleteUser() async throws
+  @_Concurrency.MainActor final public func mergeUserAccounts(conflictResolutions: [DynamicSdkCore.MergeUserConflictResolution]? = nil) async throws -> DynamicSdkCore.SdkUser
+  @_Concurrency.MainActor final public func getUserSocialAccounts() throws -> [DynamicSdkCore.SocialAccount]
+  @_Concurrency.MainActor final public func unlinkSocialAccount(verifiedCredentialId: Swift.String) async throws -> DynamicSdkCore.VerifyResponse
+  @_Concurrency.MainActor final public func getRegisteredDevices() async throws -> [DynamicSdkCore.DeviceRegistration]
+  @_Concurrency.MainActor final public var isDeviceRegistrationRequired: Swift.Bool {
+    get
+  }
+  @_Concurrency.MainActor final public func completeDeviceRegistration(deviceToken: Swift.String) async throws -> DynamicSdkCore.VerifyResponse
+  @_Concurrency.MainActor final public func revokeRegisteredDevice(deviceRegistrationId: Swift.String) async throws
+  @_Concurrency.MainActor final public func revokeAllRegisteredDevices() async throws
+  @_Concurrency.MainActor final public func initialize() async throws
+  @_Concurrency.MainActor final public func sendEmailOtp(email: Swift.String) async throws -> DynamicSdkCore.SendEmailOtpResult
+  @_Concurrency.MainActor final public func verifyEmailOtp(verificationUuid: Swift.String, code: Swift.String, allowNewMfaLinking: Swift.Bool? = nil) async throws -> DynamicSdkCore.UserSession
+  @_Concurrency.MainActor final public func sendSmsOtp(isoCountryCode: Swift.String, phoneCountryCode: Swift.String, phoneNumber: Swift.String) async throws -> DynamicSdkCore.SendSmsOtpResult
+  @_Concurrency.MainActor final public func verifySmsOtp(verificationUuid: Swift.String, code: Swift.String, allowNewMfaLinking: Swift.Bool? = nil) async throws -> DynamicSdkCore.UserSession
+  @_Concurrency.MainActor final public var authToken: Swift.String? {
+    get
+  }
+  @_Concurrency.MainActor final public func signOut() async throws
+  @_Concurrency.MainActor final public func resendEmailOtp(verificationUuid: Swift.String, email: Swift.String) async throws -> DynamicSdkCore.SendEmailOtpResult
+  @_Concurrency.MainActor final public func refreshUser() async throws -> DynamicSdkCore.SdkUser
+  @_Concurrency.MainActor final public var user: DynamicSdkCore.SdkUser? {
+    get
+  }
+  @_Concurrency.MainActor final public func updateUser(alias: Swift.String? = nil, firstName: Swift.String? = nil, lastName: Swift.String? = nil, jobTitle: Swift.String? = nil, username: Swift.String? = nil, country: Swift.String? = nil) async throws -> DynamicSdkCore.SdkUser
+  @_Concurrency.MainActor final public func getSignedSessionId() async throws -> Swift.String
+  @_Concurrency.MainActor final public func getCaptchaSettings() -> DynamicSdkCore.CaptchaSettingsResult?
+  @_Concurrency.MainActor final public func setCaptchaToken(captchaToken: Swift.String)
+  @_Concurrency.MainActor final public var socialProviders: [DynamicSdkCore.Provider]? {
+    get
+  }
+  @_Concurrency.MainActor final public func signInWithSocial(provider: Swift.String, requestedScopes: [Swift.String]? = nil) async throws -> DynamicSdkCore.SdkUser
+  @_Concurrency.MainActor final public func signInWithExternalJwt(jwt: Swift.String) async throws -> DynamicSdkCore.SdkUser
+  @_Concurrency.MainActor final public func requestExternalAuthElevatedToken(jwt: Swift.String) async throws -> DynamicSdkCore.ExternalAuthAssertionResponse
+  @_Concurrency.MainActor final public func checkStepUp(scope: Swift.String) async throws -> DynamicSdkCore.StepUpCheckResponse
+  @_Concurrency.MainActor final public func completeTotpStepUp(code: Swift.String, scope: Swift.String) async throws
+  @_Concurrency.MainActor final public func getMfaRecoveryCodes() async throws -> DynamicSdkCore.MfaRecoveryCodesResponse
+  @_Concurrency.MainActor final public func createNewMfaRecoveryCodes() async throws -> DynamicSdkCore.MfaRecoveryCodesResponse
+  @_Concurrency.MainActor final public func authenticateMfaRecoveryCode(code: Swift.String, scope: Swift.String? = nil, requestedScopes: [Swift.String]? = nil) async throws -> DynamicSdkCore.VerifyResponse
+  @_Concurrency.MainActor final public func acknowledgeMfaRecoveryCodes() async throws
+  @_Concurrency.MainActor final public var isPendingMfaRecoveryCodesAcknowledgment: Swift.Bool {
+    get
+  }
+  @_Concurrency.MainActor final public func sendStepUpEmailOtp() async throws -> DynamicSdkCore.SendEmailOtpResult
+  @_Concurrency.MainActor final public func completeEmailOtpStepUp(verificationUuid: Swift.String, code: Swift.String, scope: Swift.String) async throws
+  @_Concurrency.MainActor final public func getPasskeys() async throws -> [DynamicSdkCore.UserPasskey]
+  @_Concurrency.MainActor final public func deletePasskey(passkeyId: Swift.String, mfaAuthToken: Swift.String? = nil) async throws
+  @_Concurrency.MainActor final public func registerPasskey() async throws
+  @_Concurrency.MainActor final public func signInWithPasskey() async throws -> DynamicSdkCore.UserSession
+  @_Concurrency.MainActor final public func authenticatePasskeyMFA(scope: Swift.String? = nil, requestedScopes: [Swift.String]? = nil) async throws -> DynamicSdkCore.VerifyResponse
+  @objc deinit
+}
+public struct HttpHeader : Swift.Codable, Swift.Sendable {
+  public let name: Swift.String
+  public let value: Swift.String
+  public init(name: Swift.String, value: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct HttpRequest : Swift.Codable, Swift.Sendable {
+  public let method: Swift.String
+  public let url: Swift.String
+  public let headers: [DynamicSdkCore.HttpHeader]
+  public let body: Swift.String?
+  public init(method: Swift.String, url: Swift.String, headers: [DynamicSdkCore.HttpHeader], body: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct HttpResponse : Swift.Codable, Swift.Sendable {
+  public let status: Swift.Int64
+  public let body: Swift.String
+  public init(status: Swift.Int64, body: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct MergeField : Swift.Codable, Swift.Sendable {
+  public let name: Swift.String
+  public let type: Swift.String?
+  public let label: Swift.String?
+  public init(name: Swift.String, type: Swift.String? = nil, label: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct MergeUserValue : Swift.Codable, Swift.Sendable {
+  public let userId: Swift.String
+  public let value: Swift.String
+  public init(userId: Swift.String, value: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct MergeUserConflict : Swift.Codable, Swift.Sendable {
+  public let field: DynamicSdkCore.MergeField
+  public let fromUser: DynamicSdkCore.MergeUserValue
+  public let currentUser: DynamicSdkCore.MergeUserValue
+  public init(field: DynamicSdkCore.MergeField, fromUser: DynamicSdkCore.MergeUserValue, currentUser: DynamicSdkCore.MergeUserValue)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct MergeConflicts : Swift.Codable, Swift.Sendable {
+  public let fromUser: DynamicSdkCore.SdkUser
+  public let conflicts: [DynamicSdkCore.MergeUserConflict]
+  public init(fromUser: DynamicSdkCore.SdkUser, conflicts: [DynamicSdkCore.MergeUserConflict])
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct MfaDevice : Swift.Codable, Swift.Sendable {
+  public let id: Swift.String?
+  public let type: Swift.String?
+  public let verified: Swift.Bool?
+  public let createdAt: Swift.String?
+  public let verifiedAt: Swift.String?
+  public let isDefault: Swift.Bool?
+  public let alias: Swift.String?
+  public init(id: Swift.String? = nil, type: Swift.String? = nil, verified: Swift.Bool? = nil, createdAt: Swift.String? = nil, verifiedAt: Swift.String? = nil, isDefault: Swift.Bool? = nil, alias: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct MfaDevicesResponse : Swift.Codable, Swift.Sendable {
+  public let devices: [DynamicSdkCore.MfaDevice]
+  public init(devices: [DynamicSdkCore.MfaDevice])
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct MfaMethodsResponse : Swift.Codable, Swift.Sendable {
+  public let devices: [DynamicSdkCore.MfaDevice]
+  public let passkeys: [DynamicSdkCore.UserPasskey]
+  public let userHasVerifiedMfaMethods: Swift.Bool
+  public init(devices: [DynamicSdkCore.MfaDevice], passkeys: [DynamicSdkCore.UserPasskey], userHasVerifiedMfaMethods: Swift.Bool)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct MfaTotpRegistration : Swift.Codable, Swift.Sendable {
+  public let id: Swift.String
+  public let type: Swift.String
+  public let secret: Swift.String
+  public let uri: Swift.String
+  public init(id: Swift.String, type: Swift.String, secret: Swift.String, uri: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct MfaActionSettings : Swift.Codable, Swift.Sendable {
+  public let action: Swift.String
+  public let required: Swift.Bool
+  public init(action: Swift.String, required: Swift.Bool)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct MfaSettings : Swift.Codable, Swift.Sendable {
+  public let enabled: Swift.Bool?
+  public let required: Swift.Bool?
+  public let enrollment: Swift.String?
+  public let availableMethods: [Swift.String]?
+  public let actions: [DynamicSdkCore.MfaActionSettings]?
+  public init(enabled: Swift.Bool? = nil, required: Swift.Bool? = nil, enrollment: Swift.String? = nil, availableMethods: [Swift.String]? = nil, actions: [DynamicSdkCore.MfaActionSettings]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct ElevatedAccessToken : Swift.Codable, Swift.Sendable {
+  public let token: Swift.String
+  public let scopes: Swift.String
+  public let expiresAtMs: Swift.Int64
+  public let singleUse: Swift.Bool
+  public init(token: Swift.String, scopes: Swift.String, expiresAtMs: Swift.Int64, singleUse: Swift.Bool)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct DeviceRegistration : Swift.Codable, Swift.Sendable {
+  public let id: Swift.String
+  public let isCurrentDevice: Swift.Bool
+  public let createdAt: Swift.String
+  public let userAgent: Swift.String?
+  public init(id: Swift.String, isCurrentDevice: Swift.Bool, createdAt: Swift.String, userAgent: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct DeviceRegistrationsResponse : Swift.Codable, Swift.Sendable {
+  public let deviceRegistrations: [DynamicSdkCore.DeviceRegistration]
+  public init(deviceRegistrations: [DynamicSdkCore.DeviceRegistration])
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct DeleteDeviceRegistrationResponse : Swift.Codable, Swift.Sendable {
+  public let currentDeviceRevoked: Swift.Bool
+  public init(currentDeviceRevoked: Swift.Bool)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct MergeUserConflictResolution : Swift.Codable, Swift.Sendable {
+  public let userId: Swift.String
+  public let fieldKey: Swift.String
+  public let type: Swift.String
+  public init(userId: Swift.String, fieldKey: Swift.String, type: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SocialAccount : Swift.Codable, Swift.Sendable {
+  public let verifiedCredentialId: Swift.String
+  public let provider: Swift.String?
+  public let accountId: Swift.String?
+  public let displayName: Swift.String?
+  public let username: Swift.String?
+  public let emails: [Swift.String]
+  public let photos: [Swift.String]
+  public init(verifiedCredentialId: Swift.String, provider: Swift.String? = nil, accountId: Swift.String? = nil, displayName: Swift.String? = nil, username: Swift.String? = nil, emails: [Swift.String], photos: [Swift.String])
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct WalletConnectSettings : Swift.Codable, Swift.Sendable {
+  public let projectId: Swift.String?
+  public let v2Enabled: Swift.Bool?
+  public let walletProjectId: Swift.String?
+  public init(projectId: Swift.String? = nil, v2Enabled: Swift.Bool? = nil, walletProjectId: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct HCaptchaSettings : Swift.Codable, Swift.Sendable {
+  public let enabled: Swift.Bool?
+  public let siteKey: Swift.String?
+  public init(enabled: Swift.Bool? = nil, siteKey: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct CaptchaSettings : Swift.Codable, Swift.Sendable {
+  public let enabled: Swift.Bool?
+  public let provider: Swift.String?
+  public let siteKey: Swift.String?
+  public init(enabled: Swift.Bool? = nil, provider: Swift.String? = nil, siteKey: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SecuritySettings : Swift.Codable, Swift.Sendable {
+  public let mfa: DynamicSdkCore.MfaSettings?
+  public let captcha: DynamicSdkCore.CaptchaSettings?
+  public let hCaptcha: DynamicSdkCore.HCaptchaSettings?
+  public init(mfa: DynamicSdkCore.MfaSettings? = nil, captcha: DynamicSdkCore.CaptchaSettings? = nil, hCaptcha: DynamicSdkCore.HCaptchaSettings? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct CaptchaSettingsResult : Swift.Codable, Swift.Sendable {
+  public let provider: Swift.String
+  public let siteKey: Swift.String?
+  public init(provider: Swift.String, siteKey: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct ChainConfiguration : Swift.Codable, Swift.Sendable {
+  public let name: Swift.String
+  public let enabled: Swift.Bool
+  public let primary: Swift.Bool
+  public init(name: Swift.String, enabled: Swift.Bool, primary: Swift.Bool)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct NetworkNativeCurrency : Swift.Codable, Swift.Sendable {
+  public let decimals: Swift.Int
+  public let name: Swift.String
+  public let symbol: Swift.String
+  public let denom: Swift.String?
+  public let iconUrl: Swift.String?
+  public init(decimals: Swift.Int, name: Swift.String, symbol: Swift.String, denom: Swift.String? = nil, iconUrl: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct NetworkConfiguration : Swift.Codable, Swift.Sendable {
+  public let networkId: Swift.String
+  public let name: Swift.String
+  public let vanityName: Swift.String?
+  public let chain: Swift.String
+  public let chainId: Swift.String?
+  public let iconUrls: [Swift.String]?
+  public let nativeCurrency: DynamicSdkCore.NetworkNativeCurrency?
+  public let rpcUrls: [Swift.String]
+  public let privateCustomerRpcUrls: [Swift.String]?
+  public let blockExplorerUrls: [Swift.String]?
+  public let genesisHash: Swift.String?
+  public let cluster: Swift.String?
+  public let testnet: Swift.Bool?
+  public init(networkId: Swift.String, name: Swift.String, vanityName: Swift.String? = nil, chain: Swift.String, chainId: Swift.String? = nil, iconUrls: [Swift.String]? = nil, nativeCurrency: DynamicSdkCore.NetworkNativeCurrency? = nil, rpcUrls: [Swift.String], privateCustomerRpcUrls: [Swift.String]? = nil, blockExplorerUrls: [Swift.String]? = nil, genesisHash: Swift.String? = nil, cluster: Swift.String? = nil, testnet: Swift.Bool? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct NetworkChainConfiguration : Swift.Codable, Swift.Sendable {
+  public let chainName: Swift.String?
+  public let networks: [DynamicSdkCore.NetworkConfiguration]?
+  public init(chainName: Swift.String? = nil, networks: [DynamicSdkCore.NetworkConfiguration]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct EmbeddedWalletsSettings : Swift.Codable, Swift.Sendable {
+  public let defaultWalletVersion: Swift.String?
+  public let chainConfigurations: [DynamicSdkCore.ChainConfiguration]?
+  public let automaticEmbeddedWalletCreation: Swift.Bool?
+  public let automaticEmbeddedWalletCreationForExternal: Swift.Bool?
+  public let svmGasSponsorshipEnabled: Swift.Bool?
+  public let evmGasSponsorshipEnabled: Swift.Bool?
+  public init(defaultWalletVersion: Swift.String? = nil, chainConfigurations: [DynamicSdkCore.ChainConfiguration]? = nil, automaticEmbeddedWalletCreation: Swift.Bool? = nil, automaticEmbeddedWalletCreationForExternal: Swift.Bool? = nil, svmGasSponsorshipEnabled: Swift.Bool? = nil, evmGasSponsorshipEnabled: Swift.Bool? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SdkFeatureFlags : Swift.Codable, Swift.Sendable {
+  public let enableExternalWalletOnTransactionSanctions: Swift.Bool?
+  public init(enableExternalWalletOnTransactionSanctions: Swift.Bool? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SdkSettings : Swift.Codable, Swift.Sendable {
+  public let embeddedWallets: DynamicSdkCore.EmbeddedWalletsSettings?
+  public let walletConnect: DynamicSdkCore.WalletConnectSettings?
+  public let featureFlags: DynamicSdkCore.SdkFeatureFlags?
+  public init(embeddedWallets: DynamicSdkCore.EmbeddedWalletsSettings? = nil, walletConnect: DynamicSdkCore.WalletConnectSettings? = nil, featureFlags: DynamicSdkCore.SdkFeatureFlags? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct Provider : Swift.Codable, Swift.Sendable {
+  public let providerKind: Swift.String
+  public let clientId: Swift.String?
+  public let redirectUrl: Swift.String?
+  public let baseAuthUrl: Swift.String?
+  public let scopes: Swift.String?
+  public let entryPointVersion: Swift.String?
+  public let kernelVersion: Swift.String?
+  public let ecdsaProviderType: Swift.String?
+  public let enableKernelV3Migration: Swift.Bool?
+  public let enableEip7702: Swift.Bool?
+  public let bundlerProvider: Swift.String?
+  public let bundlerRpcUrl: Swift.String?
+  public let paymasterRpcUrl: Swift.String?
+  public let kernelDelegationAddress: Swift.String?
+  public let projectVersion: Swift.String?
+  public let multichainProviders: [DynamicSdkCore.ZerodevMultichainProvider]?
+  public init(providerKind: Swift.String, clientId: Swift.String? = nil, redirectUrl: Swift.String? = nil, baseAuthUrl: Swift.String? = nil, scopes: Swift.String? = nil, entryPointVersion: Swift.String? = nil, kernelVersion: Swift.String? = nil, ecdsaProviderType: Swift.String? = nil, enableKernelV3Migration: Swift.Bool? = nil, enableEip7702: Swift.Bool? = nil, bundlerProvider: Swift.String? = nil, bundlerRpcUrl: Swift.String? = nil, paymasterRpcUrl: Swift.String? = nil, kernelDelegationAddress: Swift.String? = nil, projectVersion: Swift.String? = nil, multichainProviders: [DynamicSdkCore.ZerodevMultichainProvider]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct ProjectSettings : Swift.Codable, Swift.Sendable {
+  public let security: DynamicSdkCore.SecuritySettings?
+  public let sdk: DynamicSdkCore.SdkSettings?
+  public let providers: [DynamicSdkCore.Provider]?
+  public let networks: [DynamicSdkCore.NetworkChainConfiguration]?
+  public init(security: DynamicSdkCore.SecuritySettings? = nil, sdk: DynamicSdkCore.SdkSettings? = nil, providers: [DynamicSdkCore.Provider]? = nil, networks: [DynamicSdkCore.NetworkChainConfiguration]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct StepUpCredential : Swift.Codable, Swift.Sendable {
+  public let id: Swift.String
+  public let format: Swift.String?
+  public let type: Swift.String?
+  public let alias: Swift.String?
+  public init(id: Swift.String, format: Swift.String? = nil, type: Swift.String? = nil, alias: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct StepUpCheckResponse : Swift.Codable, Swift.Sendable {
+  public let isRequired: Swift.Bool
+  public let credentials: [DynamicSdkCore.StepUpCredential]
+  public let defaultCredentialId: Swift.String?
+  public init(isRequired: Swift.Bool, credentials: [DynamicSdkCore.StepUpCredential], defaultCredentialId: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct OAuthResult : Swift.Codable, Swift.Sendable {
+  public let type: Swift.String
+  public let url: Swift.String?
+  public init(type: Swift.String, url: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct EmailVerificationCreateResponse : Swift.Codable, Swift.Sendable {
+  public let verificationUuid: Swift.String
+  public let email: Swift.String?
+  public init(verificationUuid: Swift.String, email: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct NonceResponse : Swift.Codable, Swift.Sendable {
+  public let nonce: Swift.String
+  public init(nonce: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct NoncesResponse : Swift.Codable, Swift.Sendable {
+  public let nonces: [Swift.String]
+  public init(nonces: [Swift.String])
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct WalletAdditionalAddress : Swift.Codable, Swift.Sendable {
+  public let address: Swift.String
+  public let publicKey: Swift.String?
+  public let type: Swift.String?
+  public let network: Swift.String?
+  public init(address: Swift.String, publicKey: Swift.String? = nil, type: Swift.String? = nil, network: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct WaasKeyShareInfo : Swift.Codable, Swift.Sendable {
+  public let backupLocation: Swift.String
+  public init(backupLocation: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct WaasShareSet : Swift.Codable, Swift.Sendable {
+  public let shareSetId: Swift.String
+  public let shareSetType: Swift.String
+  public let thresholdSignatureScheme: Swift.String?
+  public let createdAt: Swift.String?
+  public init(shareSetId: Swift.String, shareSetType: Swift.String, thresholdSignatureScheme: Swift.String? = nil, createdAt: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct WaasWalletProperties : Swift.Codable, Swift.Sendable {
+  public let shareSetId: Swift.String?
+  public let shareSetType: Swift.String?
+  public let keyShares: [DynamicSdkCore.WaasKeyShareInfo]?
+  public let otherShareSets: [DynamicSdkCore.WaasShareSet]?
+  public let businessAccountId: Swift.String?
+  public init(shareSetId: Swift.String? = nil, shareSetType: Swift.String? = nil, keyShares: [DynamicSdkCore.WaasKeyShareInfo]? = nil, otherShareSets: [DynamicSdkCore.WaasShareSet]? = nil, businessAccountId: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct VerifiedCredential : Swift.Codable, Swift.Sendable {
+  public let id: Swift.String
+  public let oauthProvider: Swift.String?
+  public let oauthUsername: Swift.String?
+  public let oauthDisplayName: Swift.String?
+  public let oauthAccountId: Swift.String?
+  public let oauthEmails: [Swift.String]?
+  public let oauthAccountPhotos: [Swift.String]?
+  public let address: Swift.String?
+  public let chain: Swift.String?
+  public let walletName: Swift.String?
+  public let walletProvider: Swift.String?
+  public let format: Swift.String?
+  public let walletAdditionalAddresses: [DynamicSdkCore.WalletAdditionalAddress]?
+  public let walletProperties: DynamicSdkCore.WaasWalletProperties?
+  public let lastSelectedAt: Swift.String?
+  public init(id: Swift.String, oauthProvider: Swift.String? = nil, oauthUsername: Swift.String? = nil, oauthDisplayName: Swift.String? = nil, oauthAccountId: Swift.String? = nil, oauthEmails: [Swift.String]? = nil, oauthAccountPhotos: [Swift.String]? = nil, address: Swift.String? = nil, chain: Swift.String? = nil, walletName: Swift.String? = nil, walletProvider: Swift.String? = nil, format: Swift.String? = nil, walletAdditionalAddresses: [DynamicSdkCore.WalletAdditionalAddress]? = nil, walletProperties: DynamicSdkCore.WaasWalletProperties? = nil, lastSelectedAt: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SdkUser : Swift.Codable, Swift.Sendable {
+  public let id: Swift.String
+  public let scope: Swift.String?
+  public let email: Swift.String?
+  public let sessionId: Swift.String?
+  public let verifiedCredentials: [DynamicSdkCore.VerifiedCredential]
+  public let alias: Swift.String?
+  public let firstName: Swift.String?
+  public let lastName: Swift.String?
+  public let jobTitle: Swift.String?
+  public let username: Swift.String?
+  public let country: Swift.String?
+  public let phoneNumber: Swift.String?
+  public let mfaBackupCodeAcknowledgement: Swift.String?
+  public init(id: Swift.String, scope: Swift.String? = nil, email: Swift.String? = nil, sessionId: Swift.String? = nil, verifiedCredentials: [DynamicSdkCore.VerifiedCredential], alias: Swift.String? = nil, firstName: Swift.String? = nil, lastName: Swift.String? = nil, jobTitle: Swift.String? = nil, username: Swift.String? = nil, country: Swift.String? = nil, phoneNumber: Swift.String? = nil, mfaBackupCodeAcknowledgement: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct VerifyResponse : Swift.Codable, Swift.Sendable {
+  public let jwt: Swift.String?
+  public let minifiedJwt: Swift.String?
+  public let expiresAt: Swift.Int64?
+  public let user: DynamicSdkCore.SdkUser?
+  public let elevatedAccessToken: Swift.String?
+  public let mfaToken: Swift.String?
+  public init(jwt: Swift.String? = nil, minifiedJwt: Swift.String? = nil, expiresAt: Swift.Int64? = nil, user: DynamicSdkCore.SdkUser? = nil, elevatedAccessToken: Swift.String? = nil, mfaToken: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct StoredSession : Swift.Codable, Swift.Sendable {
+  public let token: Swift.String?
+  public let sessionExpiration: Swift.Int64?
+  public init(token: Swift.String? = nil, sessionExpiration: Swift.Int64? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SendEmailOtpResult : Swift.Codable, Swift.Sendable {
+  public let email: Swift.String
+  public let verificationUuid: Swift.String
+  public init(email: Swift.String, verificationUuid: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SmsVerificationCreateResponse : Swift.Codable, Swift.Sendable {
+  public let verificationUuid: Swift.String
+  public init(verificationUuid: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SendSmsOtpResult : Swift.Codable, Swift.Sendable {
+  public let isoCountryCode: Swift.String
+  public let phoneCountryCode: Swift.String
+  public let phoneNumber: Swift.String
+  public let verificationUuid: Swift.String
+  public init(isoCountryCode: Swift.String, phoneCountryCode: Swift.String, phoneNumber: Swift.String, verificationUuid: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct MfaRecoveryCodesResponse : Swift.Codable, Swift.Sendable {
+  public let count: Swift.Int
+  public let recoveryCodes: [Swift.String]
+  public init(count: Swift.Int, recoveryCodes: [Swift.String])
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct UserSession : Swift.Codable, Swift.Sendable {
+  public let token: Swift.String
+  public let expiresAtMs: Swift.Int64
+  public let userId: Swift.String?
+  public let userEmail: Swift.String?
+  public init(token: Swift.String, expiresAtMs: Swift.Int64, userId: Swift.String? = nil, userEmail: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct PasskeyStorageInfo : Swift.Codable, Swift.Sendable {
+  public let name: Swift.String
+  public let icon: Swift.String
+  public let updatedAt: Swift.String?
+  public init(name: Swift.String, icon: Swift.String, updatedAt: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct UserPasskey : Swift.Codable, Swift.Sendable {
+  public let id: Swift.String
+  public let alias: Swift.String?
+  public let userAgent: Swift.String?
+  public let origin: Swift.String?
+  public let credentialId: Swift.String
+  public let createdAt: Swift.String
+  public let updatedAt: Swift.String?
+  public let storage: DynamicSdkCore.PasskeyStorageInfo?
+  public init(id: Swift.String, alias: Swift.String? = nil, userAgent: Swift.String? = nil, origin: Swift.String? = nil, credentialId: Swift.String, createdAt: Swift.String, updatedAt: Swift.String? = nil, storage: DynamicSdkCore.PasskeyStorageInfo? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct GetUserPasskeysResponse : Swift.Codable, Swift.Sendable {
+  public let passkeys: [DynamicSdkCore.UserPasskey]
+  public let count: Swift.Int
+  public init(passkeys: [DynamicSdkCore.UserPasskey], count: Swift.Int)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct ExternalAuthAssertionResponse : Swift.Codable, Swift.Sendable {
+  public let elevatedAccessToken: Swift.String
+  public init(elevatedAccessToken: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct JwtClaims : Swift.Codable, Swift.Sendable {
+  public let sub: Swift.String?
+  public let exp: Swift.Int64?
+  public let iat: Swift.Int64?
+  public let scope: Swift.String?
+  public let sessionPublicKey: Swift.String?
+  public let singleUse: Swift.Bool?
+  public init(sub: Swift.String? = nil, exp: Swift.Int64? = nil, iat: Swift.Int64? = nil, scope: Swift.String? = nil, sessionPublicKey: Swift.String? = nil, singleUse: Swift.Bool? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct PasskeyRelyingParty : Swift.Codable, Swift.Sendable {
+  public let id: Swift.String
+  public let name: Swift.String
+  public init(id: Swift.String, name: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct PasskeyUser : Swift.Codable, Swift.Sendable {
+  public let displayName: Swift.String
+  public let id: Swift.String
+  public let name: Swift.String
+  public init(displayName: Swift.String, id: Swift.String, name: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct PasskeyPubKeyCredParam : Swift.Codable, Swift.Sendable {
+  public let alg: Swift.Int
+  public let type: Swift.String
+  public init(alg: Swift.Int, type: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct PasskeyCredentialDescriptor : Swift.Codable, Swift.Sendable {
+  public let id: Swift.String
+  public let type: Swift.String?
+  public let transports: [Swift.String]?
+  public init(id: Swift.String, type: Swift.String? = nil, transports: [Swift.String]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct PasskeyAuthenticatorSelection : Swift.Codable, Swift.Sendable {
+  public let authenticatorAttachment: Swift.String?
+  public let requireResidentKey: Swift.Bool?
+  public let residentKey: Swift.String?
+  public let userVerification: Swift.String?
+  public init(authenticatorAttachment: Swift.String? = nil, requireResidentKey: Swift.Bool? = nil, residentKey: Swift.String? = nil, userVerification: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct PasskeyExtensionsInput : Swift.Codable, Swift.Sendable {
+  public let appid: Swift.String?
+  public let appidExclude: Swift.String?
+  public let credProps: Swift.Bool?
+  public let uvm: Swift.Bool?
+  public init(appid: Swift.String? = nil, appidExclude: Swift.String? = nil, credProps: Swift.Bool? = nil, uvm: Swift.Bool? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct PasskeyRegistrationOptions : Swift.Codable, Swift.Sendable {
+  public let attestation: Swift.String?
+  public let authenticatorSelection: DynamicSdkCore.PasskeyAuthenticatorSelection?
+  public let challenge: Swift.String
+  public let excludeCredentials: [DynamicSdkCore.PasskeyCredentialDescriptor]?
+  public let extensions: DynamicSdkCore.PasskeyExtensionsInput?
+  public let hints: [Swift.String]?
+  public let pubKeyCredParams: [DynamicSdkCore.PasskeyPubKeyCredParam]
+  public let rp: DynamicSdkCore.PasskeyRelyingParty
+  public let timeout: Swift.Int?
+  public let user: DynamicSdkCore.PasskeyUser
+  public init(attestation: Swift.String? = nil, authenticatorSelection: DynamicSdkCore.PasskeyAuthenticatorSelection? = nil, challenge: Swift.String, excludeCredentials: [DynamicSdkCore.PasskeyCredentialDescriptor]? = nil, extensions: DynamicSdkCore.PasskeyExtensionsInput? = nil, hints: [Swift.String]? = nil, pubKeyCredParams: [DynamicSdkCore.PasskeyPubKeyCredParam], rp: DynamicSdkCore.PasskeyRelyingParty, timeout: Swift.Int? = nil, user: DynamicSdkCore.PasskeyUser)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct PasskeyAuthenticationOptions : Swift.Codable, Swift.Sendable {
+  public let challenge: Swift.String
+  public let timeout: Swift.Int?
+  public let rpId: Swift.String?
+  public let userVerification: Swift.String?
+  public let allowCredentials: [DynamicSdkCore.PasskeyCredentialDescriptor]?
+  public let extensions: DynamicSdkCore.PasskeyExtensionsInput?
+  public let hints: [Swift.String]?
+  public init(challenge: Swift.String, timeout: Swift.Int? = nil, rpId: Swift.String? = nil, userVerification: Swift.String? = nil, allowCredentials: [DynamicSdkCore.PasskeyCredentialDescriptor]? = nil, extensions: DynamicSdkCore.PasskeyExtensionsInput? = nil, hints: [Swift.String]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct PasskeyClientExtensionResults : Swift.Codable, Swift.Sendable {
+  public let appid: Swift.Bool?
+  public let hmacCreateSecret: Swift.Bool?
+  public init(appid: Swift.Bool? = nil, hmacCreateSecret: Swift.Bool? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct PasskeyAttestationResponse : Swift.Codable, Swift.Sendable {
+  public let attestationObject: Swift.String
+  public let clientDataJson: Swift.String
+  public let transports: [Swift.String]?
+  public let publicKey: Swift.String?
+  public init(attestationObject: Swift.String, clientDataJson: Swift.String, transports: [Swift.String]? = nil, publicKey: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct PasskeyRegistrationResult : Swift.Codable, Swift.Sendable {
+  public let id: Swift.String
+  public let rawId: Swift.String
+  public let response: DynamicSdkCore.PasskeyAttestationResponse
+  public let clientExtensionResults: DynamicSdkCore.PasskeyClientExtensionResults?
+  public let type: Swift.String
+  public let authenticatorAttachment: Swift.String?
+  public init(id: Swift.String, rawId: Swift.String, response: DynamicSdkCore.PasskeyAttestationResponse, clientExtensionResults: DynamicSdkCore.PasskeyClientExtensionResults? = nil, type: Swift.String, authenticatorAttachment: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct PasskeyAssertionResponse : Swift.Codable, Swift.Sendable {
+  public let authenticatorData: Swift.String
+  public let clientDataJson: Swift.String
+  public let signature: Swift.String
+  public let userHandle: Swift.String?
+  public init(authenticatorData: Swift.String, clientDataJson: Swift.String, signature: Swift.String, userHandle: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct PasskeyAuthenticationResult : Swift.Codable, Swift.Sendable {
+  public let id: Swift.String
+  public let rawId: Swift.String
+  public let response: DynamicSdkCore.PasskeyAssertionResponse
+  public let clientExtensionResults: DynamicSdkCore.PasskeyClientExtensionResults?
+  public let type: Swift.String
+  public let authenticatorAttachment: Swift.String?
+  public init(id: Swift.String, rawId: Swift.String, response: DynamicSdkCore.PasskeyAssertionResponse, clientExtensionResults: DynamicSdkCore.PasskeyClientExtensionResults? = nil, type: Swift.String, authenticatorAttachment: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct ZerodevMultichainProvider : Swift.Codable, Swift.Sendable {
+  public let clientId: Swift.String
+  public let chain: Swift.String
+  public let isDefault: Swift.Bool?
+  public init(clientId: Swift.String, chain: Swift.String, isDefault: Swift.Bool? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+@_Concurrency.MainActor public protocol DynamicExtension : Swift.Sendable {
+  @_Concurrency.MainActor var name: Swift.String { get }
+  @_Concurrency.MainActor func install(client: DynamicSdkCore.DynamicClient)
+}
+@_Concurrency.MainActor final public class DynamicClient {
+  @_Concurrency.MainActor final public let config: DynamicSdkCore.DynamicConfig
+  @_Concurrency.MainActor final public let auth: DynamicSdkCore.AuthClient
+  @_Concurrency.MainActor final public var wallets: DynamicSdkCore.WalletsClient {
+    get
+    set
+  }
+  @_Concurrency.MainActor public init(config: DynamicSdkCore.DynamicConfig, httpService: any DynamicSdkCore.HttpService, secureStorage: any DynamicSdkCore.SecureStorage, logger: any DynamicSdkCore.Logger, deviceSigner: any DynamicSdkCore.DeviceSigner, sessionSigner: any DynamicSdkCore.SessionSigner, oAuthBrowser: any DynamicSdkCore.OAuthBrowser, passkeyProvider: any DynamicSdkCore.PasskeyProvider)
+  @_Concurrency.MainActor final public func initialize() async throws
+  @discardableResult
+  @_Concurrency.MainActor final public func addExtension(_ dynamicExtension: any DynamicSdkCore.DynamicExtension) -> DynamicSdkCore.DynamicClient
+  @_Concurrency.MainActor final public func getExtension<T>(_ type: T.Type) -> T? where T : DynamicSdkCore.DynamicExtension
+  @_Concurrency.MainActor final public func findCapability<T>(_ type: T.Type) -> T?
+  @_Concurrency.MainActor final public var tokenChanged: Combine.AnyPublisher<Swift.String?, Swift.Never> {
+    get
+  }
+  @_Concurrency.MainActor final public var sessionExpiresAtMsChanged: Combine.AnyPublisher<Swift.Int64?, Swift.Never> {
+    get
+  }
+  @_Concurrency.MainActor final public var userChanged: Combine.AnyPublisher<DynamicSdkCore.SdkUser?, Swift.Never> {
+    get
+  }
+  @_Concurrency.MainActor final public var sessionPublicKeyChanged: Combine.AnyPublisher<Swift.String?, Swift.Never> {
+    get
+  }
+  @_Concurrency.MainActor final public var elevatedAccessTokensChanged: Combine.AnyPublisher<[DynamicSdkCore.ElevatedAccessToken]?, Swift.Never> {
+    get
+  }
+  @_Concurrency.MainActor final public var mfaTokenChanged: Combine.AnyPublisher<Swift.String?, Swift.Never> {
+    get
+  }
+  @_Concurrency.MainActor final public var projectSettingsChanged: Combine.AnyPublisher<DynamicSdkCore.ProjectSettings?, Swift.Never> {
+    get
+  }
+  @_Concurrency.MainActor final public var socialProvidersChanged: Combine.AnyPublisher<[DynamicSdkCore.Provider]?, Swift.Never> {
+    get
+  }
+  @_Concurrency.MainActor final public var captchaRequiredChanged: Combine.AnyPublisher<Swift.Bool, Swift.Never> {
+    get
+  }
+  @_Concurrency.MainActor final public var captchaTokenChanged: Combine.AnyPublisher<Swift.String?, Swift.Never> {
+    get
+  }
+  @_Concurrency.MainActor final public var initializedChanged: Combine.AnyPublisher<Swift.Bool, Swift.Never> {
+    get
+  }
+  @_Concurrency.MainActor final public var primaryWalletIdChanged: Combine.AnyPublisher<Swift.String?, Swift.Never> {
+    get
+  }
+  @_Concurrency.MainActor final public var activeEvmChainIdChanged: Combine.AnyPublisher<Swift.Int64?, Swift.Never> {
+    get
+  }
+  @_Concurrency.MainActor final public var activeSolanaNetworkNameChanged: Combine.AnyPublisher<Swift.String?, Swift.Never> {
+    get
+  }
+  @_Concurrency.MainActor final public var activeSuiNetworkNameChanged: Combine.AnyPublisher<Swift.String?, Swift.Never> {
+    get
+  }
+  @_Concurrency.MainActor final public var walletCreated: Combine.AnyPublisher<DynamicSdkCore.WaasCreatedWallet, Swift.Never> {
+    get
+  }
+  @_Concurrency.MainActor final public var walletCreationFailed: Combine.AnyPublisher<Swift.String, Swift.Never> {
+    get
+  }
+  @_Concurrency.MainActor final public var externalWalletActionRequested: Combine.AnyPublisher<DynamicSdkCore.ExternalWalletActionRequest, Swift.Never> {
+    get
+  }
+  @objc deinit
+}
+public struct WaasCreatedWallet : Swift.Codable, Swift.Sendable {
+  public let chainName: Swift.String
+  public let accountAddress: Swift.String
+  public let publicKeyHex: Swift.String
+  public let rawPublicKey: DynamicSdkCore.DynamicJsonValue?
+  public init(chainName: Swift.String, accountAddress: Swift.String, publicKeyHex: Swift.String, rawPublicKey: DynamicSdkCore.DynamicJsonValue? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct ExternalWalletActionRequest : Swift.Codable, Swift.Sendable {
+  public let action: Swift.String
+  public let walletName: Swift.String?
+  public let address: Swift.String
+  public let chain: Swift.String
+  public init(action: Swift.String, walletName: Swift.String? = nil, address: Swift.String, chain: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct ExternalWalletAccount : Swift.Codable, Swift.Sendable {
+  public let chain: Swift.String
+  public let address: Swift.String
+  public let displayName: Swift.String
+  public init(chain: Swift.String, address: Swift.String, displayName: Swift.String)
+  public func verifyWalletName() -> Swift.String
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public enum DynamicError : Swift.Error, Swift.Sendable {
+  case network(reason: Swift.String)
+  case api(status: Swift.Int, code: Swift.String, reason: Swift.String, mergeConflicts: DynamicSdkCore.MergeConflicts? = nil)
+  case parse(reason: Swift.String)
+  case state(reason: Swift.String)
+  case storage(reason: Swift.String)
+  case businessAccountIntentRequired(intent: [Swift.String : DynamicSdkCore.DynamicJsonValue])
+}
+public struct DynamicConfig : Swift.Sendable {
+  public let environmentId: Swift.String
+  public let apiBaseUrl: Swift.String
+  public let appName: Swift.String?
+  public let appLogoUrl: Swift.String?
+  public let universalLink: Swift.String?
+  public let nativeLink: Swift.String?
+  public let instrumentationEnabled: Swift.Bool
+  public let instrumentationUrl: Swift.String?
+  public let logLevel: Swift.String
+  public init(environmentId: Swift.String, apiBaseUrl: Swift.String = "https://app.dynamicauth.com/api/v0", appName: Swift.String? = nil, appLogoUrl: Swift.String? = nil, universalLink: Swift.String? = nil, nativeLink: Swift.String? = nil, instrumentationEnabled: Swift.Bool = true, instrumentationUrl: Swift.String? = nil, logLevel: Swift.String = "warn")
+}
+public func dynBuildUrl(_ base: Swift.String, _ query: [(Swift.String, Swift.String?)]) -> Swift.String
+public func dynUleb128(_ value: Swift.Int64) throws -> [Swift.UInt8]
+public func dynU16Le(_ value: Swift.Int64) throws -> [Swift.UInt8]
+public func dynU64Le(_ decimal: Swift.String) throws -> [Swift.UInt8]
+public func dynHexToBytes(_ hex: Swift.String) throws -> [Swift.UInt8]
+public func dynHex32(_ hex: Swift.String) throws -> [Swift.UInt8]
+public func dynBase58Decode(_ value: Swift.String) throws -> [Swift.UInt8]
+public func dynLengthPrefixed(_ bytes: [Swift.UInt8]) throws -> [Swift.UInt8]
+public func dynConcatBytes(_ parts: [[Swift.UInt8]]) -> [Swift.UInt8]
+public func dynBytesToHex(_ bytes: [Swift.UInt8]) -> Swift.String
+public func dynBytesToBase64(_ bytes: [Swift.UInt8]) -> Swift.String
+public func dynKeepAlphanumeric(_ value: Swift.String) -> Swift.String
+public func dynBytesToBase58(_ bytes: [Swift.UInt8]) -> Swift.String
+public func dynParseLong(_ value: Swift.String) throws -> Swift.Int64
+public enum DynamicJsonValue : Swift.Codable, Swift.Sendable, Swift.Equatable {
+  case null, bool(Swift.Bool), number(Swift.Double), string(Swift.String)
+  case array([DynamicSdkCore.DynamicJsonValue]), object([Swift.String : DynamicSdkCore.DynamicJsonValue])
+  public init(from decoder: any Swift.Decoder) throws
+  public func encode(to encoder: any Swift.Encoder) throws
+  public static func from<T>(_ value: T) throws -> DynamicSdkCore.DynamicJsonValue where T : Swift.Encodable
+  public static func == (a: DynamicSdkCore.DynamicJsonValue, b: DynamicSdkCore.DynamicJsonValue) -> Swift.Bool
+}
+public protocol HttpService : Swift.Sendable {
+  func fetch(request: DynamicSdkCore.HttpRequest) async throws -> DynamicSdkCore.HttpResponse
+}
+@_Concurrency.MainActor public protocol SecureStorage : Swift.Sendable {
+  @_Concurrency.MainActor func getItem(key: Swift.String) async throws -> Swift.String?
+  @_Concurrency.MainActor func setItem(key: Swift.String, value: Swift.String) async throws
+  @_Concurrency.MainActor func removeItem(key: Swift.String) async throws
+}
+@_Concurrency.MainActor public protocol Logger : Swift.Sendable {
+  @_Concurrency.MainActor func log(level: Swift.String, message: Swift.String)
+}
+@_Concurrency.MainActor public protocol DeviceSigner : Swift.Sendable {
+  @_Concurrency.MainActor func publicKeyHex() async throws -> Swift.String
+  @_Concurrency.MainActor func signNonce(nonce: Swift.String) async throws -> Swift.String
+}
+@_Concurrency.MainActor public protocol SessionSigner : Swift.Sendable {
+  @_Concurrency.MainActor func publicKeyHex() async throws -> Swift.String
+  @_Concurrency.MainActor func sign(payload: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor func reset() async throws
+}
+@_Concurrency.MainActor public protocol OAuthBrowser : Swift.Sendable {
+  @_Concurrency.MainActor func authenticate(authUrl: Swift.String, redirectUrl: Swift.String) async throws -> DynamicSdkCore.OAuthResult
+}
+@_Concurrency.MainActor public protocol PasskeyProvider : Swift.Sendable {
+  @_Concurrency.MainActor func isSupported() async throws -> Swift.Bool
+  @_Concurrency.MainActor func register(optionsJson: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor func authenticate(optionsJson: Swift.String) async throws -> Swift.String
+}
+public protocol EvmService : Swift.Sendable {
+  func getBalance(address: Swift.String, network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String
+  func getTransactionCount(address: Swift.String, network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String
+  func getGasPrice(network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String
+  func estimateGas(request: DynamicSdkCore.EvmTxRequest, network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String
+  func call(request: DynamicSdkCore.EvmTxRequest, network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String
+  func encodeFunctionData(function: DynamicSdkCore.EvmContractFunction, arguments: [Swift.String]) async throws -> Swift.String
+  func decodeFunctionResult(function: DynamicSdkCore.EvmContractFunction, data: Swift.String) async throws -> [Swift.String]
+  func getTransactionReceipt(txHash: Swift.String, network: DynamicSdkCore.EvmNetwork) async throws -> DynamicSdkCore.EvmReceipt?
+  func getCode(address: Swift.String, network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String?
+  func generateSecureNonce() async throws -> Swift.String
+  func hashEip7702Authorization(chainId: Swift.Int64, contractAddress: Swift.String, nonce: Swift.Int64) async throws -> Swift.String
+  func buildSponsoredTransactionTypedData(calls: [DynamicSdkCore.EvmSponsoredCall], chainId: Swift.Int64, deadline: Swift.String, mode: Swift.String, nonce: Swift.String, relayer: Swift.String, verifyingContract: Swift.String) async throws -> Swift.String
+  func buildUnsignedTransaction(request: DynamicSdkCore.EvmTxRequest, network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String
+  func broadcastTransaction(signedTransaction: Swift.String, network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String
+}
+public protocol SolanaService : Swift.Sendable {
+  func getBalance(address: Swift.String, network: DynamicSdkCore.SolanaNetwork) async throws -> Swift.String
+  func getTokenBalance(address: Swift.String, mint: Swift.String, network: DynamicSdkCore.SolanaNetwork) async throws -> Swift.String
+  func getLatestBlockhash(network: DynamicSdkCore.SolanaNetwork) async throws -> Swift.String
+  func getTransactionStatus(signature: Swift.String, network: DynamicSdkCore.SolanaNetwork) async throws -> DynamicSdkCore.SolanaReceipt?
+  func buildUnsignedTransaction(request: DynamicSdkCore.SolanaTxRequest, network: DynamicSdkCore.SolanaNetwork) async throws -> Swift.String
+  func buildUnsignedTokenTransfer(transfer: DynamicSdkCore.SolanaSplTransfer, network: DynamicSdkCore.SolanaNetwork) async throws -> Swift.String
+  func attachSignature(unsignedMessage: Swift.String, publicKey: Swift.String, signature: Swift.String) async throws -> Swift.String
+  func createUnsignedSerializedTransaction(unsignedMessage: Swift.String) async throws -> Swift.String
+  func getSerializedTransactionMessage(serializedTransaction: Swift.String) async throws -> Swift.String
+  func attachSignatureToSerializedTransaction(serializedTransaction: Swift.String, publicKey: Swift.String, signature: Swift.String) async throws -> Swift.String
+  func broadcastSponsoredTransaction(serializedTransaction: Swift.String, network: DynamicSdkCore.SolanaNetwork) async throws -> Swift.String
+  func broadcastTransaction(signedTransaction: Swift.String, network: DynamicSdkCore.SolanaNetwork) async throws -> Swift.String
+}
+public protocol StellarService : Swift.Sendable {
+  func loadAccount(address: Swift.String, network: DynamicSdkCore.StellarNetwork) async throws -> DynamicSdkCore.StellarAccount
+  func hasTrustline(address: Swift.String, assetCode: Swift.String, assetIssuer: Swift.String, network: DynamicSdkCore.StellarNetwork) async throws -> Swift.Bool
+  func buildPaymentTransaction(request: DynamicSdkCore.StellarPaymentRequest, network: DynamicSdkCore.StellarNetwork) async throws -> Swift.String
+  func attachSignature(unsignedTransactionXdr: Swift.String, address: Swift.String, signature: Swift.String) async throws -> Swift.String
+  func submitTransaction(signedTransactionXdr: Swift.String, network: DynamicSdkCore.StellarNetwork) async throws -> Swift.String
+}
+@_Concurrency.MainActor public protocol WalletSigner : Swift.Sendable {
+  @_Concurrency.MainActor func signMessage(chain: Swift.String, accountAddress: Swift.String, message: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor func signTransaction(chain: Swift.String, accountAddress: Swift.String, transaction: Swift.String, chainId: Swift.String?, signingIndexes: [Swift.Int]?, allowedSighash: [Swift.Int]?) async throws -> Swift.String
+}
+extension DynamicSdkCore.WalletSigner {
+  @_Concurrency.MainActor public func signTransaction(chain: Swift.String, accountAddress: Swift.String, transaction: Swift.String, chainId: Swift.String?) async throws -> Swift.String
+}
+@_Concurrency.MainActor public protocol EmbeddedWalletSigner : DynamicSdkCore.WalletSigner {
+}
+@_Concurrency.MainActor public protocol ExternalWalletSigner : DynamicSdkCore.WalletSigner {
+}
+public protocol SolanaTransactionSponsor : Swift.Sendable {
+  func sponsorSolanaTransaction(transaction: Swift.String) async throws -> Swift.String
+}
+@_Concurrency.MainActor public protocol EvmGaslessSponsor : Swift.Sendable {
+  @_Concurrency.MainActor func signTypedData(chain: Swift.String, accountAddress: Swift.String, typedData: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor func signEvm7702Authorization(accountAddress: Swift.String, authorizationHash: Swift.String, chainId: Swift.Int64, accountNonce: Swift.Int64, contractAddress: Swift.String) async throws -> DynamicSdkCore.Evm7702Authorization
+  @_Concurrency.MainActor func getAvailableEvmGaslessRelayer(chainId: Swift.Int64) async throws -> Swift.String
+  @_Concurrency.MainActor func sponsorEvmTransaction(request: DynamicSdkCore.SponsorEvmTransactionRequest) async throws -> Swift.String
+  @_Concurrency.MainActor func getEvmSponsoredTransactionStatus(requestId: Swift.String) async throws -> DynamicSdkCore.EvmSponsoredTransactionStatusResponse
+}
+@_Concurrency.MainActor public protocol ExportPrivateKeyCapability : Swift.Sendable {
+  @_Concurrency.MainActor func exportPrivateKey(chain: Swift.String, accountAddress: Swift.String) async throws
+}
+@_hasMissingDesignatedInitializers @_Concurrency.MainActor final public class WalletsClient {
+  @_Concurrency.MainActor final public func getWalletSigner(chain: Swift.String, address: Swift.String) throws -> any DynamicSdkCore.WalletSigner
+  @_Concurrency.MainActor final public func setPrimaryWallet(walletId: Swift.String) async throws -> Swift.String?
+  @_Concurrency.MainActor final public var primaryWalletId: Swift.String? {
+    get
+  }
+  @_Concurrency.MainActor final public func setActiveEvmChainId(chainId: Swift.Int64) -> Swift.Int64?
+  @_Concurrency.MainActor final public var activeEvmChainId: Swift.Int64? {
+    get
+  }
+  @_Concurrency.MainActor final public func configureEvmHostNetworks(networks: [DynamicSdkCore.NetworkConfiguration])
+  @_Concurrency.MainActor final public var evmHostNetworks: [DynamicSdkCore.NetworkConfiguration] {
+    get
+  }
+  @_Concurrency.MainActor final public func getEvmNetworks() throws -> [DynamicSdkCore.NetworkConfiguration]
+  @_Concurrency.MainActor final public func setActiveSolanaNetwork(name: Swift.String) -> Swift.String?
+  @_Concurrency.MainActor final public var activeSolanaNetwork: Swift.String? {
+    get
+  }
+  @_Concurrency.MainActor final public func configureSolanaHostNetworks(networks: [DynamicSdkCore.NetworkConfiguration])
+  @_Concurrency.MainActor final public var solanaHostNetworks: [DynamicSdkCore.NetworkConfiguration] {
+    get
+  }
+  @_Concurrency.MainActor final public func getSolanaNetworks() throws -> [DynamicSdkCore.NetworkConfiguration]
+  @_Concurrency.MainActor final public func setActiveSuiNetwork(name: Swift.String) -> Swift.String?
+  @_Concurrency.MainActor final public var activeSuiNetwork: Swift.String? {
+    get
+  }
+  @_Concurrency.MainActor final public func clearWalletSelection()
+  @_Concurrency.MainActor final public var userWallets: [DynamicSdkCore.Wallet] {
+    get
+  }
+  @_Concurrency.MainActor final public func getNetworksData() throws -> [DynamicSdkCore.NetworkData]
+  @_Concurrency.MainActor final public func getBtcNetworks() throws -> [DynamicSdkCore.NetworkData]
+  @_Concurrency.MainActor final public func getSuiNetworks() throws -> [DynamicSdkCore.NetworkData]
+  @_Concurrency.MainActor final public var isSolanaGasSponsorshipEnabled: Swift.Bool {
+    get
+  }
+  @_Concurrency.MainActor final public var isEvmGasSponsorshipEnabled: Swift.Bool {
+    get
+  }
+  @objc deinit
+}
+public enum SolanaSponsorshipMode : Swift.String, Swift.Codable, Swift.Sendable {
+  case auto
+  case off
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum EvmSponsoredTransactionStatus : Swift.String, Swift.Codable, Swift.Sendable {
+  case pending
+  case submitted
+  case success
+  case failure
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct EvmNetwork : Swift.Codable, Swift.Sendable {
+  public let chainId: Swift.Int64
+  public let rpcUrl: Swift.String
+  public let name: Swift.String
+  public init(chainId: Swift.Int64, rpcUrl: Swift.String, name: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct EvmTxRequest : Swift.Codable, Swift.Sendable {
+  public let from: Swift.String
+  public let to: Swift.String
+  public let value: Swift.String?
+  public let data: Swift.String?
+  public let gasLimit: Swift.String?
+  public let maxFeePerGas: Swift.String?
+  public let maxPriorityFeePerGas: Swift.String?
+  public let nonce: Swift.String?
+  public init(from: Swift.String, to: Swift.String, value: Swift.String? = nil, data: Swift.String? = nil, gasLimit: Swift.String? = nil, maxFeePerGas: Swift.String? = nil, maxPriorityFeePerGas: Swift.String? = nil, nonce: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct EvmReceipt : Swift.Codable, Swift.Sendable {
+  public let transactionHash: Swift.String
+  public let blockNumber: Swift.String
+  public let status: Swift.Bool
+  public let gasUsed: Swift.String
+  public init(transactionHash: Swift.String, blockNumber: Swift.String, status: Swift.Bool, gasUsed: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct EvmContractFunction : Swift.Codable, Swift.Sendable {
+  public let name: Swift.String
+  public let inputTypes: [Swift.String]
+  public let outputTypes: [Swift.String]
+  public init(name: Swift.String, inputTypes: [Swift.String], outputTypes: [Swift.String])
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct EvmSponsoredCall : Swift.Codable, Swift.Sendable {
+  public let target: Swift.String
+  public let data: Swift.String
+  public let value: Swift.String
+  public init(target: Swift.String, data: Swift.String, value: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct Evm7702Authorization : Swift.Codable, Swift.Sendable {
+  public let address: Swift.String
+  public let chainId: Swift.Int64
+  public let nonce: Swift.Int64
+  public let r: Swift.String
+  public let s: Swift.String
+  public let yParity: Swift.Int
+  public init(address: Swift.String, chainId: Swift.Int64, nonce: Swift.Int64, r: Swift.String, s: Swift.String, yParity: Swift.Int)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SponsorEvmTransactionRequest : Swift.Codable, Swift.Sendable {
+  public let authorization: DynamicSdkCore.Evm7702Authorization?
+  public let calls: [DynamicSdkCore.EvmSponsoredCall]
+  public let chainId: Swift.Int64
+  public let deadline: Swift.String
+  public let nonce: Swift.String
+  public let signature: Swift.String
+  public let relayer: Swift.String
+  public let walletAddress: Swift.String
+  public init(authorization: DynamicSdkCore.Evm7702Authorization? = nil, calls: [DynamicSdkCore.EvmSponsoredCall], chainId: Swift.Int64, deadline: Swift.String, nonce: Swift.String, signature: Swift.String, relayer: Swift.String, walletAddress: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SponsorEvmTransactionResponse : Swift.Codable, Swift.Sendable {
+  public let requestId: Swift.String
+  public init(requestId: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct EvmSponsoredTransactionStatusResponse : Swift.Codable, Swift.Sendable {
+  public let status: DynamicSdkCore.EvmSponsoredTransactionStatus
+  public let transactionHash: Swift.String?
+  public let errorMessage: Swift.String?
+  public init(status: DynamicSdkCore.EvmSponsoredTransactionStatus, transactionHash: Swift.String? = nil, errorMessage: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct EvmGaslessRelayerResponse : Swift.Codable, Swift.Sendable {
+  public let relayerAddress: Swift.String
+  public init(relayerAddress: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SolanaNetwork : Swift.Codable, Swift.Sendable {
+  public let rpcUrl: Swift.String
+  public let name: Swift.String
+  public let cluster: Swift.String
+  public let genesisHash: Swift.String
+  public init(rpcUrl: Swift.String, name: Swift.String, cluster: Swift.String, genesisHash: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SolanaTxRequest : Swift.Codable, Swift.Sendable {
+  public let from: Swift.String
+  public let to: Swift.String
+  public let lamports: Swift.String
+  public let recentBlockhash: Swift.String?
+  public init(from: Swift.String, to: Swift.String, lamports: Swift.String, recentBlockhash: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SolanaSplTransfer : Swift.Codable, Swift.Sendable {
+  public let from: Swift.String
+  public let recipient: Swift.String
+  public let mint: Swift.String
+  public let amount: Swift.String
+  public let decimals: Swift.Int?
+  public let recentBlockhash: Swift.String?
+  public init(from: Swift.String, recipient: Swift.String, mint: Swift.String, amount: Swift.String, decimals: Swift.Int? = nil, recentBlockhash: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SolanaReceipt : Swift.Codable, Swift.Sendable {
+  public let signature: Swift.String
+  public let slot: Swift.String
+  public let status: Swift.Bool
+  public let err: Swift.String?
+  public init(signature: Swift.String, slot: Swift.String, status: Swift.Bool, err: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct StellarNetwork : Swift.Codable, Swift.Sendable {
+  public let networkPassphrase: Swift.String
+  public let horizonUrl: Swift.String
+  public let name: Swift.String
+  public let waasChainId: Swift.String
+  public init(networkPassphrase: Swift.String, horizonUrl: Swift.String, name: Swift.String, waasChainId: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct StellarAccount : Swift.Codable, Swift.Sendable {
+  public let sequence: Swift.String
+  public let nativeBalance: Swift.String
+  public init(sequence: Swift.String, nativeBalance: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct StellarPaymentRequest : Swift.Codable, Swift.Sendable {
+  public let sourceAddress: Swift.String
+  public let destinationAddress: Swift.String
+  public let amount: Swift.String
+  public let assetCode: Swift.String?
+  public let assetIssuer: Swift.String?
+  public init(sourceAddress: Swift.String, destinationAddress: Swift.String, amount: Swift.String, assetCode: Swift.String? = nil, assetIssuer: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct TonNetwork : Swift.Codable, Swift.Sendable {
+  public let rpcUrl: Swift.String
+  public let name: Swift.String
+  public let networkGlobalId: Swift.Int
+  public init(rpcUrl: Swift.String, name: Swift.String, networkGlobalId: Swift.Int)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct TonMessage : Swift.Codable, Swift.Sendable {
+  public let address: Swift.String
+  public let amount: Swift.String
+  public let payload: Swift.String?
+  public let stateInit: Swift.String?
+  public init(address: Swift.String, amount: Swift.String, payload: Swift.String? = nil, stateInit: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct TonTransactionRequest : Swift.Codable, Swift.Sendable {
+  public let from: Swift.String
+  public let messages: [DynamicSdkCore.TonMessage]
+  public let validUntil: Swift.Int64
+  public init(from: Swift.String, messages: [DynamicSdkCore.TonMessage], validUntil: Swift.Int64)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct TonNativeTransfer : Swift.Codable, Swift.Sendable {
+  public let amount: Swift.String
+  public let recipientAddress: Swift.String
+  public init(amount: Swift.String, recipientAddress: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct TonJettonTransfer : Swift.Codable, Swift.Sendable {
+  public let amount: Swift.String
+  public let jettonMasterAddress: Swift.String
+  public let recipientAddress: Swift.String
+  public let forwardPayload: Swift.String?
+  public let forwardTonAmount: Swift.String?
+  public let gasAmount: Swift.String?
+  public init(amount: Swift.String, jettonMasterAddress: Swift.String, recipientAddress: Swift.String, forwardPayload: Swift.String? = nil, forwardTonAmount: Swift.String? = nil, gasAmount: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct TonPreparedTransaction : Swift.Codable, Swift.Sendable {
+  public let address: Swift.String
+  public let hashToSign: Swift.String
+  public let messageBody: Swift.String
+  public let stateInit: Swift.String?
+  public init(address: Swift.String, hashToSign: Swift.String, messageBody: Swift.String, stateInit: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct TonSendTransactionResponse : Swift.Codable, Swift.Sendable {
+  public let transactionHash: Swift.String
+  public init(transactionHash: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiNetwork : Swift.Codable, Swift.Sendable {
+  public let rpcUrl: Swift.String
+  public let name: Swift.String
+  public let cluster: Swift.String
+  public let networkId: Swift.String?
+  public init(rpcUrl: Swift.String, name: Swift.String, cluster: Swift.String, networkId: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiTxRequest : Swift.Codable, Swift.Sendable {
+  public let from: Swift.String
+  public let to: Swift.String
+  public let mist: Swift.String
+  public let gasBudget: Swift.String?
+  public init(from: Swift.String, to: Swift.String, mist: Swift.String, gasBudget: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiReceipt : Swift.Codable, Swift.Sendable {
+  public let digest: Swift.String
+  public let checkpoint: Swift.String?
+  public let status: Swift.Bool
+  public let err: Swift.String?
+  public init(digest: Swift.String, checkpoint: Swift.String? = nil, status: Swift.Bool, err: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiGetBalanceVariables : Swift.Codable, Swift.Sendable {
+  public let owner: Swift.String
+  public let coinType: Swift.String
+  public init(owner: Swift.String, coinType: Swift.String)
+  public func requestBody() -> Swift.String
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiGetBalanceRequest : Swift.Codable, Swift.Sendable {
+  public let query: Swift.String
+  public let variables: DynamicSdkCore.SuiGetBalanceVariables
+  public init(query: Swift.String, variables: DynamicSdkCore.SuiGetBalanceVariables)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiTransactionStatusVariables : Swift.Codable, Swift.Sendable {
+  public let digest: Swift.String
+  public init(digest: Swift.String)
+  public func requestBody() -> Swift.String
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiTransactionStatusRequest : Swift.Codable, Swift.Sendable {
+  public let query: Swift.String
+  public let variables: DynamicSdkCore.SuiTransactionStatusVariables
+  public init(query: Swift.String, variables: DynamicSdkCore.SuiTransactionStatusVariables)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiGetCoinsVariables : Swift.Codable, Swift.Sendable {
+  public let owner: Swift.String
+  public let type: Swift.String
+  public init(owner: Swift.String, type: Swift.String)
+  public func requestBody() -> Swift.String
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiGetCoinsRequest : Swift.Codable, Swift.Sendable {
+  public let query: Swift.String
+  public let variables: DynamicSdkCore.SuiGetCoinsVariables
+  public init(query: Swift.String, variables: DynamicSdkCore.SuiGetCoinsVariables)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiExecuteTransactionVariables : Swift.Codable, Swift.Sendable {
+  public let bcs: Swift.String
+  public let sigs: [Swift.String]
+  public init(bcs: Swift.String, sigs: [Swift.String])
+  public func requestBody() -> Swift.String
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiExecuteTransactionRequest : Swift.Codable, Swift.Sendable {
+  public let query: Swift.String
+  public let variables: DynamicSdkCore.SuiExecuteTransactionVariables
+  public init(query: Swift.String, variables: DynamicSdkCore.SuiExecuteTransactionVariables)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiGasCoinCandidate : Swift.Codable, Swift.Sendable {
+  public let objectId: Swift.String
+  public let version: Swift.String
+  public let digest: Swift.String
+  public let balanceMist: Swift.Int64
+  public init(objectId: Swift.String, version: Swift.String, digest: Swift.String, balanceMist: Swift.Int64)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiGraphQlError : Swift.Codable, Swift.Sendable {
+  public let message: Swift.String?
+  public init(message: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiBalanceEnvelope : Swift.Codable, Swift.Sendable {
+  public let data: DynamicSdkCore.SuiBalanceResponse?
+  public let errors: [DynamicSdkCore.SuiGraphQlError]?
+  public init(data: DynamicSdkCore.SuiBalanceResponse? = nil, errors: [DynamicSdkCore.SuiGraphQlError]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiGasPriceEnvelope : Swift.Codable, Swift.Sendable {
+  public let data: DynamicSdkCore.SuiGasPriceResponse?
+  public let errors: [DynamicSdkCore.SuiGraphQlError]?
+  public init(data: DynamicSdkCore.SuiGasPriceResponse? = nil, errors: [DynamicSdkCore.SuiGraphQlError]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiTransactionStatusEnvelope : Swift.Codable, Swift.Sendable {
+  public let data: DynamicSdkCore.SuiTransactionStatusResponse?
+  public let errors: [DynamicSdkCore.SuiGraphQlError]?
+  public init(data: DynamicSdkCore.SuiTransactionStatusResponse? = nil, errors: [DynamicSdkCore.SuiGraphQlError]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiCoinsEnvelope : Swift.Codable, Swift.Sendable {
+  public let data: DynamicSdkCore.SuiCoinsResponse?
+  public let errors: [DynamicSdkCore.SuiGraphQlError]?
+  public init(data: DynamicSdkCore.SuiCoinsResponse? = nil, errors: [DynamicSdkCore.SuiGraphQlError]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiExecuteEnvelope : Swift.Codable, Swift.Sendable {
+  public let data: DynamicSdkCore.SuiExecuteResponse?
+  public let errors: [DynamicSdkCore.SuiGraphQlError]?
+  public init(data: DynamicSdkCore.SuiExecuteResponse? = nil, errors: [DynamicSdkCore.SuiGraphQlError]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiCoinBalance : Swift.Codable, Swift.Sendable {
+  public let totalBalance: Swift.String?
+  public init(totalBalance: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiAddressBalance : Swift.Codable, Swift.Sendable {
+  public let balance: DynamicSdkCore.SuiCoinBalance?
+  public init(balance: DynamicSdkCore.SuiCoinBalance? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiBalanceResponse : Swift.Codable, Swift.Sendable {
+  public let address: DynamicSdkCore.SuiAddressBalance?
+  public init(address: DynamicSdkCore.SuiAddressBalance? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiEpoch : Swift.Codable, Swift.Sendable {
+  public let referenceGasPrice: Swift.String?
+  public init(referenceGasPrice: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiGasPriceResponse : Swift.Codable, Swift.Sendable {
+  public let epoch: DynamicSdkCore.SuiEpoch?
+  public init(epoch: DynamicSdkCore.SuiEpoch? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiCheckpoint : Swift.Codable, Swift.Sendable {
+  public let sequenceNumber: Swift.String?
+  public init(sequenceNumber: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiExecutionError : Swift.Codable, Swift.Sendable {
+  public let message: Swift.String?
+  public init(message: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiTransactionEffects : Swift.Codable, Swift.Sendable {
+  public let status: Swift.String?
+  public let checkpoint: DynamicSdkCore.SuiCheckpoint?
+  public let executionError: DynamicSdkCore.SuiExecutionError?
+  public init(status: Swift.String? = nil, checkpoint: DynamicSdkCore.SuiCheckpoint? = nil, executionError: DynamicSdkCore.SuiExecutionError? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiTransactionStatusResponse : Swift.Codable, Swift.Sendable {
+  public let transactionEffects: DynamicSdkCore.SuiTransactionEffects?
+  public init(transactionEffects: DynamicSdkCore.SuiTransactionEffects? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiCoinFields : Swift.Codable, Swift.Sendable {
+  public let balance: Swift.String?
+  public init(balance: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiCoinContents : Swift.Codable, Swift.Sendable {
+  public let json: DynamicSdkCore.SuiCoinFields?
+  public init(json: DynamicSdkCore.SuiCoinFields? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiCoinNode : Swift.Codable, Swift.Sendable {
+  public let address: Swift.String
+  public let version: Swift.String
+  public let digest: Swift.String
+  public let contents: DynamicSdkCore.SuiCoinContents?
+  public init(address: Swift.String, version: Swift.String, digest: Swift.String, contents: DynamicSdkCore.SuiCoinContents? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiObjectConnection : Swift.Codable, Swift.Sendable {
+  public let nodes: [DynamicSdkCore.SuiCoinNode]?
+  public init(nodes: [DynamicSdkCore.SuiCoinNode]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiOwnedObjects : Swift.Codable, Swift.Sendable {
+  public let objects: DynamicSdkCore.SuiObjectConnection?
+  public init(objects: DynamicSdkCore.SuiObjectConnection? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiCoinsResponse : Swift.Codable, Swift.Sendable {
+  public let address: DynamicSdkCore.SuiOwnedObjects?
+  public init(address: DynamicSdkCore.SuiOwnedObjects? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiTransactionDigest : Swift.Codable, Swift.Sendable {
+  public let digest: Swift.String?
+  public init(digest: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiExecuteEffects : Swift.Codable, Swift.Sendable {
+  public let transaction: DynamicSdkCore.SuiTransactionDigest?
+  public init(transaction: DynamicSdkCore.SuiTransactionDigest? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiExecuteResult : Swift.Codable, Swift.Sendable {
+  public let errors: [Swift.String]?
+  public let effects: DynamicSdkCore.SuiExecuteEffects?
+  public init(errors: [Swift.String]? = nil, effects: DynamicSdkCore.SuiExecuteEffects? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiExecuteResponse : Swift.Codable, Swift.Sendable {
+  public let executeTransaction: DynamicSdkCore.SuiExecuteResult?
+  public init(executeTransaction: DynamicSdkCore.SuiExecuteResult? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SuiUnsignedTransaction : Swift.Codable, Swift.Sendable {
+  public let sender: Swift.String
+  public let recipient: Swift.String
+  public let mist: Swift.String
+  public let gasCoins: [DynamicSdkCore.SuiGasCoinCandidate]
+  public let gasPrice: Swift.String
+  public let gasBudget: Swift.String
+  public init(sender: Swift.String, recipient: Swift.String, mist: Swift.String, gasCoins: [DynamicSdkCore.SuiGasCoinCandidate], gasPrice: Swift.String, gasBudget: Swift.String)
+  public func programmableTransactionBytes() throws -> [Swift.UInt8]
+  public func gasDataBytes() throws -> [Swift.UInt8]
+  public func transactionDataHex() throws -> Swift.String
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BtcNetwork : Swift.Codable, Swift.Sendable {
+  public let name: Swift.String
+  public let apiBaseUrl: Swift.String
+  public let isTestnet: Swift.Bool
+  public let networkId: Swift.String?
+  public let apiKind: Swift.String?
+  public init(name: Swift.String, apiBaseUrl: Swift.String, isTestnet: Swift.Bool, networkId: Swift.String? = nil, apiKind: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BtcUtxo : Swift.Codable, Swift.Sendable {
+  public let txid: Swift.String
+  public let vout: Swift.Int64
+  public let value: Swift.String
+  public let confirmed: Swift.Bool
+  public init(txid: Swift.String, vout: Swift.Int64, value: Swift.String, confirmed: Swift.Bool)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BtcFeeEstimate : Swift.Codable, Swift.Sendable {
+  public let confirmationTarget: Swift.Int64
+  public let satPerVByte: Swift.Double
+  public init(confirmationTarget: Swift.Int64, satPerVByte: Swift.Double)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BtcFeeAndChange : Swift.Codable, Swift.Sendable {
+  public let feeEstimate: Swift.Int64
+  public let changeAmount: Swift.Int64
+  public let hasChangeOutput: Swift.Bool
+  public init(feeEstimate: Swift.Int64, changeAmount: Swift.Int64, hasChangeOutput: Swift.Bool)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BtcFeePlan : Swift.Codable, Swift.Sendable {
+  public let feeEstimates: [DynamicSdkCore.BtcFeeEstimate]
+  public let desiredConfirmationTarget: Swift.Int64
+  public let numInputs: Swift.Int
+  public let amountInSatoshis: Swift.Int64
+  public let selectedTotalValue: Swift.Int64
+  public init(feeEstimates: [DynamicSdkCore.BtcFeeEstimate], desiredConfirmationTarget: Swift.Int64, numInputs: Swift.Int, amountInSatoshis: Swift.Int64, selectedTotalValue: Swift.Int64)
+  public func feeFor(numOutputs: Swift.Int64) -> Swift.Int64
+  public func feeAndChange() -> DynamicSdkCore.BtcFeeAndChange
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct NetworkRpcUrls : Swift.Codable, Swift.Sendable {
+  public let http: [Swift.String]
+  public init(http: [Swift.String])
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct NetworkData : Swift.Codable, Swift.Sendable {
+  public let chain: Swift.String
+  public let networkId: Swift.String
+  public let name: Swift.String
+  public let displayName: Swift.String
+  public let rpcUrls: DynamicSdkCore.NetworkRpcUrls
+  public let blockExplorerUrls: [Swift.String]
+  public let iconUrl: Swift.String?
+  public let nativeCurrency: DynamicSdkCore.NetworkNativeCurrency?
+  public let cluster: Swift.String?
+  public let genesisHash: Swift.String?
+  public let testnet: Swift.Bool
+  public init(chain: Swift.String, networkId: Swift.String, name: Swift.String, displayName: Swift.String, rpcUrls: DynamicSdkCore.NetworkRpcUrls, blockExplorerUrls: [Swift.String], iconUrl: Swift.String? = nil, nativeCurrency: DynamicSdkCore.NetworkNativeCurrency? = nil, cluster: Swift.String? = nil, genesisHash: Swift.String? = nil, testnet: Swift.Bool)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+@_Concurrency.MainActor public struct Wallet {
+  @_Concurrency.MainActor public let id: Swift.String
+  @_Concurrency.MainActor public let chain: Swift.String
+  @_Concurrency.MainActor public let address: Swift.String
+  @_Concurrency.MainActor public let client: DynamicSdkCore.DynamicClient?
+  @_Concurrency.MainActor public let isEmbedded: Swift.Bool
+  @_Concurrency.MainActor public let walletProviderKey: Swift.String
+  @_Concurrency.MainActor public let signer: (any DynamicSdkCore.WalletSigner)?
+  @_Concurrency.MainActor public init(id: Swift.String, chain: Swift.String, address: Swift.String, client: DynamicSdkCore.DynamicClient? = nil, isEmbedded: Swift.Bool, walletProviderKey: Swift.String, signer: (any DynamicSdkCore.WalletSigner)? = nil)
+  @_Concurrency.MainActor public func signMessage(message: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor public func exportPrivateKey() async throws
+}
+public enum DynamicCaptchaError : Swift.Error {
+  case cancelled
+  case failed(Swift.String)
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor final public class DynamicCaptchaWidget : ObjectiveC.NSObject {
+  @_Concurrency.MainActor @objc override dynamic public init()
+  @_Concurrency.MainActor final public func present(provider: Swift.String, siteKey: Swift.String, hostOrigin: Swift.String, theme: Swift.String = "light", size: Swift.String? = nil, appearance: Swift.String? = nil) async throws -> Swift.String
+  @objc deinit
+}
+extension DynamicSdkCore.DynamicCaptchaWidget : WebKit.WKScriptMessageHandler {
+  @_Concurrency.MainActor @preconcurrency @objc final public func userContentController(_ userContentController: WebKit.WKUserContentController, didReceive message: WebKit.WKScriptMessage)
+}
+extension DynamicSdkCore.DynamicCaptchaWidget : UIKit.UIAdaptivePresentationControllerDelegate {
+  @_Concurrency.MainActor @preconcurrency @objc final public func presentationControllerDidDismiss(_ presentationController: UIKit.UIPresentationController)
+}
+public enum DynamicDeviceSignerError : Swift.Error {
+  case keyCreationFailed(Swift.String)
+  case signingFailed(Swift.String)
+}
+final public class DynamicDeviceSigner {
+  public init(tag: Swift.String = "com.dynamic.sdk.devicekey")
+  final public func reset()
+  final public func publicKeyHex() throws -> Swift.String
+  final public func signNonce(_ nonce: Swift.String) throws -> Swift.String
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor @preconcurrency final public class DynamicOAuthBrowser : ObjectiveC.NSObject, AuthenticationServices.ASWebAuthenticationPresentationContextProviding {
+  @_Concurrency.MainActor @preconcurrency @objc override dynamic public init()
+  @_Concurrency.MainActor @preconcurrency final public func authenticate(authUrl: Swift.String, redirectUrl: Swift.String) async -> Swift.String
+  @_Concurrency.MainActor @preconcurrency @objc final public func presentationAnchor(for session: AuthenticationServices.ASWebAuthenticationSession) -> AuthenticationServices.ASPresentationAnchor
+  @objc deinit
+}
+public enum DynamicPasskeyError : Swift.Error {
+  case cancelled
+  case unsupported
+  case failed(Swift.String)
+}
+@objc @_inheritsConvenienceInitializers @available(iOS 16.0, *)
+@_Concurrency.MainActor final public class DynamicPasskeyProvider : ObjectiveC.NSObject {
+  @_Concurrency.MainActor @objc override dynamic public init()
+  @_Concurrency.MainActor final public func isSupported() -> Swift.Bool
+  @_Concurrency.MainActor final public func register(optionsJson: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func authenticate(optionsJson: Swift.String) async throws -> Swift.String
+  @objc deinit
+}
+@available(iOS 16.0, *)
+extension DynamicSdkCore.DynamicPasskeyProvider : AuthenticationServices.ASAuthorizationControllerDelegate {
+  @_Concurrency.MainActor @preconcurrency @objc final public func authorizationController(controller: AuthenticationServices.ASAuthorizationController, didCompleteWithAuthorization authorization: AuthenticationServices.ASAuthorization)
+  @_Concurrency.MainActor @preconcurrency @objc final public func authorizationController(controller: AuthenticationServices.ASAuthorizationController, didCompleteWithError error: any Swift.Error)
+}
+@available(iOS 16.0, *)
+extension DynamicSdkCore.DynamicPasskeyProvider : AuthenticationServices.ASAuthorizationControllerPresentationContextProviding {
+  @_Concurrency.MainActor @preconcurrency @objc final public func presentationAnchor(for controller: AuthenticationServices.ASAuthorizationController) -> AuthenticationServices.ASPresentationAnchor
+}
+final public class DynamicSecureStorage {
+  public init(service: Swift.String = "com.dynamic.sdk.storage")
+  final public func getItem(key: Swift.String) -> Swift.String?
+  final public func getItemBytes(key: Swift.String) -> Foundation.Data?
+  final public func setItem(key: Swift.String, value: Swift.String)
+  final public func setItemBytes(key: Swift.String, value: Foundation.Data)
+  final public func removeItem(key: Swift.String)
+  public static func zero(_ data: inout Foundation.Data)
+  @objc deinit
+}
+extension DynamicSdkCore.AuthClient : Swift.Sendable {}
+extension DynamicSdkCore.DynamicClient : Swift.Sendable {}
+extension DynamicSdkCore.WalletsClient : Swift.Sendable {}
+extension DynamicSdkCore.SolanaSponsorshipMode : Swift.Equatable {}
+extension DynamicSdkCore.SolanaSponsorshipMode : Swift.Hashable {}
+extension DynamicSdkCore.SolanaSponsorshipMode : Swift.RawRepresentable {}
+extension DynamicSdkCore.EvmSponsoredTransactionStatus : Swift.Equatable {}
+extension DynamicSdkCore.EvmSponsoredTransactionStatus : Swift.Hashable {}
+extension DynamicSdkCore.EvmSponsoredTransactionStatus : Swift.RawRepresentable {}
+extension DynamicSdkCore.Wallet : Swift.Sendable {}
+extension DynamicSdkCore.DynamicCaptchaWidget : Swift.Sendable {}
+extension DynamicSdkCore.DynamicOAuthBrowser : Swift.Sendable {}
+@available(iOS 16.0, *)
+extension DynamicSdkCore.DynamicPasskeyProvider : Swift.Sendable {}

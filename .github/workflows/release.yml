@@ -1,0 +1,110 @@
+name: Publish public release
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: public-release-${{ github.event.pull_request.merge_commit_sha }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Tag and publish public binaries
+    if: >-
+      github.event.pull_request.merged == true &&
+      startsWith(github.event.pull_request.head.ref, 'release/')
+    runs-on: [self-hosted, fargate, default]
+    timeout-minutes: 15
+    steps:
+      - name: Create a release token
+        id: release-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          app-id: ${{ secrets.OSS_RELEASE_APP_ID }}
+          private-key: ${{ secrets.OSS_RELEASE_APP_PRIVATE_KEY }}
+          owner: dynamic-labs-oss
+          repositories: mobile-sdks
+          permission-contents: write
+
+      - name: Check out the release commit
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
+          token: ${{ steps.release-token.outputs.token }}
+
+      - name: Verify release metadata
+        env:
+          BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          VERSION=$(node -p "require('./RELEASE-MANIFEST.json').version")
+          test "$BRANCH" = "release/$VERSION"
+          test -f "artifacts/dynamic-sdk-swift-$VERSION.zip"
+          test -f "artifacts/dynamic-sdk-kotlin-$VERSION.zip"
+          test -f "artifacts/dynamic-sdk-dotnet-$VERSION.zip"
+
+      - name: Create immutable tag and GitHub release
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
+        env:
+          RELEASE_SHA: ${{ github.event.pull_request.merge_commit_sha }}
+        with:
+          github-token: ${{ steps.release-token.outputs.token }}
+          script: |
+            const { readFileSync } = require('node:fs');
+            const manifest = JSON.parse(readFileSync('RELEASE-MANIFEST.json', 'utf8'));
+            const { owner, repo } = context.repo;
+            const version = manifest.version;
+            const sha = process.env.RELEASE_SHA;
+
+            try {
+              const existing = await github.rest.git.getRef({ owner, repo, ref: `tags/${version}` });
+              if (existing.data.object.sha !== sha) {
+                core.setFailed(`Tag ${version} points to another commit.`);
+                return;
+              }
+            } catch (error) {
+              if (error.status !== 404) throw error;
+              await github.rest.git.createRef({ owner, repo, ref: `refs/tags/${version}`, sha });
+            }
+
+            let release;
+            try {
+              release = (await github.rest.repos.getReleaseByTag({ owner, repo, tag: version })).data;
+            } catch (error) {
+              if (error.status !== 404) throw error;
+              release = (await github.rest.repos.createRelease({
+                owner,
+                repo,
+                tag_name: version,
+                target_commitish: sha,
+                name: `Dynamic SDK ${version}`,
+                prerelease: version.includes('-'),
+                generate_release_notes: false,
+              })).data;
+            }
+
+            const assets = [
+              `dynamic-sdk-swift-${version}.zip`,
+              `dynamic-sdk-kotlin-${version}.zip`,
+              `dynamic-sdk-dotnet-${version}.zip`,
+            ];
+            const existingAssets = new Set(
+              (await github.paginate(github.rest.repos.listReleaseAssets, {
+                owner, repo, release_id: release.id, per_page: 100,
+              })).map((asset) => asset.name),
+            );
+            for (const name of assets) {
+              if (existingAssets.has(name)) continue;
+              await github.rest.repos.uploadReleaseAsset({
+                owner,
+                repo,
+                release_id: release.id,
+                name,
+                headers: { 'content-type': 'application/zip' },
+                data: readFileSync(`artifacts/${name}`),
+              });
+            }

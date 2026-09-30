@@ -1,0 +1,33 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.3 effective-5.10 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+// swift-module-flags: -target arm64-apple-ios15.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -module-name DynamicSdkExternalWalletPhantom
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.3
+import DynamicSdkCore
+import DynamicSdkExternalWallet
+import Foundation
+import Swift
+import UIKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+@_hasMissingDesignatedInitializers @_Concurrency.MainActor public class SolanaDeepLinkMechanism : DynamicSdkExternalWallet.ExternalWalletMechanism {
+  @_Concurrency.MainActor public var walletKey: Swift.String {
+    get
+  }
+  @_Concurrency.MainActor public func initialize(appName: Swift.String?, appIconUrl: Swift.String?, nativeLink: Swift.String?, universalLink: Swift.String?) async throws
+  @_Concurrency.MainActor public func beginConnect(chains: [Swift.String]) async throws -> Swift.String
+  @_Concurrency.MainActor public func awaitConnection() async throws -> [DynamicSdkCore.ExternalWalletAccount]
+  @_Concurrency.MainActor public func signMessage(accountAddress: Swift.String, message: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor public func signTransaction(accountAddress: Swift.String, transaction: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor public func disconnect() async
+  @_Concurrency.MainActor public func handleRedirect(uri: Swift.String) -> Swift.Bool
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @_Concurrency.MainActor final public class PhantomMechanism : DynamicSdkExternalWalletPhantom.SolanaDeepLinkMechanism {
+  @_Concurrency.MainActor public init(cluster: Swift.String? = nil, openUrl: ((Foundation.URL) -> Swift.Void)? = nil)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers @_Concurrency.MainActor final public class SolflareMechanism : DynamicSdkExternalWalletPhantom.SolanaDeepLinkMechanism {
+  @_Concurrency.MainActor public init(cluster: Swift.String? = nil, openUrl: ((Foundation.URL) -> Swift.Void)? = nil)
+  @objc deinit
+}

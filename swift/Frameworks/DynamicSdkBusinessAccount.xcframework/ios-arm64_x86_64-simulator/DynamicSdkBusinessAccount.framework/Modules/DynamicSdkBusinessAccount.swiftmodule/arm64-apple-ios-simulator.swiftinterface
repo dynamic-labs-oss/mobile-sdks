@@ -1,0 +1,310 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.3 effective-5.10 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+// swift-module-flags: -target arm64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -module-name DynamicSdkBusinessAccount
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.3
+import Combine
+@_exported import DynamicSdkCore
+import DynamicSdkWaas
+import Foundation
+import Swift
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+extension DynamicSdkCore.DynamicClient {
+  @discardableResult
+  @_Concurrency.MainActor final public func useBusinessAccount() -> DynamicSdkCore.DynamicClient
+}
+@_Concurrency.MainActor public protocol BusinessAccountClient {
+  @_Concurrency.MainActor func createBusinessAccount(name: Swift.String?, externalRef: Swift.String?, metadata: [Swift.String : DynamicSdkCore.DynamicJsonValue]?) async throws -> DynamicSdkBusinessAccount.BusinessAccount
+  @_Concurrency.MainActor func getBusinessAccount(businessAccountId: Swift.String) async throws -> DynamicSdkBusinessAccount.BusinessAccountDetail
+  @_Concurrency.MainActor func listBusinessAccounts(externalRefs: [Swift.String]?) async throws -> DynamicSdkBusinessAccount.BusinessAccountList
+  @_Concurrency.MainActor func updateBusinessAccount(businessAccountId: Swift.String, name: Swift.String) async throws -> DynamicSdkBusinessAccount.BusinessAccount
+  @_Concurrency.MainActor func addBusinessAccountMember(businessAccountId: Swift.String, targetIdentity: DynamicSdkWaas.BusinessAccountTargetIdentity, role: Swift.String?, autoExecute: Swift.Bool?, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent?) async throws -> DynamicSdkBusinessAccount.BusinessAccountMemberResult
+  @_Concurrency.MainActor func updateBusinessAccountMemberRole(businessAccountId: Swift.String, userId: Swift.String, role: Swift.String, autoExecute: Swift.Bool?, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent?) async throws -> DynamicSdkBusinessAccount.BusinessAccountMemberResult
+  @_Concurrency.MainActor func removeBusinessAccountMember(businessAccountId: Swift.String, userId: Swift.String, autoExecute: Swift.Bool?, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent?) async throws -> DynamicSdkBusinessAccount.BusinessAccountMemberResult
+  @_Concurrency.MainActor func transferBusinessAccountOwnership(businessAccountId: Swift.String, newOwnerUserId: Swift.String, autoExecute: Swift.Bool?, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent?) async throws -> DynamicSdkBusinessAccount.BusinessAccountResult
+  @_Concurrency.MainActor func addWalletToBusinessAccount(walletId: Swift.String, businessAccountId: Swift.String?, autoExecute: Swift.Bool?, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent?) async throws -> DynamicSdkBusinessAccount.BusinessAccountResult
+  @_Concurrency.MainActor func removeBusinessAccountWallet(businessAccountId: Swift.String, walletId: Swift.String, autoExecute: Swift.Bool?, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent?) async throws -> DynamicSdkBusinessAccount.BusinessAccountResult
+  @_Concurrency.MainActor func removeBusinessAccountSigner(businessAccountId: Swift.String, walletId: Swift.String, signerId: Swift.String, autoExecute: Swift.Bool?, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent?) async throws -> DynamicSdkBusinessAccount.BusinessAccountSignerResult
+  @_Concurrency.MainActor func getBusinessAccountGovernance(businessAccountId: Swift.String) async throws -> [Swift.String : [DynamicSdkBusinessAccount.BusinessAccountGovernanceRequirement]]
+  @_Concurrency.MainActor func listBusinessAccountRoles(businessAccountId: Swift.String) async throws -> [Swift.String : DynamicSdkBusinessAccount.BusinessAccountRoleDefinition]
+  @_Concurrency.MainActor func setBusinessAccountGovernance(businessAccountId: Swift.String, governance: [Swift.String : [DynamicSdkBusinessAccount.BusinessAccountGovernanceRequirement]], autoExecute: Swift.Bool?, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent?) async throws -> DynamicSdkBusinessAccount.BusinessAccountVersionResult
+  @_Concurrency.MainActor func defineBusinessAccountRole(businessAccountId: Swift.String, role: Swift.String, inherits: Swift.String, autoExecute: Swift.Bool?, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent?) async throws -> DynamicSdkBusinessAccount.BusinessAccountVersionResult
+  @_Concurrency.MainActor func deleteBusinessAccountRole(businessAccountId: Swift.String, role: Swift.String, autoExecute: Swift.Bool?, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent?) async throws -> DynamicSdkBusinessAccount.BusinessAccountVersionResult
+  @_Concurrency.MainActor func listBusinessAccountProposals(businessAccountId: Swift.String, status: Swift.String?) async throws -> [DynamicSdkBusinessAccount.BusinessAccountProposal]
+  @_Concurrency.MainActor func listBusinessAccountProposalsAwaitingMyApproval() async throws -> [DynamicSdkBusinessAccount.BusinessAccountProposal]
+  @_Concurrency.MainActor func getBusinessAccountProposal(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkBusinessAccount.BusinessAccountProposal
+  @_Concurrency.MainActor func signBusinessAccountIntent(intent: [Swift.String : DynamicSdkCore.DynamicJsonValue]) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
+  @_Concurrency.MainActor func signAddBusinessAccountMemberIntent(businessAccountId: Swift.String, userId: Swift.String, role: Swift.String?, autoExecute: Swift.Bool?) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
+  @_Concurrency.MainActor func signUpdateBusinessAccountMemberRoleIntent(businessAccountId: Swift.String, userId: Swift.String, role: Swift.String, autoExecute: Swift.Bool?) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
+  @_Concurrency.MainActor func signRemoveBusinessAccountMemberIntent(businessAccountId: Swift.String, userId: Swift.String, autoExecute: Swift.Bool?) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
+  @_Concurrency.MainActor func signTransferBusinessAccountOwnershipIntent(businessAccountId: Swift.String, newOwnerUserId: Swift.String, autoExecute: Swift.Bool?) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
+  @_Concurrency.MainActor func signRemoveBusinessAccountWalletIntent(businessAccountId: Swift.String, walletId: Swift.String, autoExecute: Swift.Bool?) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
+  @_Concurrency.MainActor func signSetBusinessAccountGovernanceIntent(businessAccountId: Swift.String, governance: [Swift.String : [DynamicSdkBusinessAccount.BusinessAccountGovernanceRequirement]], autoExecute: Swift.Bool?) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
+  @_Concurrency.MainActor func signDefineBusinessAccountRoleIntent(businessAccountId: Swift.String, role: Swift.String, inherits: Swift.String, autoExecute: Swift.Bool?) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
+  @_Concurrency.MainActor func signDeleteBusinessAccountRoleIntent(businessAccountId: Swift.String, role: Swift.String, autoExecute: Swift.Bool?) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
+  @_Concurrency.MainActor func signBusinessAccountApproval(intent: [Swift.String : DynamicSdkCore.DynamicJsonValue], approvedAt: Swift.String?) async throws -> DynamicSdkBusinessAccount.BusinessAccountApproval
+  @_Concurrency.MainActor func approveBusinessAccountProposal(businessAccountId: Swift.String, proposal: DynamicSdkBusinessAccount.BusinessAccountProposal) async throws -> DynamicSdkBusinessAccount.BusinessAccountProposal
+  @_Concurrency.MainActor func executeBusinessAccountProposal(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkBusinessAccount.BusinessAccountVersionResult
+  @_Concurrency.MainActor func vetoBusinessAccountProposal(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkBusinessAccount.BusinessAccountProposal
+  @_Concurrency.MainActor func withdrawBusinessAccountProposalApproval(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkBusinessAccount.BusinessAccountProposal
+  @_Concurrency.MainActor func getAccountPolicyLayer(businessAccountId: Swift.String) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
+  @_Concurrency.MainActor func upsertAccountPolicyRule(businessAccountId: Swift.String, rule: DynamicSdkWaas.WaasPolicyRule) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
+  @_Concurrency.MainActor func removeAccountPolicyRule(businessAccountId: Swift.String, ruleId: Swift.String) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
+}
+@_hasMissingDesignatedInitializers @_Concurrency.MainActor final public class BusinessAccountClientImpl : DynamicSdkBusinessAccount.BusinessAccountClient, DynamicSdkCore.DynamicExtension {
+  @_Concurrency.MainActor final public let name: Swift.String
+  @_Concurrency.MainActor final public func install(client: DynamicSdkCore.DynamicClient)
+  @_Concurrency.MainActor final public func createBusinessAccount(name: Swift.String? = nil, externalRef: Swift.String? = nil, metadata: [Swift.String : DynamicSdkCore.DynamicJsonValue]? = nil) async throws -> DynamicSdkBusinessAccount.BusinessAccount
+  @_Concurrency.MainActor final public func getBusinessAccount(businessAccountId: Swift.String) async throws -> DynamicSdkBusinessAccount.BusinessAccountDetail
+  @_Concurrency.MainActor final public func listBusinessAccounts(externalRefs: [Swift.String]? = nil) async throws -> DynamicSdkBusinessAccount.BusinessAccountList
+  @_Concurrency.MainActor final public func updateBusinessAccount(businessAccountId: Swift.String, name: Swift.String) async throws -> DynamicSdkBusinessAccount.BusinessAccount
+  @_Concurrency.MainActor final public func addBusinessAccountMember(businessAccountId: Swift.String, targetIdentity: DynamicSdkWaas.BusinessAccountTargetIdentity, role: Swift.String? = nil, autoExecute: Swift.Bool? = nil, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent? = nil) async throws -> DynamicSdkBusinessAccount.BusinessAccountMemberResult
+  @_Concurrency.MainActor final public func updateBusinessAccountMemberRole(businessAccountId: Swift.String, userId: Swift.String, role: Swift.String, autoExecute: Swift.Bool? = nil, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent? = nil) async throws -> DynamicSdkBusinessAccount.BusinessAccountMemberResult
+  @_Concurrency.MainActor final public func removeBusinessAccountMember(businessAccountId: Swift.String, userId: Swift.String, autoExecute: Swift.Bool? = nil, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent? = nil) async throws -> DynamicSdkBusinessAccount.BusinessAccountMemberResult
+  @_Concurrency.MainActor final public func transferBusinessAccountOwnership(businessAccountId: Swift.String, newOwnerUserId: Swift.String, autoExecute: Swift.Bool? = nil, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent? = nil) async throws -> DynamicSdkBusinessAccount.BusinessAccountResult
+  @_Concurrency.MainActor final public func addWalletToBusinessAccount(walletId: Swift.String, businessAccountId: Swift.String? = nil, autoExecute: Swift.Bool? = nil, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent? = nil) async throws -> DynamicSdkBusinessAccount.BusinessAccountResult
+  @_Concurrency.MainActor final public func removeBusinessAccountWallet(businessAccountId: Swift.String, walletId: Swift.String, autoExecute: Swift.Bool? = nil, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent? = nil) async throws -> DynamicSdkBusinessAccount.BusinessAccountResult
+  @_Concurrency.MainActor final public func removeBusinessAccountSigner(businessAccountId: Swift.String, walletId: Swift.String, signerId: Swift.String, autoExecute: Swift.Bool? = nil, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent? = nil) async throws -> DynamicSdkBusinessAccount.BusinessAccountSignerResult
+  @_Concurrency.MainActor final public func getBusinessAccountGovernance(businessAccountId: Swift.String) async throws -> [Swift.String : [DynamicSdkBusinessAccount.BusinessAccountGovernanceRequirement]]
+  @_Concurrency.MainActor final public func listBusinessAccountRoles(businessAccountId: Swift.String) async throws -> [Swift.String : DynamicSdkBusinessAccount.BusinessAccountRoleDefinition]
+  @_Concurrency.MainActor final public func setBusinessAccountGovernance(businessAccountId: Swift.String, governance: [Swift.String : [DynamicSdkBusinessAccount.BusinessAccountGovernanceRequirement]], autoExecute: Swift.Bool? = nil, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent? = nil) async throws -> DynamicSdkBusinessAccount.BusinessAccountVersionResult
+  @_Concurrency.MainActor final public func defineBusinessAccountRole(businessAccountId: Swift.String, role: Swift.String, inherits: Swift.String, autoExecute: Swift.Bool? = nil, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent? = nil) async throws -> DynamicSdkBusinessAccount.BusinessAccountVersionResult
+  @_Concurrency.MainActor final public func deleteBusinessAccountRole(businessAccountId: Swift.String, role: Swift.String, autoExecute: Swift.Bool? = nil, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent? = nil) async throws -> DynamicSdkBusinessAccount.BusinessAccountVersionResult
+  @_Concurrency.MainActor final public func listBusinessAccountProposals(businessAccountId: Swift.String, status: Swift.String? = nil) async throws -> [DynamicSdkBusinessAccount.BusinessAccountProposal]
+  @_Concurrency.MainActor final public func listBusinessAccountProposalsAwaitingMyApproval() async throws -> [DynamicSdkBusinessAccount.BusinessAccountProposal]
+  @_Concurrency.MainActor final public func getBusinessAccountProposal(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkBusinessAccount.BusinessAccountProposal
+  @_Concurrency.MainActor final public func signBusinessAccountIntent(intent: [Swift.String : DynamicSdkCore.DynamicJsonValue]) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
+  @_Concurrency.MainActor final public func signAddBusinessAccountMemberIntent(businessAccountId: Swift.String, userId: Swift.String, role: Swift.String? = nil, autoExecute: Swift.Bool? = nil) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
+  @_Concurrency.MainActor final public func signUpdateBusinessAccountMemberRoleIntent(businessAccountId: Swift.String, userId: Swift.String, role: Swift.String, autoExecute: Swift.Bool? = nil) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
+  @_Concurrency.MainActor final public func signRemoveBusinessAccountMemberIntent(businessAccountId: Swift.String, userId: Swift.String, autoExecute: Swift.Bool? = nil) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
+  @_Concurrency.MainActor final public func signTransferBusinessAccountOwnershipIntent(businessAccountId: Swift.String, newOwnerUserId: Swift.String, autoExecute: Swift.Bool? = nil) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
+  @_Concurrency.MainActor final public func signRemoveBusinessAccountWalletIntent(businessAccountId: Swift.String, walletId: Swift.String, autoExecute: Swift.Bool? = nil) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
+  @_Concurrency.MainActor final public func signSetBusinessAccountGovernanceIntent(businessAccountId: Swift.String, governance: [Swift.String : [DynamicSdkBusinessAccount.BusinessAccountGovernanceRequirement]], autoExecute: Swift.Bool? = nil) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
+  @_Concurrency.MainActor final public func signDefineBusinessAccountRoleIntent(businessAccountId: Swift.String, role: Swift.String, inherits: Swift.String, autoExecute: Swift.Bool? = nil) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
+  @_Concurrency.MainActor final public func signDeleteBusinessAccountRoleIntent(businessAccountId: Swift.String, role: Swift.String, autoExecute: Swift.Bool? = nil) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
+  @_Concurrency.MainActor final public func signBusinessAccountApproval(intent: [Swift.String : DynamicSdkCore.DynamicJsonValue], approvedAt: Swift.String? = nil) async throws -> DynamicSdkBusinessAccount.BusinessAccountApproval
+  @_Concurrency.MainActor final public func approveBusinessAccountProposal(businessAccountId: Swift.String, proposal: DynamicSdkBusinessAccount.BusinessAccountProposal) async throws -> DynamicSdkBusinessAccount.BusinessAccountProposal
+  @_Concurrency.MainActor final public func executeBusinessAccountProposal(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkBusinessAccount.BusinessAccountVersionResult
+  @_Concurrency.MainActor final public func vetoBusinessAccountProposal(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkBusinessAccount.BusinessAccountProposal
+  @_Concurrency.MainActor final public func withdrawBusinessAccountProposalApproval(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkBusinessAccount.BusinessAccountProposal
+  @_Concurrency.MainActor final public func getAccountPolicyLayer(businessAccountId: Swift.String) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
+  @_Concurrency.MainActor final public func upsertAccountPolicyRule(businessAccountId: Swift.String, rule: DynamicSdkWaas.WaasPolicyRule) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
+  @_Concurrency.MainActor final public func removeAccountPolicyRule(businessAccountId: Swift.String, ruleId: Swift.String) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
+  @objc deinit
+}
+@_Concurrency.MainActor final public class BusinessAccountExtension : DynamicSdkCore.DynamicExtension {
+  @_Concurrency.MainActor final public let name: Swift.String
+  @_Concurrency.MainActor public init()
+  @_Concurrency.MainActor final public func install(client: DynamicSdkCore.DynamicClient)
+  @objc deinit
+}
+extension DynamicSdkCore.DynamicClient {
+  @_Concurrency.MainActor final public var businessAccount: DynamicSdkBusinessAccount.BusinessAccountClientImpl {
+    get throws
+  }
+}
+public struct BusinessAccount : Swift.Codable, Swift.Sendable {
+  public let id: Swift.String
+  public let projectEnvironmentId: Swift.String
+  public let name: Swift.String?
+  public let externalRef: Swift.String?
+  public let metadata: [Swift.String : DynamicSdkCore.DynamicJsonValue]?
+  public let createdAt: Swift.String?
+  public let updatedAt: Swift.String?
+  public init(id: Swift.String, projectEnvironmentId: Swift.String, name: Swift.String? = nil, externalRef: Swift.String? = nil, metadata: [Swift.String : DynamicSdkCore.DynamicJsonValue]? = nil, createdAt: Swift.String? = nil, updatedAt: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountMember : Swift.Codable, Swift.Sendable {
+  public let id: Swift.String
+  public let businessAccountId: Swift.String
+  public let userId: Swift.String
+  public let role: Swift.String
+  public let addedByUserId: Swift.String?
+  public let createdAt: Swift.String?
+  public init(id: Swift.String, businessAccountId: Swift.String, userId: Swift.String, role: Swift.String, addedByUserId: Swift.String? = nil, createdAt: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountSigner : Swift.Codable, Swift.Sendable {
+  public let id: Swift.String
+  public let businessAccountId: Swift.String
+  public let walletId: Swift.String
+  public let type: Swift.String
+  public let userId: Swift.String?
+  public let shareSetId: Swift.String?
+  public let derivedFromUserId: Swift.String?
+  public let apiKeyIdentityRef: Swift.String?
+  public let expiresAt: Swift.String?
+  public let revokedAt: Swift.String?
+  public let createdAt: Swift.String?
+  public init(id: Swift.String, businessAccountId: Swift.String, walletId: Swift.String, type: Swift.String, userId: Swift.String? = nil, shareSetId: Swift.String? = nil, derivedFromUserId: Swift.String? = nil, apiKeyIdentityRef: Swift.String? = nil, expiresAt: Swift.String? = nil, revokedAt: Swift.String? = nil, createdAt: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountWallet : Swift.Codable, Swift.Sendable {
+  public let id: Swift.String
+  public let publicKey: Swift.String
+  public let chain: Swift.String
+  public let createdAt: Swift.String?
+  public init(id: Swift.String, publicKey: Swift.String, chain: Swift.String, createdAt: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountDetail : Swift.Codable, Swift.Sendable {
+  public let id: Swift.String
+  public let projectEnvironmentId: Swift.String
+  public let name: Swift.String?
+  public let externalRef: Swift.String?
+  public let metadata: [Swift.String : DynamicSdkCore.DynamicJsonValue]?
+  public let createdAt: Swift.String?
+  public let updatedAt: Swift.String?
+  public let members: [DynamicSdkBusinessAccount.BusinessAccountMember]
+  public let signers: [DynamicSdkBusinessAccount.BusinessAccountSigner]
+  public let wallets: [DynamicSdkBusinessAccount.BusinessAccountWallet]?
+  public init(id: Swift.String, projectEnvironmentId: Swift.String, name: Swift.String? = nil, externalRef: Swift.String? = nil, metadata: [Swift.String : DynamicSdkCore.DynamicJsonValue]? = nil, createdAt: Swift.String? = nil, updatedAt: Swift.String? = nil, members: [DynamicSdkBusinessAccount.BusinessAccountMember], signers: [DynamicSdkBusinessAccount.BusinessAccountSigner], wallets: [DynamicSdkBusinessAccount.BusinessAccountWallet]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountList : Swift.Codable, Swift.Sendable {
+  public let items: [DynamicSdkBusinessAccount.BusinessAccount]?
+  public let nextCursor: Swift.String?
+  public init(items: [DynamicSdkBusinessAccount.BusinessAccount]? = nil, nextCursor: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct RemoveBusinessAccountMemberResponse : Swift.Codable, Swift.Sendable {
+  public let member: DynamicSdkBusinessAccount.BusinessAccountMember
+  public init(member: DynamicSdkBusinessAccount.BusinessAccountMember)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct RemoveBusinessAccountSignerResponse : Swift.Codable, Swift.Sendable {
+  public let signer: DynamicSdkBusinessAccount.BusinessAccountSigner
+  public init(signer: DynamicSdkBusinessAccount.BusinessAccountSigner)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountActionRequired : Swift.Codable, Swift.Sendable {
+  public let reason: Swift.String
+  public let intent: [Swift.String : DynamicSdkCore.DynamicJsonValue]
+  public let proposalId: Swift.String
+  public let approvalRequirements: [DynamicSdkWaas.BusinessAccountApprovalRequirement]
+  public init(reason: Swift.String, intent: [Swift.String : DynamicSdkCore.DynamicJsonValue], proposalId: Swift.String, approvalRequirements: [DynamicSdkWaas.BusinessAccountApprovalRequirement])
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountExecutionPending : Swift.Codable, Swift.Sendable {
+  public let reason: Swift.String
+  public let intent: [Swift.String : DynamicSdkCore.DynamicJsonValue]
+  public let approvalRequirements: [DynamicSdkWaas.BusinessAccountApprovalRequirement]?
+  public init(reason: Swift.String, intent: [Swift.String : DynamicSdkCore.DynamicJsonValue], approvalRequirements: [DynamicSdkWaas.BusinessAccountApprovalRequirement]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountApproval : Swift.Codable, Swift.Sendable {
+  public let approvedAt: Swift.String
+  public let signature: Swift.String
+  public init(approvedAt: Swift.String, signature: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountMutationVersion : Swift.Codable, Swift.Sendable {
+  public let version: Swift.Int
+  public init(version: Swift.Int)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountRoleDefinition : Swift.Codable, Swift.Sendable {
+  public let inherits: Swift.String
+  public init(inherits: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountRolesResponse : Swift.Codable, Swift.Sendable {
+  public let roles: [Swift.String : DynamicSdkBusinessAccount.BusinessAccountRoleDefinition]
+  public init(roles: [Swift.String : DynamicSdkBusinessAccount.BusinessAccountRoleDefinition])
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountRequirementCondition : Swift.Codable, Swift.Sendable {
+  public let initiatorRoles: [Swift.String]?
+  public let initiatorUserIds: [Swift.String]?
+  public let newRole: Swift.String?
+  public let role: Swift.String?
+  public let targetUserIds: [Swift.String]?
+  public let walletIds: [Swift.String]?
+  public init(initiatorRoles: [Swift.String]? = nil, initiatorUserIds: [Swift.String]? = nil, newRole: Swift.String? = nil, role: Swift.String? = nil, targetUserIds: [Swift.String]? = nil, walletIds: [Swift.String]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountGovernanceRequirement : Swift.Codable, Swift.Sendable {
+  public let id: Swift.String
+  public let requiredApprovals: Swift.Int
+  public let schemaVersion: Swift.Int
+  public let approverCapabilities: [Swift.String]?
+  public let completeWithinSeconds: Swift.Int?
+  public let eligibleApproverRoles: [Swift.String]?
+  public let eligibleInitiatorRoles: [Swift.String]?
+  public let mandatoryApproverRoles: [Swift.String]?
+  public let condition: DynamicSdkBusinessAccount.BusinessAccountRequirementCondition?
+  public init(id: Swift.String, requiredApprovals: Swift.Int, schemaVersion: Swift.Int, approverCapabilities: [Swift.String]? = nil, completeWithinSeconds: Swift.Int? = nil, eligibleApproverRoles: [Swift.String]? = nil, eligibleInitiatorRoles: [Swift.String]? = nil, mandatoryApproverRoles: [Swift.String]? = nil, condition: DynamicSdkBusinessAccount.BusinessAccountRequirementCondition? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountGovernanceResponse : Swift.Codable, Swift.Sendable {
+  public let governance: [Swift.String : [DynamicSdkBusinessAccount.BusinessAccountGovernanceRequirement]]
+  public init(governance: [Swift.String : [DynamicSdkBusinessAccount.BusinessAccountGovernanceRequirement]])
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountProposalApprovalRecord : Swift.Codable, Swift.Sendable {
+  public let approvedAt: Swift.String
+  public let approverUserId: Swift.String
+  public let revokedAt: Swift.String?
+  public init(approvedAt: Swift.String, approverUserId: Swift.String, revokedAt: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountProposalSubject : Swift.Codable, Swift.Sendable {
+  public let userId: Swift.String
+  public let email: Swift.String?
+  public init(userId: Swift.String, email: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountProposal : Swift.Codable, Swift.Sendable {
+  public let id: Swift.String
+  public let businessAccountId: Swift.String
+  public let actionType: Swift.String
+  public let status: Swift.String
+  public let initiatorUserId: Swift.String
+  public let intent: [Swift.String : DynamicSdkCore.DynamicJsonValue]
+  public let completeBy: Swift.String
+  public let createdAt: Swift.String
+  public let consumedAt: Swift.String?
+  public let autoExecute: Swift.Bool?
+  public let approvals: [DynamicSdkBusinessAccount.BusinessAccountProposalApprovalRecord]
+  public let subjects: [DynamicSdkBusinessAccount.BusinessAccountProposalSubject]?
+  public let approvalRequirements: [DynamicSdkWaas.BusinessAccountApprovalRequirement]?
+  public init(id: Swift.String, businessAccountId: Swift.String, actionType: Swift.String, status: Swift.String, initiatorUserId: Swift.String, intent: [Swift.String : DynamicSdkCore.DynamicJsonValue], completeBy: Swift.String, createdAt: Swift.String, consumedAt: Swift.String? = nil, autoExecute: Swift.Bool? = nil, approvals: [DynamicSdkBusinessAccount.BusinessAccountProposalApprovalRecord], subjects: [DynamicSdkBusinessAccount.BusinessAccountProposalSubject]? = nil, approvalRequirements: [DynamicSdkWaas.BusinessAccountApprovalRequirement]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public enum BusinessAccountMemberResult : Swift.Sendable {
+  case member(DynamicSdkBusinessAccount.BusinessAccountMember)
+  case actionRequired(DynamicSdkBusinessAccount.BusinessAccountActionRequired)
+}
+public enum BusinessAccountResult : Swift.Sendable {
+  case account(DynamicSdkBusinessAccount.BusinessAccountDetail)
+  case actionRequired(DynamicSdkBusinessAccount.BusinessAccountActionRequired)
+}
+public enum BusinessAccountSignerResult : Swift.Sendable {
+  case signer(DynamicSdkBusinessAccount.BusinessAccountSigner)
+  case actionRequired(DynamicSdkBusinessAccount.BusinessAccountActionRequired)
+}
+public enum BusinessAccountVersionResult : Swift.Sendable {
+  case version(Swift.Int)
+  case actionRequired(DynamicSdkBusinessAccount.BusinessAccountActionRequired)
+}

@@ -1,0 +1,113 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.3 effective-5.10 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+// swift-module-flags: -target x86_64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -module-name DynamicSdkExportPrivateKey
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.3
+import Combine
+import DynamicSdkCore
+import Foundation
+import Swift
+import UIKit
+import WebKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+extension DynamicSdkCore.DynamicClient {
+  @discardableResult
+  @_Concurrency.MainActor final public func useExportPrivateKey() -> DynamicSdkCore.DynamicClient
+}
+extension DynamicSdkCore.DynamicClient {
+  @discardableResult
+  @_Concurrency.MainActor final public func useExportPrivateKey(_ exportPrivateKeyEngine: any DynamicSdkExportPrivateKey.ExportPrivateKeyEngine) -> DynamicSdkCore.DynamicClient
+}
+@_Concurrency.MainActor public protocol ExportPrivateKeyClient {
+  @_Concurrency.MainActor func exportPrivateKey(chain: Swift.String, accountAddress: Swift.String) async throws
+}
+@_hasMissingDesignatedInitializers @_Concurrency.MainActor final public class ExportPrivateKeyClientImpl : DynamicSdkExportPrivateKey.ExportPrivateKeyClient, DynamicSdkCore.DynamicExtension, DynamicSdkCore.ExportPrivateKeyCapability {
+  @_Concurrency.MainActor final public let name: Swift.String
+  @_Concurrency.MainActor final public func install(client: DynamicSdkCore.DynamicClient)
+  @_Concurrency.MainActor final public func exportPrivateKey(chain: Swift.String, accountAddress: Swift.String) async throws
+  @objc deinit
+}
+@_Concurrency.MainActor final public class ExportPrivateKeyExtension : DynamicSdkCore.DynamicExtension {
+  @_Concurrency.MainActor final public let name: Swift.String
+  @_Concurrency.MainActor public init(exportPrivateKeyEngine: any DynamicSdkExportPrivateKey.ExportPrivateKeyEngine)
+  @_Concurrency.MainActor final public func install(client: DynamicSdkCore.DynamicClient)
+  @objc deinit
+}
+extension DynamicSdkCore.DynamicClient {
+  @_Concurrency.MainActor final public var exportPrivateKey: DynamicSdkExportPrivateKey.ExportPrivateKeyClientImpl {
+    get throws
+  }
+}
+public struct WaasExportPrivateKeyPayload : Swift.Codable, Swift.Sendable {
+  public let chainName: Swift.String
+  public let signedSessionId: Swift.String
+  public let authToken: Swift.String
+  public let accountAddress: Swift.String
+  public let elevatedAccessToken: Swift.String?
+  public init(chainName: Swift.String, signedSessionId: Swift.String, authToken: Swift.String, accountAddress: Swift.String, elevatedAccessToken: Swift.String? = nil)
+  public func payloadJson() -> Swift.String
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+@_Concurrency.MainActor public protocol ExportPrivateKeyEngine : Swift.Sendable {
+  @_Concurrency.MainActor func exportPrivateKey(environmentId: Swift.String, chainName: Swift.String, accountAddress: Swift.String, authToken: Swift.String, apiBaseUrl: Swift.String, signedSessionId: Swift.String, elevatedAccessToken: Swift.String?, hostOrigin: Swift.String?) async throws
+}
+public enum DynamicWaasError : Swift.Error, Foundation.LocalizedError, Swift.CustomStringConvertible {
+  case notInitialized
+  case invalidUrl(Swift.String)
+  case noHostView
+  case handshakeTimeout(Swift.UInt64, Swift.String)
+  case navigationFailed(Swift.String)
+  case httpError(Swift.Int)
+  case tokenExchangeFailed(Swift.String)
+  case requestNotAcked(Swift.String, Swift.UInt64)
+  case requestNotResolved(Swift.String, Swift.UInt64)
+  case rejected(Swift.String)
+  case rendererGone
+  case sessionTornDown
+  case unexpectedPayload(Swift.String)
+  case invalidArgument(Swift.String)
+  case corruptedKeyShare
+  public var errorDescription: Swift.String? {
+    get
+  }
+  public var description: Swift.String {
+    get
+  }
+}
+public enum DynamicWaasLockPolicy : Swift.Equatable, Swift.Sendable {
+  case none
+  case lockWallet
+  case lockWalletAndZeroOutInMemory
+  public static func == (a: DynamicSdkExportPrivateKey.DynamicWaasLockPolicy, b: DynamicSdkExportPrivateKey.DynamicWaasLockPolicy) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+@_Concurrency.MainActor final public class DynamicWaasEngine {
+  @_Concurrency.MainActor public init(storage: DynamicSdkCore.DynamicSecureStorage, lockPolicy: DynamicSdkExportPrivateKey.DynamicWaasLockPolicy = .none, signedSessionIdProvider: (() async -> Swift.String?)? = nil)
+  @_Concurrency.MainActor final public func initialize(environmentId: Swift.String, chainName: Swift.String, authToken: Swift.String, apiBaseUrl: Swift.String, hostOrigin: Swift.String?) async throws
+  @_Concurrency.MainActor final public func createWallet(payloadJson: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func importPrivateKey(payloadJson: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func signMessage(payloadJson: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func signRawMessage(payloadJson: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func signTypedData(payloadJson: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func signTransaction(payloadJson: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func getWalletRecoveryState(payloadJson: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func unlockWallet(payloadJson: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func backupKeySharesToGoogleDrive(payloadJson: Swift.String) async throws
+  @_Concurrency.MainActor final public func setPassword(payloadJson: Swift.String) async throws
+  @_Concurrency.MainActor final public func updatePassword(payloadJson: Swift.String) async throws
+  @_Concurrency.MainActor final public func delegateKeyShares(payloadJson: Swift.String) async throws
+  @_Concurrency.MainActor final public func reshareToNewSignerShareSet(payloadJson: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func revokeDelegation(payloadJson: Swift.String) async throws
+  @_Concurrency.MainActor final public func refreshWalletAccountShares(payloadJson: Swift.String) async throws
+  @_Concurrency.MainActor final public func createOfflineRecoveryShares(payloadJson: Swift.String) async throws
+  @_Concurrency.MainActor final public func exportPrivateKey(environmentId: Swift.String, apiBaseUrl: Swift.String, hostOrigin: Swift.String?, payloadJson: Swift.String) async throws
+  @_Concurrency.MainActor final public func destroy()
+  @objc deinit
+}
+extension DynamicSdkExportPrivateKey.DynamicWaasLockPolicy : Swift.Hashable {}
+extension DynamicSdkExportPrivateKey.DynamicWaasEngine : Swift.Sendable {}

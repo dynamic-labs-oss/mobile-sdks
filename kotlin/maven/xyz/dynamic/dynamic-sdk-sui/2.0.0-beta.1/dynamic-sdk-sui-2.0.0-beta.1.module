@@ -1,0 +1,90 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "xyz.dynamic",
+    "module": "dynamic-sdk-sui",
+    "version": "2.0.0-beta.1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-sui-2.0.0-beta.1.aar",
+          "url": "dynamic-sdk-sui-2.0.0-beta.1.aar",
+          "size": 61884,
+          "sha512": "e9900160729e82ba808aa792f7a6f0768637f4b56564170c4d7fa6d99a585f534f17108db2f5f5bee70f4db9991c08dee78c48916cdbcb91bfb3e2773e8cdc43",
+          "sha256": "b7719740802727ea831dbf6185f76bb29f94a4b2e7057a6c951ca9b8ee45bf1c",
+          "sha1": "f1fd6b45af41dc4c5939f7c6f04d5624dd761be8",
+          "md5": "160976cc6852704365ac67bb1818ca0b"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-sui-2.0.0-beta.1.aar",
+          "url": "dynamic-sdk-sui-2.0.0-beta.1.aar",
+          "size": 61884,
+          "sha512": "e9900160729e82ba808aa792f7a6f0768637f4b56564170c4d7fa6d99a585f534f17108db2f5f5bee70f4db9991c08dee78c48916cdbcb91bfb3e2773e8cdc43",
+          "sha256": "b7719740802727ea831dbf6185f76bb29f94a4b2e7057a6c951ca9b8ee45bf1c",
+          "sha1": "f1fd6b45af41dc4c5939f7c6f04d5624dd761be8",
+          "md5": "160976cc6852704365ac67bb1818ca0b"
+        }
+      ]
+    }
+  ]
+}

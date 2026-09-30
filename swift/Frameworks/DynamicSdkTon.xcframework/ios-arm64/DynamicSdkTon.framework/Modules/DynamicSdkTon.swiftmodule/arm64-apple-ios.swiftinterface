@@ -1,0 +1,67 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.3 effective-5.10 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+// swift-module-flags: -target arm64-apple-ios15.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -module-name DynamicSdkTon
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.3
+import Combine
+import DynamicSdkCore
+import Foundation
+import Swift
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+final public class NativeTonService : DynamicSdkTon.TonService, @unchecked Swift.Sendable {
+  public init(session: Foundation.URLSession = .shared)
+  final public func getNetworks(networks: [DynamicSdkCore.NetworkData], configuredNetworks: [DynamicSdkCore.TonNetwork]) -> [DynamicSdkCore.TonNetwork]
+  final public func getBalance(address: Swift.String, network: DynamicSdkCore.TonNetwork) async throws -> Swift.String
+  final public func prepareNativeTransfer(from: Swift.String, transfer: DynamicSdkCore.TonNativeTransfer, publicKeyHex: Swift.String, timeoutSeconds: Swift.Int, network: DynamicSdkCore.TonNetwork) async throws -> DynamicSdkCore.TonPreparedTransaction
+  final public func prepareJettonTransfer(from: Swift.String, transfer: DynamicSdkCore.TonJettonTransfer, publicKeyHex: Swift.String, timeoutSeconds: Swift.Int, network: DynamicSdkCore.TonNetwork) async throws -> DynamicSdkCore.TonPreparedTransaction
+  final public func prepareTransaction(request: DynamicSdkCore.TonTransactionRequest, publicKeyHex: Swift.String, network: DynamicSdkCore.TonNetwork) async throws -> DynamicSdkCore.TonPreparedTransaction
+  final public func broadcastTransaction(transaction: DynamicSdkCore.TonPreparedTransaction, signature: Swift.String, network: DynamicSdkCore.TonNetwork) async throws -> DynamicSdkCore.TonSendTransactionResponse
+  @objc deinit
+}
+extension DynamicSdkCore.DynamicClient {
+  @discardableResult
+  @_Concurrency.MainActor final public func useTon(_ networks: [DynamicSdkCore.TonNetwork], service: any DynamicSdkTon.TonService = NativeTonService()) -> DynamicSdkCore.DynamicClient
+}
+extension DynamicSdkCore.DynamicClient {
+  @discardableResult
+  @_Concurrency.MainActor final public func useTonWithService(_ tonService: any DynamicSdkTon.TonService, networks: [DynamicSdkCore.TonNetwork]) -> DynamicSdkCore.DynamicClient
+}
+@_Concurrency.MainActor public protocol TonClient {
+  @_Concurrency.MainActor func configureNetworks(networks: [DynamicSdkCore.TonNetwork]) throws
+  @_Concurrency.MainActor func availableNetworks() throws -> [DynamicSdkCore.TonNetwork]
+  @_Concurrency.MainActor func getBalance(address: Swift.String, network: DynamicSdkCore.TonNetwork?) async throws -> Swift.String
+  @_Concurrency.MainActor func sendTransaction(request: DynamicSdkCore.TonTransactionRequest, network: DynamicSdkCore.TonNetwork?) async throws -> DynamicSdkCore.TonSendTransactionResponse
+  @_Concurrency.MainActor func sendTon(from: Swift.String, transfer: DynamicSdkCore.TonNativeTransfer, timeoutSeconds: Swift.Int, network: DynamicSdkCore.TonNetwork?) async throws -> DynamicSdkCore.TonSendTransactionResponse
+  @_Concurrency.MainActor func sendJetton(from: Swift.String, transfer: DynamicSdkCore.TonJettonTransfer, timeoutSeconds: Swift.Int, network: DynamicSdkCore.TonNetwork?) async throws -> DynamicSdkCore.TonSendTransactionResponse
+}
+@_hasMissingDesignatedInitializers @_Concurrency.MainActor final public class TonClientImpl : DynamicSdkTon.TonClient, DynamicSdkCore.DynamicExtension {
+  @_Concurrency.MainActor final public let name: Swift.String
+  @_Concurrency.MainActor final public func install(client: DynamicSdkCore.DynamicClient)
+  @_Concurrency.MainActor final public func configureNetworks(networks: [DynamicSdkCore.TonNetwork]) throws
+  @_Concurrency.MainActor final public func availableNetworks() throws -> [DynamicSdkCore.TonNetwork]
+  @_Concurrency.MainActor final public func getBalance(address: Swift.String, network: DynamicSdkCore.TonNetwork? = nil) async throws -> Swift.String
+  @_Concurrency.MainActor final public func sendTransaction(request: DynamicSdkCore.TonTransactionRequest, network: DynamicSdkCore.TonNetwork? = nil) async throws -> DynamicSdkCore.TonSendTransactionResponse
+  @_Concurrency.MainActor final public func sendTon(from: Swift.String, transfer: DynamicSdkCore.TonNativeTransfer, timeoutSeconds: Swift.Int = 60, network: DynamicSdkCore.TonNetwork? = nil) async throws -> DynamicSdkCore.TonSendTransactionResponse
+  @_Concurrency.MainActor final public func sendJetton(from: Swift.String, transfer: DynamicSdkCore.TonJettonTransfer, timeoutSeconds: Swift.Int = 60, network: DynamicSdkCore.TonNetwork? = nil) async throws -> DynamicSdkCore.TonSendTransactionResponse
+  @objc deinit
+}
+@_Concurrency.MainActor final public class TonExtension : DynamicSdkCore.DynamicExtension {
+  @_Concurrency.MainActor final public let name: Swift.String
+  @_Concurrency.MainActor public init(tonService: any DynamicSdkTon.TonService)
+  @_Concurrency.MainActor final public func install(client: DynamicSdkCore.DynamicClient)
+  @objc deinit
+}
+extension DynamicSdkCore.DynamicClient {
+  @_Concurrency.MainActor final public var ton: DynamicSdkTon.TonClientImpl {
+    get throws
+  }
+}
+public protocol TonService : Swift.Sendable {
+  func getNetworks(networks: [DynamicSdkCore.NetworkData], configuredNetworks: [DynamicSdkCore.TonNetwork]) -> [DynamicSdkCore.TonNetwork]
+  func getBalance(address: Swift.String, network: DynamicSdkCore.TonNetwork) async throws -> Swift.String
+  func prepareTransaction(request: DynamicSdkCore.TonTransactionRequest, publicKeyHex: Swift.String, network: DynamicSdkCore.TonNetwork) async throws -> DynamicSdkCore.TonPreparedTransaction
+  func prepareNativeTransfer(from: Swift.String, transfer: DynamicSdkCore.TonNativeTransfer, publicKeyHex: Swift.String, timeoutSeconds: Swift.Int, network: DynamicSdkCore.TonNetwork) async throws -> DynamicSdkCore.TonPreparedTransaction
+  func prepareJettonTransfer(from: Swift.String, transfer: DynamicSdkCore.TonJettonTransfer, publicKeyHex: Swift.String, timeoutSeconds: Swift.Int, network: DynamicSdkCore.TonNetwork) async throws -> DynamicSdkCore.TonPreparedTransaction
+  func broadcastTransaction(transaction: DynamicSdkCore.TonPreparedTransaction, signature: Swift.String, network: DynamicSdkCore.TonNetwork) async throws -> DynamicSdkCore.TonSendTransactionResponse
+}

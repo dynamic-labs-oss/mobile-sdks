@@ -1,0 +1,51 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.3 effective-5.10 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+// swift-module-flags: -target arm64-apple-ios15.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -module-name DynamicSdkExternalWalletCoinbase
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.3
+import DynamicSdkCore
+import DynamicSdkExternalWallet
+import Foundation
+import Swift
+import UIKit
+import WebKit
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public enum CoinbaseConnectError : Swift.Error, Foundation.LocalizedError, Swift.CustomStringConvertible {
+  case noHostView
+  case invalidHostOrigin(Swift.String)
+  case javascriptFailed(Swift.String)
+  case notConnected
+  public var errorDescription: Swift.String? {
+    get
+  }
+  public var description: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers final public class CoinbaseConnectController : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @_Concurrency.MainActor final public func connect(appName: Swift.String?, appIconUrl: Swift.String?, hostOrigin: Swift.String) async throws -> [Swift.String]
+  @_Concurrency.MainActor final public func signMessage(address: Swift.String, message: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func signTransaction(address: Swift.String, transaction: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func disconnect()
+  @objc deinit
+}
+extension DynamicSdkExternalWalletCoinbase.CoinbaseConnectController : WebKit.WKUIDelegate {
+  @_Concurrency.MainActor @preconcurrency @objc final public func webView(_ webView: WebKit.WKWebView, createWebViewWith configuration: WebKit.WKWebViewConfiguration, for navigationAction: WebKit.WKNavigationAction, windowFeatures: WebKit.WKWindowFeatures) -> WebKit.WKWebView?
+  @_Concurrency.MainActor @preconcurrency @objc final public func webViewDidClose(_ webView: WebKit.WKWebView)
+}
+@_Concurrency.MainActor final public class CoinbaseWebviewMechanism : DynamicSdkExternalWallet.ExternalWalletMechanism {
+  @_Concurrency.MainActor public init()
+  @_Concurrency.MainActor final public var walletKey: Swift.String {
+    get
+  }
+  @_Concurrency.MainActor final public func initialize(appName: Swift.String?, appIconUrl: Swift.String?, nativeLink: Swift.String?, universalLink: Swift.String?) async throws
+  @_Concurrency.MainActor final public func beginConnect(chains: [Swift.String]) async throws -> Swift.String
+  @_Concurrency.MainActor final public func awaitConnection() async throws -> [DynamicSdkCore.ExternalWalletAccount]
+  @_Concurrency.MainActor final public func signMessage(accountAddress: Swift.String, message: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func signTransaction(accountAddress: Swift.String, transaction: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func disconnect() async
+  @_Concurrency.MainActor final public func handleRedirect(uri: Swift.String) -> Swift.Bool
+  @objc deinit
+}

@@ -1,0 +1,116 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "xyz.dynamic",
+    "module": "dynamic-sdk-evm",
+    "version": "2.0.0-beta.1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.1"
+          }
+        },
+        {
+          "group": "org.web3j",
+          "module": "core",
+          "version": {
+            "requires": "4.12.3"
+          },
+          "excludes": [
+            {
+              "group": "io.netty",
+              "module": "*"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-evm-2.0.0-beta.1.aar",
+          "url": "dynamic-sdk-evm-2.0.0-beta.1.aar",
+          "size": 60316,
+          "sha512": "0485f003e8c7e68fa3f1f37e76355fb3b9e571d0b5959d7658d758c2e18323a05b6ddd9ad287acacaea8a98082a8c4a6d684ff2adb97cef4b34d6b879e48ca51",
+          "sha256": "180f5d63fbae1d0e3b36ffb5d98f6d8eccf36d188c78b4107013e7fd947877ad",
+          "sha1": "f1b3afcfb4f166ed70a5c558ad329ce9a6449e36",
+          "md5": "7ae3a4e7c8f053b842a33ef56f25ff90"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.1"
+          }
+        },
+        {
+          "group": "org.web3j",
+          "module": "core",
+          "version": {
+            "requires": "4.12.3"
+          },
+          "excludes": [
+            {
+              "group": "io.netty",
+              "module": "*"
+            }
+          ]
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-evm-2.0.0-beta.1.aar",
+          "url": "dynamic-sdk-evm-2.0.0-beta.1.aar",
+          "size": 60316,
+          "sha512": "0485f003e8c7e68fa3f1f37e76355fb3b9e571d0b5959d7658d758c2e18323a05b6ddd9ad287acacaea8a98082a8c4a6d684ff2adb97cef4b34d6b879e48ca51",
+          "sha256": "180f5d63fbae1d0e3b36ffb5d98f6d8eccf36d188c78b4107013e7fd947877ad",
+          "sha1": "f1b3afcfb4f166ed70a5c558ad329ce9a6449e36",
+          "md5": "7ae3a4e7c8f053b842a33ef56f25ff90"
+        }
+      ]
+    }
+  ]
+}

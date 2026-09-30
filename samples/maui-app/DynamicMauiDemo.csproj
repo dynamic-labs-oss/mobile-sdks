@@ -1,0 +1,91 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Full-parity MAUI demo of the generated C# SDK, driving the SHARED native
+       WaaS/secure-storage/OAuth via Dynamic.Sdk.MAUI. Mirrors examples/flutter-app. -->
+  <PropertyGroup>
+    <TargetFrameworks>net10.0-android;net10.0-ios</TargetFrameworks>
+    <DynamicSdkVersion>2.0.0-beta.1</DynamicSdkVersion>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <OutputType>Exe</OutputType>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
+    <EmbedAssembliesIntoApk Condition="$(TargetFramework.Contains('-android'))">true</EmbedAssembliesIntoApk>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>DynamicMauiDemo</RootNamespace>
+
+    <ApplicationTitle>Dynamic MAUI Demo</ApplicationTitle>
+    <ApplicationId>com.dynamic.mauidemo</ApplicationId>
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+
+    <SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-android'))">23.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-ios'))">15.0</SupportedOSPlatformVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Branded icon/splash, derived from the same app_logo.png already used
+         in-app (Resources/Images) — copies, not regenerations, per
+         DESIGN.md §8. Raster MauiIcon/MauiSplashScreen items (not the stock
+         .NET MAUI template SVGs this replaces) — MAUI's resizetizer accepts
+         PNG sources directly. Background is bgWhite (#FFFFFF), not the
+         stock .NET MAUI purple. Copied into their own resizetizer folders
+         (not referenced from Resources\Images directly) so they don't also
+         get swept up by the MauiImage glob below.
+
+         BaseSize matches the source's own 268x268 (app_logo.png's real
+         dimensions) instead of the old SVG-derived 128x128, so the lowest
+         (mdpi) density bucket needs no upscaling at all — higher buckets
+         still upscale a raster source, same as any single-source
+         MauiIcon/MauiSplashScreen setup; a true no-upscale result across
+         EVERY density needs a higher-resolution (or vector) source than
+         what's currently in Resources/Images, which is a remaining manual
+         step, not something fixable from this csproj alone. MauiIcon also
+         has no ForegroundFile/background split configured, so Android's
+         adaptive-icon mask crops straight into app_logo.png's square
+         corners on API 26+ launchers — supplying a dedicated foreground
+         (transparent background, logo inset well within the safe zone) is
+         the other still-open manual step. -->
+    <MauiIcon Include="Resources\AppIcon\appicon.png" />
+    <MauiSplashScreen Include="Resources\Splash\splash.png" Color="#FFFFFF" BaseSize="268,268" />
+    <!-- dynamic_logo.png / login_background.png, pulled from the Dynamic
+         Flutter SDK example app (flutter-sdk/example/assets) — same brand
+         assets as examples/flutter-app's, not placeholders. -->
+    <MauiImage Include="Resources\Images\*.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+    <PackageReference Include="Dynamic.Sdk" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.Btc" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.BusinessAccount" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.Earn" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.Evm" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.ExportPrivateKey" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.ExternalWallet" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.ExternalWallet.Phantom" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.MAUI" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.MAUI.Captcha" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.MAUI.ExportPrivateKey" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.MAUI.ExternalWallet.Coinbase" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.MAUI.LegacyWalletUpgrade" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.MAUI.Waas" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.Solana" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.Stellar" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.Sui" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.Ton" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.Waas" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.Zerodev" Version="$(DynamicSdkVersion)" />
+  </ItemGroup>
+
+  <!-- This demo consumes Dynamic.Sdk.MAUI by PROJECT reference, so it does NOT
+       get the package's buildTransitive DataStore fix — it replicates it here.
+       A real app that installs the NuGet only needs the three ExcludeAssets lines
+       (the two jvm jars arrive automatically via buildTransitive). See README. -->
+  <ItemGroup Condition="$(TargetFramework.Contains('-android'))">
+    <PackageReference Include="Xamarin.AndroidX.DataStore.Core.Jvm" Version="1.1.1.1" ExcludeAssets="all" />
+    <PackageReference Include="Xamarin.AndroidX.DataStore.Core.OkIO.Jvm" Version="1.1.1.1" ExcludeAssets="all" />
+    <PackageReference Include="Xamarin.AndroidX.DataStore.Preferences.Core.Jvm" Version="1.1.1.1" ExcludeAssets="all" />
+  </ItemGroup>
+
+</Project>
