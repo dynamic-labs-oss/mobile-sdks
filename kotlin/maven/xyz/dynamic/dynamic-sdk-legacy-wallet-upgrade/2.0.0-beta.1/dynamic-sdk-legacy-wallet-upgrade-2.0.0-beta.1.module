@@ -1,0 +1,90 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "xyz.dynamic",
+    "module": "dynamic-sdk-legacy-wallet-upgrade",
+    "version": "2.0.0-beta.1",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-legacy-wallet-upgrade-2.0.0-beta.1.aar",
+          "url": "dynamic-sdk-legacy-wallet-upgrade-2.0.0-beta.1.aar",
+          "size": 10451,
+          "sha512": "30d22cf6b957f5df71daf50cf74f08e130a87324f4ec7e51411dba2760a1641aae818082144aa104a280ae5b600c8bb1e9b0306d23f86d916cbfb4e0ddf9fa02",
+          "sha256": "f80bd0762769c7abd3cabddf241ed6285b090b43bbe34b3197ac42cf71a3a0ff",
+          "sha1": "a7f8dcf780fcf369f9adbad30b0083cf1abeb39e",
+          "md5": "ccf706e456161a1c629f37e7217a7385"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-legacy-wallet-upgrade-2.0.0-beta.1.aar",
+          "url": "dynamic-sdk-legacy-wallet-upgrade-2.0.0-beta.1.aar",
+          "size": 10451,
+          "sha512": "30d22cf6b957f5df71daf50cf74f08e130a87324f4ec7e51411dba2760a1641aae818082144aa104a280ae5b600c8bb1e9b0306d23f86d916cbfb4e0ddf9fa02",
+          "sha256": "f80bd0762769c7abd3cabddf241ed6285b090b43bbe34b3197ac42cf71a3a0ff",
+          "sha1": "a7f8dcf780fcf369f9adbad30b0083cf1abeb39e",
+          "md5": "ccf706e456161a1c629f37e7217a7385"
+        }
+      ]
+    }
+  ]
+}

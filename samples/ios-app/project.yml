@@ -1,0 +1,84 @@
+# XcodeGen spec for the SwiftUI SDK demo.
+name: DynamicDemo
+options:
+  bundleIdPrefix: com.dynamic.demo
+  deploymentTarget:
+    iOS: "15.0"
+packages:
+  DynamicSDK:
+    path: ../..
+targets:
+  DynamicDemo:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+      - path: Assets.xcassets
+    dependencies:
+      - package: DynamicSDK
+        product: DynamicSDK
+      - package: DynamicSDK
+        product: DynamicSdkBtc
+      - package: DynamicSDK
+        product: DynamicSdkBusinessAccount
+      - package: DynamicSDK
+        product: DynamicSdkEarn
+      - package: DynamicSDK
+        product: DynamicSdkEvm
+      - package: DynamicSDK
+        product: DynamicSdkExportPrivateKey
+      - package: DynamicSDK
+        product: DynamicSdkExternalWallet
+      - package: DynamicSDK
+        product: DynamicSdkExternalWalletCoinbase
+      - package: DynamicSDK
+        product: DynamicSdkExternalWalletPhantom
+      - package: DynamicSDK
+        product: DynamicSdkLegacyWalletUpgrade
+      - package: DynamicSDK
+        product: DynamicSdkSolana
+      - package: DynamicSDK
+        product: DynamicSdkStellar
+      - package: DynamicSDK
+        product: DynamicSdkSui
+      - package: DynamicSDK
+        product: DynamicSdkTon
+      - package: DynamicSDK
+        product: DynamicSdkWaas
+      - package: DynamicSDK
+        product: DynamicSdkZerodev
+    # WalletConnect keeps its session keys in a keychain access group, and
+    # reown's Networking.configure requires the group identifier, so the app
+    # has to actually hold the entitlement — see walletConnectAppGroup.
+    entitlements:
+      path: DynamicDemo.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.dynamic.demo.DynamicDemo
+    # An explicit Info.plist, not GENERATE_INFOPLIST_FILE: the app has to
+    # REGISTER the dynamicdemo:// scheme, and CFBundleURLTypes is an array of
+    # dictionaries, which the INFOPLIST_KEY_* build settings cannot express.
+    # Without it the scheme routes nowhere and Phantom's answer — which
+    # arrives as a link back into this app — is never delivered. Mirrors the
+    # Android demo's own intent-filter (app/src/main/AndroidManifest.xml).
+    info:
+      path: Info.plist
+      properties:
+        UILaunchScreen: {}
+        CFBundleURLTypes:
+          - CFBundleURLName: com.dynamic.demo.DynamicDemo
+            CFBundleURLSchemes:
+              - dynamicdemo
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dynamic.demo.DynamicDemo
+        # Same team the Flutter demo's iOS and macOS projects already carry,
+        # so running on a device does not need a per-machine edit. Automatic
+        # signing then resolves the App ID, the App Group and the profile —
+        # the App Group is not optional here, WalletConnect keeps its session
+        # keys in it (see Networking.configure(groupIdentifier:)).
+        DEVELOPMENT_TEAM: KHJ42F2X7E
+        CODE_SIGN_STYLE: Automatic
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        SWIFT_VERSION: "5.7"
+        TARGETED_DEVICE_FAMILY: "1"

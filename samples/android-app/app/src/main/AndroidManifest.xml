@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- The SDK talks to the Dynamic API through the injected HttpService. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:label="Dynamic Demo"
+        android:theme="@android:style/Theme.Material.Light.NoActionBar">
+        <!-- singleTask, not singleTop, and the difference is load-bearing for
+             external wallets. singleTop reuses the running instance only when
+             it is already on top of the TARGET task — and a wallet that opens
+             dynamicdemo:// without FLAG_ACTIVITY_NEW_TASK puts our activity
+             into ITS task, where no instance of ours exists. Android then
+             builds a SECOND instance there, onNewIntent never fires on the one
+             holding the pending connect, and the answer is lost: the app just
+             comes to the foreground with nothing happening. It also shows our
+             UI inside the wallet's own recents card.
+
+             Measured with Solflare on a Pixel 8a. Phantom happened to work
+             because it adds NEW_TASK itself, which is not something a dApp can
+             rely on. singleTask keeps this activity in its own task always, so
+             an incoming link reaches the existing instance through
+             onNewIntent — the standard choice for a deep-link receiver, and
+             OAuth still lands there too. -->
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="singleTask"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- Social-login redirect scheme (must match nativeLink + env allow-list). -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="dynamicdemo" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

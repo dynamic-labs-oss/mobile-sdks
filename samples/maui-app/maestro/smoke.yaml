@@ -1,0 +1,8 @@
+appId: com.dynamic.mauidemo
+---
+- launchApp:
+    stopApp: true
+- extendedWaitUntil:
+    visible: "Send code|Create wallet"
+    timeout: 60000
+- assertNotVisible: "Startup error"

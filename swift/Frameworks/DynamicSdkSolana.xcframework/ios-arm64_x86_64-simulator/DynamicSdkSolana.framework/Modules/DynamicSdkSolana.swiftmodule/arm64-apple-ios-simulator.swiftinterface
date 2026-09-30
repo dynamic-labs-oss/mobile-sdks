@@ -1,0 +1,48 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 6.3.3 effective-5.10 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)
+// swift-module-flags: -target arm64-apple-ios15.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -O -enable-experimental-feature DebugDescriptionMacro -module-name DynamicSdkSolana
+// swift-module-flags-ignorable: -no-verify-emitted-module-interface -formal-cxx-interoperability-mode=off -interface-compiler-version 6.3.3
+import CryptoKit
+import DynamicSdkCore
+import Foundation
+import Swift
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+final public class NativeSolanaService : DynamicSdkCore.SolanaService {
+  public init()
+  final public func getBalance(address: Swift.String, network: DynamicSdkCore.SolanaNetwork) async throws -> Swift.String
+  final public func getTokenBalance(address: Swift.String, mint: Swift.String, network: DynamicSdkCore.SolanaNetwork) async throws -> Swift.String
+  final public func getLatestBlockhash(network: DynamicSdkCore.SolanaNetwork) async throws -> Swift.String
+  final public func getTransactionStatus(signature: Swift.String, network: DynamicSdkCore.SolanaNetwork) async throws -> DynamicSdkCore.SolanaReceipt?
+  final public func buildUnsignedTransaction(request: DynamicSdkCore.SolanaTxRequest, network: DynamicSdkCore.SolanaNetwork) async throws -> Swift.String
+  final public func buildUnsignedTokenTransfer(transfer: DynamicSdkCore.SolanaSplTransfer, network: DynamicSdkCore.SolanaNetwork) async throws -> Swift.String
+  final public func attachSignature(unsignedMessage: Swift.String, publicKey: Swift.String, signature: Swift.String) async throws -> Swift.String
+  final public func createUnsignedSerializedTransaction(unsignedMessage: Swift.String) async throws -> Swift.String
+  final public func getSerializedTransactionMessage(serializedTransaction: Swift.String) async throws -> Swift.String
+  final public func attachSignatureToSerializedTransaction(serializedTransaction: Swift.String, publicKey: Swift.String, signature: Swift.String) async throws -> Swift.String
+  final public func broadcastSponsoredTransaction(serializedTransaction: Swift.String, network: DynamicSdkCore.SolanaNetwork) async throws -> Swift.String
+  final public func broadcastTransaction(signedTransaction: Swift.String, network: DynamicSdkCore.SolanaNetwork) async throws -> Swift.String
+  @objc deinit
+}
+@_Concurrency.MainActor final public class SolanaExtension : DynamicSdkCore.DynamicExtension {
+  @_Concurrency.MainActor public init(client: DynamicSdkCore.DynamicClient, networks: [DynamicSdkCore.SolanaNetwork], service: any DynamicSdkCore.SolanaService = NativeSolanaService())
+  @_Concurrency.MainActor final public let name: Swift.String
+  @_Concurrency.MainActor final public func install(client: DynamicSdkCore.DynamicClient)
+  @_Concurrency.MainActor final public func availableNetworks() -> [DynamicSdkCore.SolanaNetwork]
+  @_Concurrency.MainActor final public func getBalance(address: Swift.String, network: DynamicSdkCore.SolanaNetwork? = nil) async throws -> Swift.String
+  @_Concurrency.MainActor final public func getTokenBalance(address: Swift.String, mint: Swift.String, network: DynamicSdkCore.SolanaNetwork? = nil) async throws -> Swift.String
+  @_Concurrency.MainActor final public func getTransactionStatus(signature: Swift.String, network: DynamicSdkCore.SolanaNetwork? = nil) async throws -> DynamicSdkCore.SolanaReceipt?
+  @_Concurrency.MainActor final public func sendTransaction(request: DynamicSdkCore.SolanaTxRequest, network: DynamicSdkCore.SolanaNetwork? = nil, sponsorshipMode: DynamicSdkCore.SolanaSponsorshipMode = .auto) async throws -> Swift.String
+  @_Concurrency.MainActor final public func sendToken(transfer: DynamicSdkCore.SolanaSplTransfer, network: DynamicSdkCore.SolanaNetwork? = nil, sponsorshipMode: DynamicSdkCore.SolanaSponsorshipMode = .auto) async throws -> Swift.String
+  @_Concurrency.MainActor final public func sendSponsoredTransaction(request: DynamicSdkCore.SolanaTxRequest, network: DynamicSdkCore.SolanaNetwork? = nil) async throws -> Swift.String
+  @_Concurrency.MainActor final public func signMessage(from: Swift.String, message: Swift.String) async throws -> Swift.String
+  @objc deinit
+}
+extension DynamicSdkCore.DynamicClient {
+  @_Concurrency.MainActor final public var solana: DynamicSdkSolana.SolanaExtension {
+    get throws
+  }
+  @discardableResult
+  @_Concurrency.MainActor final public func useSolana(_ networks: [DynamicSdkCore.SolanaNetwork], service: any DynamicSdkCore.SolanaService = NativeSolanaService()) -> DynamicSdkCore.DynamicClient
+}
