@@ -55,25 +55,25 @@ android {
 
 dependencies {
     // The demo installs every public SDK module.
-    implementation("xyz.dynamic:dynamic-sdk:2.0.0-beta.1")
-    implementation("xyz.dynamic:dynamic-sdk-evm:2.0.0-beta.1")
-    implementation("xyz.dynamic:dynamic-sdk-solana:2.0.0-beta.1")
-    implementation("xyz.dynamic:dynamic-sdk-btc:2.0.0-beta.1")
-    implementation("xyz.dynamic:dynamic-sdk-sui:2.0.0-beta.1")
-    implementation("xyz.dynamic:dynamic-sdk-business-account:2.0.0-beta.1")
-    implementation("xyz.dynamic:dynamic-sdk-earn:2.0.0-beta.1")
-    implementation("xyz.dynamic:dynamic-sdk-stellar:2.0.0-beta.1")
-    implementation("xyz.dynamic:dynamic-sdk-ton:2.0.0-beta.1")
-    implementation("xyz.dynamic:dynamic-sdk-zerodev:2.0.0-beta.1")
-    implementation("xyz.dynamic:dynamic-sdk-legacy-wallet-upgrade:2.0.0-beta.1")
-    implementation("xyz.dynamic:dynamic-sdk-waas:2.0.0-beta.1")
-    implementation("xyz.dynamic:dynamic-sdk-export-private-key:2.0.0-beta.1")
+    implementation("xyz.dynamic:dynamic-sdk:2.0.0-beta.2")
+    implementation("xyz.dynamic:dynamic-sdk-evm:2.0.0-beta.2")
+    implementation("xyz.dynamic:dynamic-sdk-solana:2.0.0-beta.2")
+    implementation("xyz.dynamic:dynamic-sdk-btc:2.0.0-beta.2")
+    implementation("xyz.dynamic:dynamic-sdk-sui:2.0.0-beta.2")
+    implementation("xyz.dynamic:dynamic-sdk-business-account:2.0.0-beta.2")
+    implementation("xyz.dynamic:dynamic-sdk-earn:2.0.0-beta.2")
+    implementation("xyz.dynamic:dynamic-sdk-stellar:2.0.0-beta.2")
+    implementation("xyz.dynamic:dynamic-sdk-ton:2.0.0-beta.2")
+    implementation("xyz.dynamic:dynamic-sdk-zerodev:2.0.0-beta.2")
+    implementation("xyz.dynamic:dynamic-sdk-legacy-wallet-upgrade:2.0.0-beta.2")
+    implementation("xyz.dynamic:dynamic-sdk-waas:2.0.0-beta.2")
+    implementation("xyz.dynamic:dynamic-sdk-export-private-key:2.0.0-beta.2")
     // Opt-in external wallets (MetaMask, ...) over native WalletConnect.
-    implementation("xyz.dynamic:dynamic-sdk-external-wallet:2.0.0-beta.1")
+    implementation("xyz.dynamic:dynamic-sdk-external-wallet:2.0.0-beta.2")
     // Phantom, which has no WalletConnect namespace — its own module because
     // it brings libsodium.
-    implementation("xyz.dynamic:dynamic-sdk-external-wallet-phantom:2.0.0-beta.1")
-    implementation("xyz.dynamic:dynamic-sdk-external-wallet-coinbase:2.0.0-beta.1")
+    implementation("xyz.dynamic:dynamic-sdk-external-wallet-phantom:2.0.0-beta.2")
+    implementation("xyz.dynamic:dynamic-sdk-external-wallet-coinbase:2.0.0-beta.2")
 
     implementation("androidx.activity:activity-compose:1.9.3")
     implementation(platform("androidx.compose:compose-bom:2024.09.03"))

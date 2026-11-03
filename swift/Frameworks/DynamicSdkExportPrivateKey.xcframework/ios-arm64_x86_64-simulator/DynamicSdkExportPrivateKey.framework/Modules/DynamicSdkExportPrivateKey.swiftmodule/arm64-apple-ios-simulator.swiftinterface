@@ -92,6 +92,9 @@ public enum DynamicWaasLockPolicy : Swift.Equatable, Swift.Sendable {
   @_Concurrency.MainActor final public func createWallet(payloadJson: Swift.String) async throws -> Swift.String
   @_Concurrency.MainActor final public func importPrivateKey(payloadJson: Swift.String) async throws -> Swift.String
   @_Concurrency.MainActor final public func signMessage(payloadJson: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func resumeSigningIntent(payloadJson: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func prepareSigningIntent(payloadJson: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func prepareExportIntent(payloadJson: Swift.String) async throws -> Swift.String
   @_Concurrency.MainActor final public func signRawMessage(payloadJson: Swift.String) async throws -> Swift.String
   @_Concurrency.MainActor final public func signTypedData(payloadJson: Swift.String) async throws -> Swift.String
   @_Concurrency.MainActor final public func signTransaction(payloadJson: Swift.String) async throws -> Swift.String

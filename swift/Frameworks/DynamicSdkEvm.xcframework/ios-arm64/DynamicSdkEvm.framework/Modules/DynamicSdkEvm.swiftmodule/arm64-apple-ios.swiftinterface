@@ -19,6 +19,7 @@ import _SwiftConcurrencyShims
   @_Concurrency.MainActor final public func getTransactionCount(address: Swift.String, network: DynamicSdkCore.EvmNetwork? = nil) async throws -> SwiftBigInt.BigInt
   @_Concurrency.MainActor final public func getGasPrice(network: DynamicSdkCore.EvmNetwork? = nil) async throws -> SwiftBigInt.BigInt
   @_Concurrency.MainActor final public func estimateGas(request: DynamicSdkCore.EvmTxRequest, network: DynamicSdkCore.EvmNetwork? = nil) async throws -> SwiftBigInt.BigInt
+  @_Concurrency.MainActor final public func calculateEvmTransactionFee(request: DynamicSdkCore.EvmTxRequest, network: DynamicSdkCore.EvmNetwork? = nil, nativeTokenPriceUsd: Swift.Double? = nil) async throws -> DynamicSdkCore.EvmTransactionFeeData
   @_Concurrency.MainActor final public func call(request: DynamicSdkCore.EvmTxRequest, network: DynamicSdkCore.EvmNetwork? = nil) async throws -> Swift.String
   @_Concurrency.MainActor final public func readContract(from: Swift.String, contract: Swift.String, function: DynamicSdkCore.EvmContractFunction, arguments: [Swift.String], network: DynamicSdkCore.EvmNetwork? = nil) async throws -> [Swift.String]
   @_Concurrency.MainActor final public func getTransactionReceipt(txHash: Swift.String, network: DynamicSdkCore.EvmNetwork? = nil) async throws -> DynamicSdkCore.EvmReceipt?
@@ -41,12 +42,16 @@ extension DynamicSdkCore.DynamicClient {
   @discardableResult
   @_Concurrency.MainActor final public func useEvm(_ networks: [DynamicSdkCore.EvmNetwork], service: any DynamicSdkCore.EvmService = Web3SwiftEvmService()) -> DynamicSdkCore.DynamicClient
 }
+extension DynamicSdkEvm.EvmExtension : DynamicSdkCore.Evm7702AuthorizationVerifier {
+  @_Concurrency.MainActor final public func recoverEvm7702Authorization(contractAddress: Swift.String, chainId: Swift.Int64, nonce: Swift.Int64, signature: Swift.String) async throws -> DynamicSdkCore.Evm7702RecoveredAuthorization?
+}
 final public class Web3SwiftEvmService : DynamicSdkCore.EvmService {
   public init()
   final public func getBalance(address: Swift.String, network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String
   final public func getTransactionCount(address: Swift.String, network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String
   final public func getGasPrice(network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String
   final public func estimateGas(request: DynamicSdkCore.EvmTxRequest, network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String
+  final public func calculateTransactionFee(request: DynamicSdkCore.EvmTxRequest, network: DynamicSdkCore.EvmNetwork) async throws -> DynamicSdkCore.EvmTransactionFeeData
   final public func call(request: DynamicSdkCore.EvmTxRequest, network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String
   final public func encodeFunctionData(function: DynamicSdkCore.EvmContractFunction, arguments: [Swift.String]) async throws -> Swift.String
   final public func decodeFunctionResult(function: DynamicSdkCore.EvmContractFunction, data: Swift.String) async throws -> [Swift.String]
@@ -54,6 +59,7 @@ final public class Web3SwiftEvmService : DynamicSdkCore.EvmService {
   final public func getCode(address: Swift.String, network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String?
   final public func generateSecureNonce() async throws -> Swift.String
   final public func hashEip7702Authorization(chainId: Swift.Int64, contractAddress: Swift.String, nonce: Swift.Int64) async throws -> Swift.String
+  final public func recoverEip7702Authorization(contractAddress: Swift.String, chainId: Swift.Int64, nonce: Swift.Int64, signature: Swift.String) async throws -> DynamicSdkCore.Evm7702RecoveredAuthorization?
   final public func buildSponsoredTransactionTypedData(calls: [DynamicSdkCore.EvmSponsoredCall], chainId: Swift.Int64, deadline: Swift.String, mode: Swift.String, nonce: Swift.String, relayer: Swift.String, verifyingContract: Swift.String) async throws -> Swift.String
   final public func buildUnsignedTransaction(request: DynamicSdkCore.EvmTxRequest, network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String
   final public func broadcastTransaction(signedTransaction: Swift.String, network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String

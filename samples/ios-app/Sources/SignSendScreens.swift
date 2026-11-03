@@ -218,6 +218,7 @@ struct SendView: View {
     @State private var amount: String
     @State private var balance: String?
     @State private var txHash: String?
+    @State private var suiStatus: String?
     @State private var busy = false
 
     init(wallet: Wallet) {
@@ -228,7 +229,7 @@ struct SendView: View {
         switch wallet.chain {
         case "SOL": defaultAmount = "0.01"
         case "BTC": defaultAmount = "0.0001"
-        case "SUI": defaultAmount = "0.1"
+        case "SUI": defaultAmount = "0.01"
         default: defaultAmount = "0.001"
         }
         _amount = State(initialValue: defaultAmount)
@@ -243,6 +244,11 @@ struct SendView: View {
         }
     }
 
+    private var selectedSuiNetwork: SuiNetwork? {
+        let name = store.activeSuiNetwork ?? store.suiNetworks.first?.name
+        return store.suiNetworks.first { $0.name == name }
+    }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
@@ -252,6 +258,41 @@ struct SendView: View {
                 }
                 Text("From: \(short(address))").appBodyMedium()
                 Text("Balance: \(balance ?? "loading…")").appBodyMedium()
+                if chain == "SUI" {
+                    Text("Network").appListItemTitle()
+                    Picker(
+                        "Sui network",
+                        selection: Binding(
+                            get: { selectedSuiNetwork?.name ?? "" },
+                            set: { store.switchSuiNetwork($0) }
+                        )
+                    ) {
+                        ForEach(store.suiNetworks, id: \.name) { network in
+                            Text(network.name).tag(network.name)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Sui transfer test").appListItemTitle()
+                        Text("1. Select the Sui network above.").appBodySmall()
+                        Text("2. Fund this address on the same network.").appBodySmall()
+                        Text("3. Enter another address on that network and an amount.").appBodySmall()
+                        Text("4. Send, approve the signature, and check the digest status.").appBodySmall()
+                        if selectedSuiNetwork?.cluster == "mainnet" {
+                            Text("Mainnet uses real SUI. The faucet is not available.").appBodySmall()
+                        } else {
+                            Button("Copy faucet command") {
+                                UIPasteboard.general.string = "sui client faucet --address \(address)"
+                                store.toast = "Faucet command copied"
+                            }
+                            .buttonStyle(AppOutlinedButtonStyle())
+                        }
+                    }
+                    .padding(12)
+                    .background(AppColors.bgWhite)
+                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(AppColors.bgBase4, lineWidth: 1))
+                    .cornerRadius(10)
+                }
                 TextField(addressPlaceholder, text: $to)
                     .textFieldStyle(.roundedBorder)
                     .autocapitalization(.none)
@@ -262,12 +303,17 @@ struct SendView: View {
                 Button(busy ? "Sending…" : "Send transaction") {
                     busy = true
                     txHash = nil
+                    suiStatus = nil
                     Task {
                         txHash = await store.send(
                             chain: chain, address: address,
                             to: to.trimmingCharacters(in: .whitespaces),
                             amountToken: amount.trimmingCharacters(in: .whitespaces)
                         )
+                        if chain == "SUI", let digest = txHash {
+                            suiStatus = "Waiting for Sui indexing…"
+                            suiStatus = await store.waitForSuiTransaction(digest: digest)
+                        }
                         busy = false
                     }
                 }
@@ -277,6 +323,9 @@ struct SendView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Broadcast").appListItemTitle()
                         Text("Tx hash: \(txHash)").appBodySmall()
+                        if let suiStatus {
+                            Text("Status: \(suiStatus)").appBodySmall()
+                        }
                         Button("Copy tx hash") {
                             UIPasteboard.general.string = txHash
                             store.toast = "Tx hash copied"
@@ -292,7 +341,10 @@ struct SendView: View {
             .padding(24)
         }
         .background(AppColors.bgGrey)
-        .task { balance = await store.balance(chain: chain, address: address) }
+        .task(id: chain == "SUI" ? store.activeSuiNetwork : nil) {
+            balance = nil
+            balance = await store.balance(chain: chain, address: address)
+        }
     }
 
     private func short(_ address: String) -> String {

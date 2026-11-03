@@ -37,8 +37,8 @@ public static class DemoConfig
     /// <summary>Sui networks the demo supports (first = initial active network).</summary>
     public static readonly List<SuiNetwork> SuiNetworks = new()
     {
-        new SuiNetwork("https://graphql.testnet.sui.io/graphql", "Testnet", "testnet"),
-        new SuiNetwork("https://graphql.mainnet.sui.io/graphql", "Mainnet", "mainnet"),
+        new SuiNetwork("https://fullnode.testnet.sui.io:443", "Testnet", "testnet"),
+        new SuiNetwork("https://fullnode.mainnet.sui.io:443", "Mainnet", "mainnet"),
     };
 
     public static readonly IReadOnlyList<StellarNetwork> StellarNetworks = new[]

@@ -8,6 +8,7 @@ let package = Package(
         .library(name: "DynamicSDK", targets: ["DynamicSDKSupport"]),
         .library(name: "DynamicSdkBtc", targets: ["DynamicSdkBtcSupport"]),
         .library(name: "DynamicSdkBusinessAccount", targets: ["DynamicSdkBusinessAccountSupport"]),
+        .library(name: "DynamicSdkPolicyEngine", targets: ["DynamicSdkPolicyEngineSupport"]),
         .library(name: "DynamicSdkEvm", targets: ["DynamicSdkEvmSupport"]),
         .library(name: "DynamicSdkEarn", targets: ["DynamicSdkEarnSupport"]),
         .library(name: "DynamicSdkExportPrivateKey", targets: ["DynamicSdkExportPrivateKeySupport"]),
@@ -25,9 +26,11 @@ let package = Package(
     dependencies: [],
     targets: [
         .binaryTarget(name: "DynamicSdkCoreBinary", path: "swift/Frameworks/DynamicSdkCore.xcframework"),
+        .binaryTarget(name: "SwiftBigIntBinary", path: "swift/Frameworks/SwiftBigInt.xcframework"),
         .binaryTarget(name: "DynamicSDKBinary", path: "swift/Frameworks/DynamicSDK.xcframework"),
         .binaryTarget(name: "DynamicSdkBtcBinary", path: "swift/Frameworks/DynamicSdkBtc.xcframework"),
         .binaryTarget(name: "DynamicSdkBusinessAccountBinary", path: "swift/Frameworks/DynamicSdkBusinessAccount.xcframework"),
+        .binaryTarget(name: "DynamicSdkPolicyEngineBinary", path: "swift/Frameworks/DynamicSdkPolicyEngine.xcframework"),
         .binaryTarget(name: "DynamicSdkEvmBinary", path: "swift/Frameworks/DynamicSdkEvm.xcframework"),
         .binaryTarget(name: "DynamicSdkEarnBinary", path: "swift/Frameworks/DynamicSdkEarn.xcframework"),
         .binaryTarget(name: "DynamicSdkExportPrivateKeyBinary", path: "swift/Frameworks/DynamicSdkExportPrivateKey.xcframework"),
@@ -41,7 +44,6 @@ let package = Package(
         .binaryTarget(name: "DynamicSdkTonBinary", path: "swift/Frameworks/DynamicSdkTon.xcframework"),
         .binaryTarget(name: "DynamicSdkWaasBinary", path: "swift/Frameworks/DynamicSdkWaas.xcframework"),
         .binaryTarget(name: "DynamicSdkZerodevBinary", path: "swift/Frameworks/DynamicSdkZerodev.xcframework"),
-        .binaryTarget(name: "SwiftBigIntBinary", path: "swift/Frameworks/SwiftBigInt.xcframework"),
         .target(
             name: "DynamicSDKSupport",
             dependencies: [
@@ -66,6 +68,15 @@ let package = Package(
                 .target(name: "DynamicSdkWaasBinary"),
             ],
             path: "swift/Sources/DynamicSdkBusinessAccountSupport"
+        ),
+        .target(
+            name: "DynamicSdkPolicyEngineSupport",
+            dependencies: [
+                .target(name: "DynamicSdkPolicyEngineBinary"),
+                .target(name: "DynamicSdkCoreBinary"),
+                .target(name: "DynamicSdkWaasBinary"),
+            ],
+            path: "swift/Sources/DynamicSdkPolicyEngineSupport"
         ),
         .target(
             name: "DynamicSdkEvmSupport",
@@ -157,6 +168,7 @@ let package = Package(
             dependencies: [
                 .target(name: "DynamicSdkTonBinary"),
                 .target(name: "DynamicSdkCoreBinary"),
+                .target(name: "SwiftBigIntBinary"),
             ],
             path: "swift/Sources/DynamicSdkTonSupport"
         ),

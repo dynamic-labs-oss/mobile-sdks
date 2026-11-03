@@ -1,0 +1,104 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "xyz.dynamic",
+    "module": "dynamic-sdk-internal-waas-engine",
+    "version": "2.0.0-beta.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.2"
+          }
+        },
+        {
+          "group": "androidx.webkit",
+          "module": "webkit",
+          "version": {
+            "requires": "1.12.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-internal-waas-engine-2.0.0-beta.2.aar",
+          "url": "dynamic-sdk-internal-waas-engine-2.0.0-beta.2.aar",
+          "size": 41226,
+          "sha512": "aa530cd595a63d3808b10faed6089f2aeaa0048abc653d0a45de75cb18bc57555d6bb3166f4fbc6cabd64892fdd9cadbc15303ca77a5e9cacbe611e63694de7a",
+          "sha256": "ae5ae55f622941e12bd085f3fb2f4445f5a7cb1e09da3398e4d327a60f7ae88c",
+          "sha1": "0ca3661c596aa006991f754e184e72517f149632",
+          "md5": "c3d3719d2df3c0b6f8924995185f3d77"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.2"
+          }
+        },
+        {
+          "group": "androidx.webkit",
+          "module": "webkit",
+          "version": {
+            "requires": "1.12.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-internal-waas-engine-2.0.0-beta.2.aar",
+          "url": "dynamic-sdk-internal-waas-engine-2.0.0-beta.2.aar",
+          "size": 41226,
+          "sha512": "aa530cd595a63d3808b10faed6089f2aeaa0048abc653d0a45de75cb18bc57555d6bb3166f4fbc6cabd64892fdd9cadbc15303ca77a5e9cacbe611e63694de7a",
+          "sha256": "ae5ae55f622941e12bd085f3fb2f4445f5a7cb1e09da3398e4d327a60f7ae88c",
+          "sha1": "0ca3661c596aa006991f754e184e72517f149632",
+          "md5": "c3d3719d2df3c0b6f8924995185f3d77"
+        }
+      ]
+    }
+  ]
+}

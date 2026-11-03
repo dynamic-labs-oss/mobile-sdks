@@ -20,12 +20,16 @@ extension DynamicSdkCore.DynamicClient {
   @_Concurrency.MainActor final public func useWaas(_ waasEngine: any DynamicSdkWaas.WaasEngine) -> DynamicSdkCore.DynamicClient
 }
 @_Concurrency.MainActor public protocol WaasClient {
+  @_Concurrency.MainActor func getBusinessAccountSigningIntent(proposal: DynamicSdkWaas.BusinessAccountProposal) throws -> DynamicSdkWaas.BusinessAccountSigningIntentResult
+  @_Concurrency.MainActor func resumeSigningProposal(proposal: DynamicSdkWaas.BusinessAccountProposal, chain: Swift.String, accountAddress: Swift.String, password: Swift.String?) async throws -> Swift.String
+  @_Concurrency.MainActor func resume7702AuthorizationProposal(proposal: DynamicSdkWaas.BusinessAccountProposal, accountAddress: Swift.String, password: Swift.String?) async throws -> DynamicSdkCore.Evm7702Authorization
   @_Concurrency.MainActor func createWalletForBusinessAccount(businessAccountId: Swift.String, chain: Swift.String, password: Swift.String?, thresholdSignatureScheme: Swift.String?) async throws -> DynamicSdkCore.WaasCreatedWallet
-  @_Concurrency.MainActor func addBusinessAccountSigner(chain: Swift.String, accountAddress: Swift.String, targetIdentity: DynamicSdkWaas.BusinessAccountTargetIdentity, businessAccountId: Swift.String?, walletId: Swift.String?, signerType: Swift.String?, password: Swift.String?, targetSignerPassword: Swift.String?, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent?) async throws -> DynamicSdkWaas.WaasBusinessAccountSignerResponse
+  @_Concurrency.MainActor func addBusinessAccountSigner(chain: Swift.String, accountAddress: Swift.String, targetIdentity: DynamicSdkWaas.BusinessAccountTargetIdentity, businessAccountId: Swift.String?, walletId: Swift.String?, signerType: Swift.String?, password: Swift.String?, targetSignerPassword: Swift.String?, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent?, initialSignerRules: [DynamicSdkWaas.WaasPolicyRule]?) async throws -> DynamicSdkWaas.WaasBusinessAccountSignerResponse
   @_Concurrency.MainActor func createWallet(chain: Swift.String) async throws -> DynamicSdkCore.WaasCreatedWallet
   @_Concurrency.MainActor func importPrivateKey(chain: Swift.String, privateKey: Swift.String, isRawScalarImport: Swift.Bool?) async throws -> DynamicSdkCore.WaasCreatedWallet
   @_Concurrency.MainActor func createMissingWaasWallets() async throws
   @_Concurrency.MainActor func signMessage(chain: Swift.String, accountAddress: Swift.String, message: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor func signRawMessage(chain: Swift.String, accountAddress: Swift.String, message: Swift.String, rawSign: DynamicSdkWaas.BusinessAccountSigningIntentRawSign?, password: Swift.String?) async throws -> Swift.String
   @_Concurrency.MainActor func signTypedData(chain: Swift.String, accountAddress: Swift.String, typedData: Swift.String) async throws -> Swift.String
   @_Concurrency.MainActor func signEvm7702Authorization(accountAddress: Swift.String, authorizationHash: Swift.String, chainId: Swift.Int64, accountNonce: Swift.Int64, contractAddress: Swift.String) async throws -> DynamicSdkCore.Evm7702Authorization
   @_Concurrency.MainActor func signTransaction(chain: Swift.String, accountAddress: Swift.String, transaction: Swift.String, chainId: Swift.String?, signingIndexes: [Swift.Int]?, allowedSighash: [Swift.Int]?) async throws -> Swift.String
@@ -37,10 +41,6 @@ extension DynamicSdkCore.DynamicClient {
   @_Concurrency.MainActor func updateWaasPassword(chain: Swift.String, accountAddress: Swift.String, existingPassword: Swift.String, newPassword: Swift.String) async throws
   @_Concurrency.MainActor var settings: DynamicSdkCore.EmbeddedWalletsSettings? { get throws }
   @_Concurrency.MainActor var isEnabled: Swift.Bool { get throws }
-  @_Concurrency.MainActor func getWalletPolicyLayer(chain: Swift.String, accountAddress: Swift.String) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
-  @_Concurrency.MainActor func upsertWalletPolicyRule(chain: Swift.String, accountAddress: Swift.String, rule: DynamicSdkWaas.WaasPolicyRule) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
-  @_Concurrency.MainActor func getSignerPolicyLayer(chain: Swift.String, accountAddress: Swift.String) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
-  @_Concurrency.MainActor func upsertSignerPolicyRule(chain: Swift.String, accountAddress: Swift.String, rule: DynamicSdkWaas.WaasPolicyRule, shareSetId: Swift.String?) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
   @_Concurrency.MainActor func hasDelegatedAccess(chain: Swift.String, accountAddress: Swift.String) throws -> Swift.Bool
   @_Concurrency.MainActor func getWalletAccountShareSets(chain: Swift.String, accountAddress: Swift.String) throws -> DynamicSdkWaas.WaasWalletAccountShareSets
   @_Concurrency.MainActor func delegateWaasKeyShares(chain: Swift.String, accountAddress: Swift.String, initialSignerRules: [DynamicSdkWaas.WaasPolicyRule]?, password: Swift.String?) async throws
@@ -55,12 +55,16 @@ extension DynamicSdkCore.DynamicClient {
 @_hasMissingDesignatedInitializers @_Concurrency.MainActor final public class WaasClientImpl : DynamicSdkWaas.WaasClient, DynamicSdkCore.DynamicExtension, DynamicSdkCore.EmbeddedWalletSigner, DynamicSdkCore.SolanaTransactionSponsor, DynamicSdkCore.EvmGaslessSponsor {
   @_Concurrency.MainActor final public let name: Swift.String
   @_Concurrency.MainActor final public func install(client: DynamicSdkCore.DynamicClient)
+  @_Concurrency.MainActor final public func getBusinessAccountSigningIntent(proposal: DynamicSdkWaas.BusinessAccountProposal) throws -> DynamicSdkWaas.BusinessAccountSigningIntentResult
+  @_Concurrency.MainActor final public func resumeSigningProposal(proposal: DynamicSdkWaas.BusinessAccountProposal, chain: Swift.String, accountAddress: Swift.String, password: Swift.String? = nil) async throws -> Swift.String
+  @_Concurrency.MainActor final public func resume7702AuthorizationProposal(proposal: DynamicSdkWaas.BusinessAccountProposal, accountAddress: Swift.String, password: Swift.String? = nil) async throws -> DynamicSdkCore.Evm7702Authorization
   @_Concurrency.MainActor final public func createWalletForBusinessAccount(businessAccountId: Swift.String, chain: Swift.String, password: Swift.String? = nil, thresholdSignatureScheme: Swift.String? = nil) async throws -> DynamicSdkCore.WaasCreatedWallet
-  @_Concurrency.MainActor final public func addBusinessAccountSigner(chain: Swift.String, accountAddress: Swift.String, targetIdentity: DynamicSdkWaas.BusinessAccountTargetIdentity, businessAccountId: Swift.String? = nil, walletId: Swift.String? = nil, signerType: Swift.String? = nil, password: Swift.String? = nil, targetSignerPassword: Swift.String? = nil, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent? = nil) async throws -> DynamicSdkWaas.WaasBusinessAccountSignerResponse
+  @_Concurrency.MainActor final public func addBusinessAccountSigner(chain: Swift.String, accountAddress: Swift.String, targetIdentity: DynamicSdkWaas.BusinessAccountTargetIdentity, businessAccountId: Swift.String? = nil, walletId: Swift.String? = nil, signerType: Swift.String? = nil, password: Swift.String? = nil, targetSignerPassword: Swift.String? = nil, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent? = nil, initialSignerRules: [DynamicSdkWaas.WaasPolicyRule]? = nil) async throws -> DynamicSdkWaas.WaasBusinessAccountSignerResponse
   @_Concurrency.MainActor final public func createWallet(chain: Swift.String) async throws -> DynamicSdkCore.WaasCreatedWallet
   @_Concurrency.MainActor final public func importPrivateKey(chain: Swift.String, privateKey: Swift.String, isRawScalarImport: Swift.Bool?) async throws -> DynamicSdkCore.WaasCreatedWallet
   @_Concurrency.MainActor final public func createMissingWaasWallets() async throws
   @_Concurrency.MainActor final public func signMessage(chain: Swift.String, accountAddress: Swift.String, message: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func signRawMessage(chain: Swift.String, accountAddress: Swift.String, message: Swift.String, rawSign: DynamicSdkWaas.BusinessAccountSigningIntentRawSign?, password: Swift.String?) async throws -> Swift.String
   @_Concurrency.MainActor final public func signTypedData(chain: Swift.String, accountAddress: Swift.String, typedData: Swift.String) async throws -> Swift.String
   @_Concurrency.MainActor final public func signEvm7702Authorization(accountAddress: Swift.String, authorizationHash: Swift.String, chainId: Swift.Int64, accountNonce: Swift.Int64, contractAddress: Swift.String) async throws -> DynamicSdkCore.Evm7702Authorization
   @_Concurrency.MainActor final public func signTransaction(chain: Swift.String, accountAddress: Swift.String, transaction: Swift.String, chainId: Swift.String?, signingIndexes: [Swift.Int]? = nil, allowedSighash: [Swift.Int]? = nil) async throws -> Swift.String
@@ -76,10 +80,6 @@ extension DynamicSdkCore.DynamicClient {
   @_Concurrency.MainActor final public var isEnabled: Swift.Bool {
     get throws
   }
-  @_Concurrency.MainActor final public func getWalletPolicyLayer(chain: Swift.String, accountAddress: Swift.String) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
-  @_Concurrency.MainActor final public func upsertWalletPolicyRule(chain: Swift.String, accountAddress: Swift.String, rule: DynamicSdkWaas.WaasPolicyRule) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
-  @_Concurrency.MainActor final public func getSignerPolicyLayer(chain: Swift.String, accountAddress: Swift.String) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
-  @_Concurrency.MainActor final public func upsertSignerPolicyRule(chain: Swift.String, accountAddress: Swift.String, rule: DynamicSdkWaas.WaasPolicyRule, shareSetId: Swift.String?) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
   @_Concurrency.MainActor final public func hasDelegatedAccess(chain: Swift.String, accountAddress: Swift.String) throws -> Swift.Bool
   @_Concurrency.MainActor final public func getWalletAccountShareSets(chain: Swift.String, accountAddress: Swift.String) throws -> DynamicSdkWaas.WaasWalletAccountShareSets
   @_Concurrency.MainActor final public func delegateWaasKeyShares(chain: Swift.String, accountAddress: Swift.String, initialSignerRules: [DynamicSdkWaas.WaasPolicyRule]?, password: Swift.String?) async throws
@@ -126,6 +126,40 @@ public struct WaasOptions : Swift.Codable, Swift.Sendable {
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
+public struct PolicyApprovalRequirementMinValue : Swift.Codable, Swift.Sendable {
+  public let amount: Swift.String?
+  public let asset: Swift.String?
+  public init(amount: Swift.String? = nil, asset: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct PolicyApprovalGroup : Swift.Codable, Swift.Sendable {
+  public let roles: [Swift.String]?
+  public let userIds: [Swift.String]?
+  public init(roles: [Swift.String]? = nil, userIds: [Swift.String]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct PolicyApprovalRequirementWhen : Swift.Codable, Swift.Sendable {
+  public let minValue: DynamicSdkWaas.PolicyApprovalRequirementMinValue?
+  public let initiatorRole: DynamicSdkWaas.PolicyApprovalGroup?
+  public let actionTypes: [Swift.String]?
+  public init(minValue: DynamicSdkWaas.PolicyApprovalRequirementMinValue? = nil, initiatorRole: DynamicSdkWaas.PolicyApprovalGroup? = nil, actionTypes: [Swift.String]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct PolicyApprovalRequirement : Swift.Codable, Swift.Sendable {
+  public let id: Swift.String
+  public let v: Swift.Int
+  public let requiredApprovals: Swift.Int
+  public let eligibleApproverRoles: [Swift.String]?
+  public let mandatoryApproverRoles: [Swift.String]?
+  public let completeWithinSeconds: Swift.Int?
+  public let condition: DynamicSdkWaas.PolicyApprovalRequirementWhen?
+  public init(id: Swift.String, v: Swift.Int, requiredApprovals: Swift.Int, eligibleApproverRoles: [Swift.String]? = nil, mandatoryApproverRoles: [Swift.String]? = nil, completeWithinSeconds: Swift.Int? = nil, condition: DynamicSdkWaas.PolicyApprovalRequirementWhen? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
 public struct WaasPolicyRuleValueLimit : Swift.Codable, Swift.Sendable {
   public let asset: Swift.String?
   public let maxPerCall: Swift.String?
@@ -153,15 +187,36 @@ public struct WaasPolicyRule : Swift.Codable, Swift.Sendable {
   public let chainIds: [Swift.Int]?
   public let valueLimit: DynamicSdkWaas.WaasPolicyRuleValueLimit?
   public let operationRestrictions: DynamicSdkWaas.WaasPolicyRuleOperationRestrictions?
+  public let approvalRequirements: [DynamicSdkWaas.PolicyApprovalRequirement]?
   public let disableBlockaidSecurityChecks: Swift.Bool?
   public let modifiableBySigner: Swift.Bool?
-  public init(ruleId: Swift.String? = nil, name: Swift.String, ruleType: Swift.String, address: Swift.String? = nil, addresses: [Swift.String]? = nil, chain: Swift.String, chainId: Swift.Int? = nil, chainIds: [Swift.Int]? = nil, valueLimit: DynamicSdkWaas.WaasPolicyRuleValueLimit? = nil, operationRestrictions: DynamicSdkWaas.WaasPolicyRuleOperationRestrictions? = nil, disableBlockaidSecurityChecks: Swift.Bool? = nil, modifiableBySigner: Swift.Bool? = nil)
+  public init(ruleId: Swift.String? = nil, name: Swift.String, ruleType: Swift.String, address: Swift.String? = nil, addresses: [Swift.String]? = nil, chain: Swift.String, chainId: Swift.Int? = nil, chainIds: [Swift.Int]? = nil, valueLimit: DynamicSdkWaas.WaasPolicyRuleValueLimit? = nil, operationRestrictions: DynamicSdkWaas.WaasPolicyRuleOperationRestrictions? = nil, approvalRequirements: [DynamicSdkWaas.PolicyApprovalRequirement]? = nil, disableBlockaidSecurityChecks: Swift.Bool? = nil, modifiableBySigner: Swift.Bool? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct WaasPolicyLayerRule : Swift.Codable, Swift.Sendable {
+  public let ruleId: Swift.String?
+  public let name: Swift.String?
+  public let ruleType: Swift.String?
+  public let address: Swift.String?
+  public let addresses: [Swift.String]?
+  public let chain: Swift.String?
+  public let chainId: Swift.Int?
+  public let chainIds: [Swift.Int]?
+  public let valueLimit: DynamicSdkWaas.WaasPolicyRuleValueLimit?
+  public let operationRestrictions: DynamicSdkWaas.WaasPolicyRuleOperationRestrictions?
+  public let approvalRequirements: [DynamicSdkWaas.PolicyApprovalRequirement]?
+  public let disableBlockaidSecurityChecks: Swift.Bool?
+  public let modifiableBySigner: Swift.Bool?
+  public let deletedByType: Swift.String?
+  public let deletedById: Swift.String?
+  public init(ruleId: Swift.String? = nil, name: Swift.String? = nil, ruleType: Swift.String? = nil, address: Swift.String? = nil, addresses: [Swift.String]? = nil, chain: Swift.String? = nil, chainId: Swift.Int? = nil, chainIds: [Swift.Int]? = nil, valueLimit: DynamicSdkWaas.WaasPolicyRuleValueLimit? = nil, operationRestrictions: DynamicSdkWaas.WaasPolicyRuleOperationRestrictions? = nil, approvalRequirements: [DynamicSdkWaas.PolicyApprovalRequirement]? = nil, disableBlockaidSecurityChecks: Swift.Bool? = nil, modifiableBySigner: Swift.Bool? = nil, deletedByType: Swift.String? = nil, deletedById: Swift.String? = nil)
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
 public struct WaasPolicyLayerContent : Swift.Codable, Swift.Sendable {
-  public let rules: [DynamicSdkWaas.WaasPolicyRule]?
-  public init(rules: [DynamicSdkWaas.WaasPolicyRule]? = nil)
+  public let rules: [DynamicSdkWaas.WaasPolicyLayerRule]?
+  public init(rules: [DynamicSdkWaas.WaasPolicyLayerRule]? = nil)
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
@@ -231,8 +286,9 @@ public struct WaasEip7702Auth : Swift.Codable, Swift.Sendable {
   public init(from decoder: any Swift.Decoder) throws
 }
 public struct WaasSignMessageContext : Swift.Codable, Swift.Sendable {
-  public let eip7702Auth: DynamicSdkWaas.WaasEip7702Auth
-  public init(eip7702Auth: DynamicSdkWaas.WaasEip7702Auth)
+  public let eip7702Auth: DynamicSdkWaas.WaasEip7702Auth?
+  public let rawSign: DynamicSdkWaas.BusinessAccountSigningIntentRawSign?
+  public init(eip7702Auth: DynamicSdkWaas.WaasEip7702Auth? = nil, rawSign: DynamicSdkWaas.BusinessAccountSigningIntentRawSign? = nil)
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
@@ -242,9 +298,10 @@ public struct WaasSignRawMessagePayload : Swift.Codable, Swift.Sendable {
   public let authToken: Swift.String
   public let accountAddress: Swift.String
   public let message: Swift.String
-  public let context: DynamicSdkWaas.WaasSignMessageContext
+  public let context: DynamicSdkWaas.WaasSignMessageContext?
   public let elevatedAccessToken: Swift.String?
-  public init(chainName: Swift.String, signedSessionId: Swift.String, authToken: Swift.String, accountAddress: Swift.String, message: Swift.String, context: DynamicSdkWaas.WaasSignMessageContext, elevatedAccessToken: Swift.String? = nil)
+  public let password: Swift.String?
+  public init(chainName: Swift.String, signedSessionId: Swift.String, authToken: Swift.String, accountAddress: Swift.String, message: Swift.String, context: DynamicSdkWaas.WaasSignMessageContext? = nil, elevatedAccessToken: Swift.String? = nil, password: Swift.String? = nil)
   public func payloadJson() -> Swift.String
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
@@ -395,7 +452,56 @@ public struct WaasBusinessAccountSignerPayload : Swift.Codable, Swift.Sendable {
   public let elevatedAccessToken: Swift.String?
   public let intent: [Swift.String : DynamicSdkCore.DynamicJsonValue]?
   public let intentSignature: Swift.String?
-  public init(chainName: Swift.String, signedSessionId: Swift.String, authToken: Swift.String, accountAddress: Swift.String, businessAccountId: Swift.String, targetSignerIdentity: DynamicSdkWaas.BusinessAccountTargetIdentity, signerType: Swift.String? = nil, password: Swift.String? = nil, targetSignerPassword: Swift.String? = nil, elevatedAccessToken: Swift.String? = nil, intent: [Swift.String : DynamicSdkCore.DynamicJsonValue]? = nil, intentSignature: Swift.String? = nil)
+  public let initialSignerRules: [DynamicSdkWaas.WaasPolicyRule]?
+  public init(chainName: Swift.String, signedSessionId: Swift.String, authToken: Swift.String, accountAddress: Swift.String, businessAccountId: Swift.String, targetSignerIdentity: DynamicSdkWaas.BusinessAccountTargetIdentity, signerType: Swift.String? = nil, password: Swift.String? = nil, targetSignerPassword: Swift.String? = nil, elevatedAccessToken: Swift.String? = nil, intent: [Swift.String : DynamicSdkCore.DynamicJsonValue]? = nil, intentSignature: Swift.String? = nil, initialSignerRules: [DynamicSdkWaas.WaasPolicyRule]? = nil)
+  public func payloadJson() -> Swift.String
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct WaasResumeSigningIntentPayload : Swift.Codable, Swift.Sendable {
+  public let chainName: Swift.String
+  public let signedSessionId: Swift.String
+  public let authToken: Swift.String
+  public let intent: [Swift.String : DynamicSdkCore.DynamicJsonValue]
+  public let elevatedAccessToken: Swift.String?
+  public let mfaToken: Swift.String?
+  public let password: Swift.String?
+  public init(chainName: Swift.String, signedSessionId: Swift.String, authToken: Swift.String, intent: [Swift.String : DynamicSdkCore.DynamicJsonValue], elevatedAccessToken: Swift.String? = nil, mfaToken: Swift.String? = nil, password: Swift.String? = nil)
+  public func payloadJson() -> Swift.String
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct WaasPrepareSigningIntentPayload : Swift.Codable, Swift.Sendable {
+  public let chainName: Swift.String
+  public let authToken: Swift.String
+  public let accountAddress: Swift.String
+  public let businessAccountId: Swift.String
+  public let initiatorUserId: Swift.String
+  public let completeBy: Swift.String?
+  public let kind: Swift.String
+  public let message: Swift.String?
+  public let typedData: Swift.String?
+  public let rawSign: DynamicSdkWaas.BusinessAccountSigningIntentRawSign?
+  public let eip7702Auth: DynamicSdkWaas.WaasEip7702Auth?
+  public let transaction: Swift.String?
+  public let chainId: Swift.String?
+  public let refreshLimits: DynamicSdkWaas.BusinessAccountSigningIntentLimits?
+  public let refreshableNonce: Swift.Bool?
+  public init(chainName: Swift.String, authToken: Swift.String, accountAddress: Swift.String, businessAccountId: Swift.String, initiatorUserId: Swift.String, completeBy: Swift.String? = nil, kind: Swift.String, message: Swift.String? = nil, typedData: Swift.String? = nil, rawSign: DynamicSdkWaas.BusinessAccountSigningIntentRawSign? = nil, eip7702Auth: DynamicSdkWaas.WaasEip7702Auth? = nil, transaction: Swift.String? = nil, chainId: Swift.String? = nil, refreshLimits: DynamicSdkWaas.BusinessAccountSigningIntentLimits? = nil, refreshableNonce: Swift.Bool? = nil)
+  public func payloadJson() -> Swift.String
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct WaasPrepareExportIntentPayload : Swift.Codable, Swift.Sendable {
+  public let chainName: Swift.String
+  public let signedSessionId: Swift.String
+  public let authToken: Swift.String
+  public let accountAddress: Swift.String
+  public let businessAccountId: Swift.String
+  public let initiatorUserId: Swift.String
+  public let completeBy: Swift.String?
+  public let password: Swift.String?
+  public init(chainName: Swift.String, signedSessionId: Swift.String, authToken: Swift.String, accountAddress: Swift.String, businessAccountId: Swift.String, initiatorUserId: Swift.String, completeBy: Swift.String? = nil, password: Swift.String? = nil)
   public func payloadJson() -> Swift.String
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
@@ -451,12 +557,203 @@ public struct SignedBusinessAccountIntent : Swift.Codable, Swift.Sendable {
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
+public struct BusinessAccountProposalApprovalRecord : Swift.Codable, Swift.Sendable {
+  public let approvedAt: Swift.String
+  public let approverUserId: Swift.String
+  public let revokedAt: Swift.String?
+  public init(approvedAt: Swift.String, approverUserId: Swift.String, revokedAt: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountProposalSubject : Swift.Codable, Swift.Sendable {
+  public let userId: Swift.String
+  public let email: Swift.String?
+  public init(userId: Swift.String, email: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountSigningIntentRawSign : Swift.Codable, Swift.Sendable {
+  public let hashFunction: Swift.String
+  public let payload: Swift.String
+  public let prefix: Swift.String?
+  public init(hashFunction: Swift.String, payload: Swift.String, prefix: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountSigningIntentSvmHeader : Swift.Codable, Swift.Sendable {
+  public let numReadonlySignedAccounts: Swift.Int
+  public let numReadonlyUnsignedAccounts: Swift.Int
+  public let numRequiredSignatures: Swift.Int
+  public init(numReadonlySignedAccounts: Swift.Int, numReadonlyUnsignedAccounts: Swift.Int, numRequiredSignatures: Swift.Int)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountSigningIntentSvmInstruction : Swift.Codable, Swift.Sendable {
+  public let accountKeyIndexes: [Swift.Int]
+  public let data: Swift.String
+  public let programIdIndex: Swift.Int
+  public init(accountKeyIndexes: [Swift.Int], data: Swift.String, programIdIndex: Swift.Int)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountSigningIntentLifetime : Swift.Codable, Swift.Sendable {
+  public let refreshable: Swift.String
+  public init(refreshable: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountSigningIntentOperation : Swift.Codable, Swift.Sendable {
+  public let chainName: Swift.String
+  public let kind: Swift.String
+  public let payload: Swift.String?
+  public let message: Swift.String?
+  public let typedData: Swift.String?
+  public let rawSign: DynamicSdkWaas.BusinessAccountSigningIntentRawSign?
+  public let eip7702Auth: DynamicSdkWaas.WaasEip7702Auth?
+  public let chainId: Swift.String?
+  public let data: Swift.String?
+  public let from: Swift.String?
+  public let nonce: Swift.String?
+  public let to: Swift.String?
+  public let value: Swift.String?
+  public let feePayer: Swift.String?
+  public let header: DynamicSdkWaas.BusinessAccountSigningIntentSvmHeader?
+  public let instructions: [DynamicSdkWaas.BusinessAccountSigningIntentSvmInstruction]?
+  public let messageVersion: Swift.String?
+  public let staticAccountKeys: [Swift.String]?
+  public init(chainName: Swift.String, kind: Swift.String, payload: Swift.String? = nil, message: Swift.String? = nil, typedData: Swift.String? = nil, rawSign: DynamicSdkWaas.BusinessAccountSigningIntentRawSign? = nil, eip7702Auth: DynamicSdkWaas.WaasEip7702Auth? = nil, chainId: Swift.String? = nil, data: Swift.String? = nil, from: Swift.String? = nil, nonce: Swift.String? = nil, to: Swift.String? = nil, value: Swift.String? = nil, feePayer: Swift.String? = nil, header: DynamicSdkWaas.BusinessAccountSigningIntentSvmHeader? = nil, instructions: [DynamicSdkWaas.BusinessAccountSigningIntentSvmInstruction]? = nil, messageVersion: Swift.String? = nil, staticAccountKeys: [Swift.String]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountSigningIntentLimits : Swift.Codable, Swift.Sendable {
+  public let maxFeePerGas: Swift.String
+  public let maxGas: Swift.String
+  public let maxPriorityFeePerGas: Swift.String
+  public let maxTotalFee: Swift.String
+  public init(maxFeePerGas: Swift.String, maxGas: Swift.String, maxPriorityFeePerGas: Swift.String, maxTotalFee: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountSigningIntent : Swift.Codable, Swift.Sendable {
+  public let accountAddress: Swift.String
+  public let actionType: Swift.String
+  public let businessAccountId: Swift.String
+  public let completeBy: Swift.String?
+  public let createdAt: Swift.String
+  public let initiatorUserId: Swift.String
+  public let intentId: Swift.String
+  public let lifetime: DynamicSdkWaas.BusinessAccountSigningIntentLifetime?
+  public let operation: DynamicSdkWaas.BusinessAccountSigningIntentOperation?
+  public let limits: DynamicSdkWaas.BusinessAccountSigningIntentLimits?
+  public init(accountAddress: Swift.String, actionType: Swift.String, businessAccountId: Swift.String, completeBy: Swift.String? = nil, createdAt: Swift.String, initiatorUserId: Swift.String, intentId: Swift.String, lifetime: DynamicSdkWaas.BusinessAccountSigningIntentLifetime? = nil, operation: DynamicSdkWaas.BusinessAccountSigningIntentOperation? = nil, limits: DynamicSdkWaas.BusinessAccountSigningIntentLimits? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountSigningIntentResult : Swift.Codable, Swift.Sendable {
+  public let status: Swift.String
+  public let intent: [Swift.String : DynamicSdkCore.DynamicJsonValue]?
+  public init(status: Swift.String, intent: [Swift.String : DynamicSdkCore.DynamicJsonValue]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountProposal : Swift.Codable, Swift.Sendable {
+  public let id: Swift.String
+  public let businessAccountId: Swift.String
+  public let actionType: Swift.String
+  public let status: Swift.String
+  public let initiatorUserId: Swift.String
+  public let intent: [Swift.String : DynamicSdkCore.DynamicJsonValue]
+  public let completeBy: Swift.String
+  public let createdAt: Swift.String
+  public let consumedAt: Swift.String?
+  public let autoExecute: Swift.Bool?
+  public let approvals: [DynamicSdkWaas.BusinessAccountProposalApprovalRecord]
+  public let subjects: [DynamicSdkWaas.BusinessAccountProposalSubject]?
+  public let approvalRequirements: [DynamicSdkWaas.BusinessAccountApprovalRequirement]?
+  public init(id: Swift.String, businessAccountId: Swift.String, actionType: Swift.String, status: Swift.String, initiatorUserId: Swift.String, intent: [Swift.String : DynamicSdkCore.DynamicJsonValue], completeBy: Swift.String, createdAt: Swift.String, consumedAt: Swift.String? = nil, autoExecute: Swift.Bool? = nil, approvals: [DynamicSdkWaas.BusinessAccountProposalApprovalRecord], subjects: [DynamicSdkWaas.BusinessAccountProposalSubject]? = nil, approvalRequirements: [DynamicSdkWaas.BusinessAccountApprovalRequirement]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct SigningProposalNotPendingError : DynamicSdkCore.DynamicNamedError, Foundation.LocalizedError, Swift.Sendable {
+  public let reason: Swift.String
+  public init(reason: Swift.String)
+  public var isTransportError: Swift.Bool {
+    get
+  }
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+public struct SigningProposalApprovalsRequiredError : DynamicSdkCore.DynamicNamedError, Foundation.LocalizedError, Swift.Sendable {
+  public let reason: Swift.String
+  public init(reason: Swift.String)
+  public var isTransportError: Swift.Bool {
+    get
+  }
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+public struct SigningProposalIntentUnavailableError : DynamicSdkCore.DynamicNamedError, Foundation.LocalizedError, Swift.Sendable {
+  public let reason: Swift.String
+  public init(reason: Swift.String)
+  public var isTransportError: Swift.Bool {
+    get
+  }
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+public struct SigningProposalWalletMismatchError : DynamicSdkCore.DynamicNamedError, Foundation.LocalizedError, Swift.Sendable {
+  public let reason: Swift.String
+  public init(reason: Swift.String)
+  public var isTransportError: Swift.Bool {
+    get
+  }
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+public struct SigningProposalNotEip7702AuthorizationError : DynamicSdkCore.DynamicNamedError, Foundation.LocalizedError, Swift.Sendable {
+  public let reason: Swift.String
+  public init(reason: Swift.String)
+  public var isTransportError: Swift.Bool {
+    get
+  }
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+public struct SigningProposalSignatureMalformedError : DynamicSdkCore.DynamicNamedError, Foundation.LocalizedError, Swift.Sendable {
+  public let reason: Swift.String
+  public init(reason: Swift.String)
+  public var isTransportError: Swift.Bool {
+    get
+  }
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
+public struct SigningProposalSignatureMismatchError : DynamicSdkCore.DynamicNamedError, Foundation.LocalizedError, Swift.Sendable {
+  public let reason: Swift.String
+  public init(reason: Swift.String)
+  public var isTransportError: Swift.Bool {
+    get
+  }
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
 @_Concurrency.MainActor public protocol WaasEngine : Swift.Sendable {
   @_Concurrency.MainActor func initialize(environmentId: Swift.String, chainName: Swift.String, authToken: Swift.String, apiBaseUrl: Swift.String, hostOrigin: Swift.String?) async throws
   @_Concurrency.MainActor func createWallet(chainName: Swift.String, authToken: Swift.String, signedSessionId: Swift.String, thresholdSignatureScheme: Swift.String) async throws -> DynamicSdkCore.WaasCreatedWallet
   @_Concurrency.MainActor func createBusinessAccountWallet(payload: DynamicSdkWaas.WaasBusinessAccountWalletPayload) async throws -> DynamicSdkCore.WaasCreatedWallet
   @_Concurrency.MainActor func reshareBusinessAccountSigner(payload: DynamicSdkWaas.WaasBusinessAccountSignerPayload) async throws -> DynamicSdkWaas.WaasBusinessAccountSignerResponse
+  @_Concurrency.MainActor func resumeSigningIntent(payload: DynamicSdkWaas.WaasResumeSigningIntentPayload) async throws -> Swift.String
+  @_Concurrency.MainActor func prepareSigningIntent(payload: DynamicSdkWaas.WaasPrepareSigningIntentPayload) async throws -> Swift.String
+  @_Concurrency.MainActor func prepareExportIntent(payload: DynamicSdkWaas.WaasPrepareExportIntentPayload) async throws -> Swift.String
   @_Concurrency.MainActor func signMessage(chainName: Swift.String, accountAddress: Swift.String, message: Swift.String, authToken: Swift.String, signedSessionId: Swift.String, elevatedAccessToken: Swift.String?) async throws -> Swift.String
+  @_Concurrency.MainActor func signRawMessage(chainName: Swift.String, accountAddress: Swift.String, message: Swift.String, authToken: Swift.String, signedSessionId: Swift.String, elevatedAccessToken: Swift.String?, rawSign: DynamicSdkWaas.BusinessAccountSigningIntentRawSign?, password: Swift.String?) async throws -> Swift.String
   @_Concurrency.MainActor func signTypedData(chainName: Swift.String, accountAddress: Swift.String, typedData: Swift.String, authToken: Swift.String, signedSessionId: Swift.String, elevatedAccessToken: Swift.String?) async throws -> Swift.String
   @_Concurrency.MainActor func signEvm7702Authorization(chainName: Swift.String, accountAddress: Swift.String, authorizationHash: Swift.String, chainId: Swift.Int64, accountNonce: Swift.Int64, contractAddress: Swift.String, authToken: Swift.String, signedSessionId: Swift.String, elevatedAccessToken: Swift.String?) async throws -> DynamicSdkCore.Evm7702Authorization
   @_Concurrency.MainActor func signTransaction(chainName: Swift.String, accountAddress: Swift.String, transaction: Swift.String, chainId: Swift.String?, signingIndexes: [Swift.Int]?, allowedSighash: [Swift.Int]?, authToken: Swift.String, signedSessionId: Swift.String, elevatedAccessToken: Swift.String?) async throws -> Swift.String
@@ -511,6 +808,9 @@ public enum DynamicWaasLockPolicy : Swift.Equatable, Swift.Sendable {
   @_Concurrency.MainActor final public func createWallet(payloadJson: Swift.String) async throws -> Swift.String
   @_Concurrency.MainActor final public func importPrivateKey(payloadJson: Swift.String) async throws -> Swift.String
   @_Concurrency.MainActor final public func signMessage(payloadJson: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func resumeSigningIntent(payloadJson: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func prepareSigningIntent(payloadJson: Swift.String) async throws -> Swift.String
+  @_Concurrency.MainActor final public func prepareExportIntent(payloadJson: Swift.String) async throws -> Swift.String
   @_Concurrency.MainActor final public func signRawMessage(payloadJson: Swift.String) async throws -> Swift.String
   @_Concurrency.MainActor final public func signTypedData(payloadJson: Swift.String) async throws -> Swift.String
   @_Concurrency.MainActor final public func signTransaction(payloadJson: Swift.String) async throws -> Swift.String

@@ -1,0 +1,90 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "xyz.dynamic",
+    "module": "dynamic-sdk-zerodev",
+    "version": "2.0.0-beta.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-zerodev-2.0.0-beta.2.aar",
+          "url": "dynamic-sdk-zerodev-2.0.0-beta.2.aar",
+          "size": 7779,
+          "sha512": "713c48a900aa6473710f4602ee55d52a6f5c2117053a9b914c91c65dc69bc68e9855a31ca640c66dda01bfcfa11e062ffeadce02911187c9bd804d413c152af0",
+          "sha256": "4e98887fa5959db53d4aa8e5e174f19e3abdd3c6967c5936f02178f2e9f76259",
+          "sha1": "cee03247c9d3f10ca265dbc06419ba97c6a727e2",
+          "md5": "94c3b5b2b9a0d157e323e1020ab52d5a"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-zerodev-2.0.0-beta.2.aar",
+          "url": "dynamic-sdk-zerodev-2.0.0-beta.2.aar",
+          "size": 7779,
+          "sha512": "713c48a900aa6473710f4602ee55d52a6f5c2117053a9b914c91c65dc69bc68e9855a31ca640c66dda01bfcfa11e062ffeadce02911187c9bd804d413c152af0",
+          "sha256": "4e98887fa5959db53d4aa8e5e174f19e3abdd3c6967c5936f02178f2e9f76259",
+          "sha1": "cee03247c9d3f10ca265dbc06419ba97c6a727e2",
+          "md5": "94c3b5b2b9a0d157e323e1020ab52d5a"
+        }
+      ]
+    }
+  ]
+}

@@ -34,6 +34,8 @@ import _SwiftConcurrencyShims
   @_Concurrency.MainActor final public var isDeviceRegistrationRequired: Swift.Bool {
     get
   }
+  @_Concurrency.MainActor final public func getDeviceRegistrationTokenFromUrl(url: Swift.String) throws -> Swift.String
+  @_Concurrency.MainActor final public func detectDeviceRegistrationRedirect(url: Swift.String) -> Swift.Bool
   @_Concurrency.MainActor final public func completeDeviceRegistration(deviceToken: Swift.String) async throws -> DynamicSdkCore.VerifyResponse
   @_Concurrency.MainActor final public func revokeRegisteredDevice(deviceRegistrationId: Swift.String) async throws
   @_Concurrency.MainActor final public func revokeAllRegisteredDevices() async throws
@@ -716,6 +718,16 @@ public struct ZerodevMultichainProvider : Swift.Codable, Swift.Sendable {
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
+public struct InvalidDeviceRegistrationRedirectError : DynamicSdkCore.DynamicNamedError, Foundation.LocalizedError, Swift.Sendable {
+  public let reason: Swift.String
+  public init(reason: Swift.String)
+  public var isTransportError: Swift.Bool {
+    get
+  }
+  public var errorDescription: Swift.String? {
+    get
+  }
+}
 @_Concurrency.MainActor public protocol DynamicExtension : Swift.Sendable {
   @_Concurrency.MainActor var name: Swift.String { get }
   @_Concurrency.MainActor func install(client: DynamicSdkCore.DynamicClient)
@@ -816,6 +828,10 @@ public struct ExternalWalletAccount : Swift.Codable, Swift.Sendable {
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
+public protocol DynamicNamedError : Swift.Error {
+  var reason: Swift.String { get }
+  var isTransportError: Swift.Bool { get }
+}
 public enum DynamicError : Swift.Error, Swift.Sendable {
   case network(reason: Swift.String)
   case api(status: Swift.Int, code: Swift.String, reason: Swift.String, mergeConflicts: DynamicSdkCore.MergeConflicts? = nil)
@@ -823,6 +839,7 @@ public enum DynamicError : Swift.Error, Swift.Sendable {
   case state(reason: Swift.String)
   case storage(reason: Swift.String)
   case businessAccountIntentRequired(intent: [Swift.String : DynamicSdkCore.DynamicJsonValue])
+  case named(any DynamicSdkCore.DynamicNamedError)
 }
 public struct DynamicConfig : Swift.Sendable {
   public let environmentId: Swift.String
@@ -891,6 +908,7 @@ public protocol EvmService : Swift.Sendable {
   func getTransactionCount(address: Swift.String, network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String
   func getGasPrice(network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String
   func estimateGas(request: DynamicSdkCore.EvmTxRequest, network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String
+  func calculateTransactionFee(request: DynamicSdkCore.EvmTxRequest, network: DynamicSdkCore.EvmNetwork) async throws -> DynamicSdkCore.EvmTransactionFeeData
   func call(request: DynamicSdkCore.EvmTxRequest, network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String
   func encodeFunctionData(function: DynamicSdkCore.EvmContractFunction, arguments: [Swift.String]) async throws -> Swift.String
   func decodeFunctionResult(function: DynamicSdkCore.EvmContractFunction, data: Swift.String) async throws -> [Swift.String]
@@ -898,6 +916,7 @@ public protocol EvmService : Swift.Sendable {
   func getCode(address: Swift.String, network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String?
   func generateSecureNonce() async throws -> Swift.String
   func hashEip7702Authorization(chainId: Swift.Int64, contractAddress: Swift.String, nonce: Swift.Int64) async throws -> Swift.String
+  func recoverEip7702Authorization(contractAddress: Swift.String, chainId: Swift.Int64, nonce: Swift.Int64, signature: Swift.String) async throws -> DynamicSdkCore.Evm7702RecoveredAuthorization?
   func buildSponsoredTransactionTypedData(calls: [DynamicSdkCore.EvmSponsoredCall], chainId: Swift.Int64, deadline: Swift.String, mode: Swift.String, nonce: Swift.String, relayer: Swift.String, verifyingContract: Swift.String) async throws -> Swift.String
   func buildUnsignedTransaction(request: DynamicSdkCore.EvmTxRequest, network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String
   func broadcastTransaction(signedTransaction: Swift.String, network: DynamicSdkCore.EvmNetwork) async throws -> Swift.String
@@ -943,6 +962,9 @@ public protocol SolanaTransactionSponsor : Swift.Sendable {
   @_Concurrency.MainActor func getAvailableEvmGaslessRelayer(chainId: Swift.Int64) async throws -> Swift.String
   @_Concurrency.MainActor func sponsorEvmTransaction(request: DynamicSdkCore.SponsorEvmTransactionRequest) async throws -> Swift.String
   @_Concurrency.MainActor func getEvmSponsoredTransactionStatus(requestId: Swift.String) async throws -> DynamicSdkCore.EvmSponsoredTransactionStatusResponse
+}
+@_Concurrency.MainActor public protocol Evm7702AuthorizationVerifier : Swift.Sendable {
+  @_Concurrency.MainActor func recoverEvm7702Authorization(contractAddress: Swift.String, chainId: Swift.Int64, nonce: Swift.Int64, signature: Swift.String) async throws -> DynamicSdkCore.Evm7702RecoveredAuthorization?
 }
 @_Concurrency.MainActor public protocol ExportPrivateKeyCapability : Swift.Sendable {
   @_Concurrency.MainActor func exportPrivateKey(chain: Swift.String, accountAddress: Swift.String) async throws
@@ -1010,6 +1032,16 @@ public enum EvmSponsoredTransactionStatus : Swift.String, Swift.Codable, Swift.S
     get
   }
 }
+public enum BtcFeePriority : Swift.String, Swift.Codable, Swift.Sendable {
+  case low
+  case medium
+  case high
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
 public struct EvmNetwork : Swift.Codable, Swift.Sendable {
   public let chainId: Swift.Int64
   public let rpcUrl: Swift.String
@@ -1028,6 +1060,18 @@ public struct EvmTxRequest : Swift.Codable, Swift.Sendable {
   public let maxPriorityFeePerGas: Swift.String?
   public let nonce: Swift.String?
   public init(from: Swift.String, to: Swift.String, value: Swift.String? = nil, data: Swift.String? = nil, gasLimit: Swift.String? = nil, maxFeePerGas: Swift.String? = nil, maxPriorityFeePerGas: Swift.String? = nil, nonce: Swift.String? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct EvmTransactionFeeData : Swift.Codable, Swift.Sendable {
+  public let gasEstimate: Swift.String
+  public let gasPrice: Swift.String?
+  public let maxFeePerGas: Swift.String?
+  public let maxPriorityFeePerGas: Swift.String?
+  public let nativeAmount: Swift.String
+  public let humanReadableAmount: Swift.String?
+  public let usdAmount: Swift.String?
+  public init(gasEstimate: Swift.String, gasPrice: Swift.String? = nil, maxFeePerGas: Swift.String? = nil, maxPriorityFeePerGas: Swift.String? = nil, nativeAmount: Swift.String, humanReadableAmount: Swift.String? = nil, usdAmount: Swift.String? = nil)
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
@@ -1064,6 +1108,13 @@ public struct Evm7702Authorization : Swift.Codable, Swift.Sendable {
   public let s: Swift.String
   public let yParity: Swift.Int
   public init(address: Swift.String, chainId: Swift.Int64, nonce: Swift.Int64, r: Swift.String, s: Swift.String, yParity: Swift.Int)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct Evm7702RecoveredAuthorization : Swift.Codable, Swift.Sendable {
+  public let authorization: DynamicSdkCore.Evm7702Authorization
+  public let signer: Swift.String
+  public init(authorization: DynamicSdkCore.Evm7702Authorization, signer: Swift.String)
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
@@ -1249,232 +1300,12 @@ public struct SuiReceipt : Swift.Codable, Swift.Sendable {
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
-public struct SuiGetBalanceVariables : Swift.Codable, Swift.Sendable {
-  public let owner: Swift.String
-  public let coinType: Swift.String
-  public init(owner: Swift.String, coinType: Swift.String)
-  public func requestBody() -> Swift.String
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiGetBalanceRequest : Swift.Codable, Swift.Sendable {
-  public let query: Swift.String
-  public let variables: DynamicSdkCore.SuiGetBalanceVariables
-  public init(query: Swift.String, variables: DynamicSdkCore.SuiGetBalanceVariables)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiTransactionStatusVariables : Swift.Codable, Swift.Sendable {
-  public let digest: Swift.String
-  public init(digest: Swift.String)
-  public func requestBody() -> Swift.String
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiTransactionStatusRequest : Swift.Codable, Swift.Sendable {
-  public let query: Swift.String
-  public let variables: DynamicSdkCore.SuiTransactionStatusVariables
-  public init(query: Swift.String, variables: DynamicSdkCore.SuiTransactionStatusVariables)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiGetCoinsVariables : Swift.Codable, Swift.Sendable {
-  public let owner: Swift.String
-  public let type: Swift.String
-  public init(owner: Swift.String, type: Swift.String)
-  public func requestBody() -> Swift.String
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiGetCoinsRequest : Swift.Codable, Swift.Sendable {
-  public let query: Swift.String
-  public let variables: DynamicSdkCore.SuiGetCoinsVariables
-  public init(query: Swift.String, variables: DynamicSdkCore.SuiGetCoinsVariables)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiExecuteTransactionVariables : Swift.Codable, Swift.Sendable {
-  public let bcs: Swift.String
-  public let sigs: [Swift.String]
-  public init(bcs: Swift.String, sigs: [Swift.String])
-  public func requestBody() -> Swift.String
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiExecuteTransactionRequest : Swift.Codable, Swift.Sendable {
-  public let query: Swift.String
-  public let variables: DynamicSdkCore.SuiExecuteTransactionVariables
-  public init(query: Swift.String, variables: DynamicSdkCore.SuiExecuteTransactionVariables)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
 public struct SuiGasCoinCandidate : Swift.Codable, Swift.Sendable {
   public let objectId: Swift.String
   public let version: Swift.String
   public let digest: Swift.String
   public let balanceMist: Swift.Int64
   public init(objectId: Swift.String, version: Swift.String, digest: Swift.String, balanceMist: Swift.Int64)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiGraphQlError : Swift.Codable, Swift.Sendable {
-  public let message: Swift.String?
-  public init(message: Swift.String? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiBalanceEnvelope : Swift.Codable, Swift.Sendable {
-  public let data: DynamicSdkCore.SuiBalanceResponse?
-  public let errors: [DynamicSdkCore.SuiGraphQlError]?
-  public init(data: DynamicSdkCore.SuiBalanceResponse? = nil, errors: [DynamicSdkCore.SuiGraphQlError]? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiGasPriceEnvelope : Swift.Codable, Swift.Sendable {
-  public let data: DynamicSdkCore.SuiGasPriceResponse?
-  public let errors: [DynamicSdkCore.SuiGraphQlError]?
-  public init(data: DynamicSdkCore.SuiGasPriceResponse? = nil, errors: [DynamicSdkCore.SuiGraphQlError]? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiTransactionStatusEnvelope : Swift.Codable, Swift.Sendable {
-  public let data: DynamicSdkCore.SuiTransactionStatusResponse?
-  public let errors: [DynamicSdkCore.SuiGraphQlError]?
-  public init(data: DynamicSdkCore.SuiTransactionStatusResponse? = nil, errors: [DynamicSdkCore.SuiGraphQlError]? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiCoinsEnvelope : Swift.Codable, Swift.Sendable {
-  public let data: DynamicSdkCore.SuiCoinsResponse?
-  public let errors: [DynamicSdkCore.SuiGraphQlError]?
-  public init(data: DynamicSdkCore.SuiCoinsResponse? = nil, errors: [DynamicSdkCore.SuiGraphQlError]? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiExecuteEnvelope : Swift.Codable, Swift.Sendable {
-  public let data: DynamicSdkCore.SuiExecuteResponse?
-  public let errors: [DynamicSdkCore.SuiGraphQlError]?
-  public init(data: DynamicSdkCore.SuiExecuteResponse? = nil, errors: [DynamicSdkCore.SuiGraphQlError]? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiCoinBalance : Swift.Codable, Swift.Sendable {
-  public let totalBalance: Swift.String?
-  public init(totalBalance: Swift.String? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiAddressBalance : Swift.Codable, Swift.Sendable {
-  public let balance: DynamicSdkCore.SuiCoinBalance?
-  public init(balance: DynamicSdkCore.SuiCoinBalance? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiBalanceResponse : Swift.Codable, Swift.Sendable {
-  public let address: DynamicSdkCore.SuiAddressBalance?
-  public init(address: DynamicSdkCore.SuiAddressBalance? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiEpoch : Swift.Codable, Swift.Sendable {
-  public let referenceGasPrice: Swift.String?
-  public init(referenceGasPrice: Swift.String? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiGasPriceResponse : Swift.Codable, Swift.Sendable {
-  public let epoch: DynamicSdkCore.SuiEpoch?
-  public init(epoch: DynamicSdkCore.SuiEpoch? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiCheckpoint : Swift.Codable, Swift.Sendable {
-  public let sequenceNumber: Swift.String?
-  public init(sequenceNumber: Swift.String? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiExecutionError : Swift.Codable, Swift.Sendable {
-  public let message: Swift.String?
-  public init(message: Swift.String? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiTransactionEffects : Swift.Codable, Swift.Sendable {
-  public let status: Swift.String?
-  public let checkpoint: DynamicSdkCore.SuiCheckpoint?
-  public let executionError: DynamicSdkCore.SuiExecutionError?
-  public init(status: Swift.String? = nil, checkpoint: DynamicSdkCore.SuiCheckpoint? = nil, executionError: DynamicSdkCore.SuiExecutionError? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiTransactionStatusResponse : Swift.Codable, Swift.Sendable {
-  public let transactionEffects: DynamicSdkCore.SuiTransactionEffects?
-  public init(transactionEffects: DynamicSdkCore.SuiTransactionEffects? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiCoinFields : Swift.Codable, Swift.Sendable {
-  public let balance: Swift.String?
-  public init(balance: Swift.String? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiCoinContents : Swift.Codable, Swift.Sendable {
-  public let json: DynamicSdkCore.SuiCoinFields?
-  public init(json: DynamicSdkCore.SuiCoinFields? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiCoinNode : Swift.Codable, Swift.Sendable {
-  public let address: Swift.String
-  public let version: Swift.String
-  public let digest: Swift.String
-  public let contents: DynamicSdkCore.SuiCoinContents?
-  public init(address: Swift.String, version: Swift.String, digest: Swift.String, contents: DynamicSdkCore.SuiCoinContents? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiObjectConnection : Swift.Codable, Swift.Sendable {
-  public let nodes: [DynamicSdkCore.SuiCoinNode]?
-  public init(nodes: [DynamicSdkCore.SuiCoinNode]? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiOwnedObjects : Swift.Codable, Swift.Sendable {
-  public let objects: DynamicSdkCore.SuiObjectConnection?
-  public init(objects: DynamicSdkCore.SuiObjectConnection? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiCoinsResponse : Swift.Codable, Swift.Sendable {
-  public let address: DynamicSdkCore.SuiOwnedObjects?
-  public init(address: DynamicSdkCore.SuiOwnedObjects? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiTransactionDigest : Swift.Codable, Swift.Sendable {
-  public let digest: Swift.String?
-  public init(digest: Swift.String? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiExecuteEffects : Swift.Codable, Swift.Sendable {
-  public let transaction: DynamicSdkCore.SuiTransactionDigest?
-  public init(transaction: DynamicSdkCore.SuiTransactionDigest? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiExecuteResult : Swift.Codable, Swift.Sendable {
-  public let errors: [Swift.String]?
-  public let effects: DynamicSdkCore.SuiExecuteEffects?
-  public init(errors: [Swift.String]? = nil, effects: DynamicSdkCore.SuiExecuteEffects? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct SuiExecuteResponse : Swift.Codable, Swift.Sendable {
-  public let executeTransaction: DynamicSdkCore.SuiExecuteResult?
-  public init(executeTransaction: DynamicSdkCore.SuiExecuteResult? = nil)
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
@@ -1645,6 +1476,9 @@ extension DynamicSdkCore.SolanaSponsorshipMode : Swift.RawRepresentable {}
 extension DynamicSdkCore.EvmSponsoredTransactionStatus : Swift.Equatable {}
 extension DynamicSdkCore.EvmSponsoredTransactionStatus : Swift.Hashable {}
 extension DynamicSdkCore.EvmSponsoredTransactionStatus : Swift.RawRepresentable {}
+extension DynamicSdkCore.BtcFeePriority : Swift.Equatable {}
+extension DynamicSdkCore.BtcFeePriority : Swift.Hashable {}
+extension DynamicSdkCore.BtcFeePriority : Swift.RawRepresentable {}
 extension DynamicSdkCore.Wallet : Swift.Sendable {}
 extension DynamicSdkCore.DynamicCaptchaWidget : Swift.Sendable {}
 extension DynamicSdkCore.DynamicOAuthBrowser : Swift.Sendable {}

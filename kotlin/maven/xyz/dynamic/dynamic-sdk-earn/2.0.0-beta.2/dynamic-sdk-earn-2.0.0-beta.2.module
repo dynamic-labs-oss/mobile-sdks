@@ -1,0 +1,104 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "xyz.dynamic",
+    "module": "dynamic-sdk-earn",
+    "version": "2.0.0-beta.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.2"
+          }
+        },
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk-evm",
+          "version": {
+            "requires": "2.0.0-beta.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-earn-2.0.0-beta.2.aar",
+          "url": "dynamic-sdk-earn-2.0.0-beta.2.aar",
+          "size": 137658,
+          "sha512": "2dbe1c0e6406c2e29a1326b47fc1f62620e7e4ee0c4e2dc3e15ae497395a8a58afce9dd61626c9319498aa3db0c9d8ae17b091f089b41e26433888fee370e779",
+          "sha256": "8602ea441fec44f730701d2cf34adb7c8a756e946565206a02d553be5e034a2f",
+          "sha1": "e98e44ff89f8163a5726f35283afd1656bdb6655",
+          "md5": "6d1d2214fae3c18a40b3734d51c08744"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.2"
+          }
+        },
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk-evm",
+          "version": {
+            "requires": "2.0.0-beta.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-earn-2.0.0-beta.2.aar",
+          "url": "dynamic-sdk-earn-2.0.0-beta.2.aar",
+          "size": 137658,
+          "sha512": "2dbe1c0e6406c2e29a1326b47fc1f62620e7e4ee0c4e2dc3e15ae497395a8a58afce9dd61626c9319498aa3db0c9d8ae17b091f089b41e26433888fee370e779",
+          "sha256": "8602ea441fec44f730701d2cf34adb7c8a756e946565206a02d553be5e034a2f",
+          "sha1": "e98e44ff89f8163a5726f35283afd1656bdb6655",
+          "md5": "6d1d2214fae3c18a40b3734d51c08744"
+        }
+      ]
+    }
+  ]
+}

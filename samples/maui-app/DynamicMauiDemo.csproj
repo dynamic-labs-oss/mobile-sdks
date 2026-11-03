@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <!-- Full-parity MAUI demo of the generated C# SDK, driving the SHARED native
-       WaaS/secure-storage/OAuth via Dynamic.Sdk.MAUI. Mirrors examples/flutter-app. -->
+       WaaS/secure-storage/OAuth via Dynamic.Sdk.Mobile. Mirrors examples/flutter-app. -->
   <PropertyGroup>
     <TargetFrameworks>net10.0-android;net10.0-ios</TargetFrameworks>
-    <DynamicSdkVersion>2.0.0-beta.1</DynamicSdkVersion>
+    <DynamicSdkVersion>2.0.0-beta.2</DynamicSdkVersion>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <OutputType>Exe</OutputType>
     <UseMaui>true</UseMaui>
@@ -59,17 +59,18 @@
     <PackageReference Include="Dynamic.Sdk" Version="$(DynamicSdkVersion)" />
     <PackageReference Include="Dynamic.Sdk.Btc" Version="$(DynamicSdkVersion)" />
     <PackageReference Include="Dynamic.Sdk.BusinessAccount" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.PolicyEngine" Version="$(DynamicSdkVersion)" />
     <PackageReference Include="Dynamic.Sdk.Earn" Version="$(DynamicSdkVersion)" />
     <PackageReference Include="Dynamic.Sdk.Evm" Version="$(DynamicSdkVersion)" />
     <PackageReference Include="Dynamic.Sdk.ExportPrivateKey" Version="$(DynamicSdkVersion)" />
     <PackageReference Include="Dynamic.Sdk.ExternalWallet" Version="$(DynamicSdkVersion)" />
     <PackageReference Include="Dynamic.Sdk.ExternalWallet.Phantom" Version="$(DynamicSdkVersion)" />
-    <PackageReference Include="Dynamic.Sdk.MAUI" Version="$(DynamicSdkVersion)" />
-    <PackageReference Include="Dynamic.Sdk.MAUI.Captcha" Version="$(DynamicSdkVersion)" />
-    <PackageReference Include="Dynamic.Sdk.MAUI.ExportPrivateKey" Version="$(DynamicSdkVersion)" />
-    <PackageReference Include="Dynamic.Sdk.MAUI.ExternalWallet.Coinbase" Version="$(DynamicSdkVersion)" />
-    <PackageReference Include="Dynamic.Sdk.MAUI.LegacyWalletUpgrade" Version="$(DynamicSdkVersion)" />
-    <PackageReference Include="Dynamic.Sdk.MAUI.Waas" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.Mobile" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.Mobile.Captcha" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.Mobile.ExportPrivateKey" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.Mobile.ExternalWallet.Coinbase" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.Mobile.LegacyWalletUpgrade" Version="$(DynamicSdkVersion)" />
+    <PackageReference Include="Dynamic.Sdk.Mobile.Waas" Version="$(DynamicSdkVersion)" />
     <PackageReference Include="Dynamic.Sdk.Solana" Version="$(DynamicSdkVersion)" />
     <PackageReference Include="Dynamic.Sdk.Stellar" Version="$(DynamicSdkVersion)" />
     <PackageReference Include="Dynamic.Sdk.Sui" Version="$(DynamicSdkVersion)" />
@@ -78,7 +79,7 @@
     <PackageReference Include="Dynamic.Sdk.Zerodev" Version="$(DynamicSdkVersion)" />
   </ItemGroup>
 
-  <!-- This demo consumes Dynamic.Sdk.MAUI by PROJECT reference, so it does NOT
+  <!-- This demo consumes Dynamic.Sdk.Mobile by PROJECT reference, so it does NOT
        get the package's buildTransitive DataStore fix — it replicates it here.
        A real app that installs the NuGet only needs the three ExcludeAssets lines
        (the two jvm jars arrive automatically via buildTransitive). See README. -->

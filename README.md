@@ -19,7 +19,7 @@ Add this repository as a Swift Package Manager dependency. Select only the Dynam
 ```swift
 .package(
     url: "https://github.com/dynamic-labs-oss/mobile-sdks.git",
-    exact: "2.0.0-beta.1"
+    exact: "2.0.0-beta.2"
 )
 ```
 
@@ -29,7 +29,7 @@ Download the Kotlin release archive or use the Maven repository in `kotlin/maven
 
 ```kotlin
 dependencies {
-    implementation("xyz.dynamic:dynamic-sdk:2.0.0-beta.1")
+    implementation("xyz.dynamic:dynamic-sdk:2.0.0-beta.2")
 }
 ```
 
@@ -38,7 +38,7 @@ dependencies {
 Download the .NET release archive or add `dotnet/packages` as a NuGet package source.
 
 ```xml
-<PackageReference Include="Dynamic.Sdk" Version="2.0.0-beta.1" />
+<PackageReference Include="Dynamic.Sdk" Version="2.0.0-beta.2" />
 ```
 
 ## Samples
