@@ -120,8 +120,8 @@ final class Store: ObservableObject {
     // Sui networks the demo supports. The first (testnet) is the initial
     // active network; switch at runtime via client.wallets.setActiveSuiNetwork.
     private static let suiNetworks = [
-        SuiNetwork(rpcUrl: "https://graphql.testnet.sui.io/graphql", name: "Testnet", cluster: "testnet"),
-        SuiNetwork(rpcUrl: "https://graphql.devnet.sui.io/graphql", name: "Devnet", cluster: "devnet"),
+        SuiNetwork(rpcUrl: "https://fullnode.testnet.sui.io:443", name: "Testnet", cluster: "testnet"),
+        SuiNetwork(rpcUrl: "https://fullnode.devnet.sui.io:443", name: "Devnet", cluster: "devnet"),
     ]
 
     // BTC network(s) the demo supports. BtcExtension has no headless
@@ -716,7 +716,14 @@ final class Store: ObservableObject {
     func send(chain: String, address: String, to: String, amountToken: String) async -> String? {
         do {
             guard await ensureStepUp(scope: "wallet:sign") else { return nil }
-            guard let amount = Decimal(string: amountToken) else { return nil }
+            guard !to.isEmpty else {
+                toast = "Enter a recipient address"
+                return nil
+            }
+            guard let amount = Decimal(string: amountToken), amount > 0 else {
+                toast = "Amount must be greater than zero"
+                return nil
+            }
             var scaled = amount * unitsPerToken(chain)
             var rounded = Decimal()
             NSDecimalRound(&rounded, &scaled, 0, .down)
@@ -736,6 +743,25 @@ final class Store: ObservableObject {
             toast = message(error)
             return nil
         }
+    }
+
+    func waitForSuiTransaction(digest: String) async -> String {
+        for attempt in 0..<10 {
+            do {
+                if let receipt = try await sui.getTransactionStatus(digest: digest) {
+                    if receipt.status {
+                        return "Succeeded at checkpoint \(receipt.checkpoint ?? "pending")."
+                    }
+                    return "Failed on-chain: \(receipt.err ?? "unknown execution error")"
+                }
+            } catch {
+                return "Status lookup failed: \(message(error))"
+            }
+            if attempt < 9 {
+                try? await Task.sleep(nanoseconds: 1_000_000_000)
+            }
+        }
+        return "Pending: digest was broadcast but is not indexed yet."
     }
 
     func sign(wallet: Wallet, message text: String) async -> String? {

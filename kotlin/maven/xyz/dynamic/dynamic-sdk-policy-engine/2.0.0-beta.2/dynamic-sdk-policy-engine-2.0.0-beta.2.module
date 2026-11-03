@@ -1,0 +1,104 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "xyz.dynamic",
+    "module": "dynamic-sdk-policy-engine",
+    "version": "2.0.0-beta.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.2"
+          }
+        },
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk-waas",
+          "version": {
+            "requires": "2.0.0-beta.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-policy-engine-2.0.0-beta.2.aar",
+          "url": "dynamic-sdk-policy-engine-2.0.0-beta.2.aar",
+          "size": 74953,
+          "sha512": "41115a281f71a33d96e10f41910eb0e4a02011e2d055bcd78821467d6b4f0279affe6db4dab3a9716e2d243d7831c057fb84a788beeb5f909a30c848cfb25d9e",
+          "sha256": "17dbc49f5d19c93b29dada76f3b27d89df4a0b5d30b0063b3a52bb897c6fcf5d",
+          "sha1": "68e0ea577f25f0697c6b55e39af34bdff83c28d8",
+          "md5": "4606e9f3a9be5d33ddb771894d4bf6c1"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.2"
+          }
+        },
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk-waas",
+          "version": {
+            "requires": "2.0.0-beta.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-policy-engine-2.0.0-beta.2.aar",
+          "url": "dynamic-sdk-policy-engine-2.0.0-beta.2.aar",
+          "size": 74953,
+          "sha512": "41115a281f71a33d96e10f41910eb0e4a02011e2d055bcd78821467d6b4f0279affe6db4dab3a9716e2d243d7831c057fb84a788beeb5f909a30c848cfb25d9e",
+          "sha256": "17dbc49f5d19c93b29dada76f3b27d89df4a0b5d30b0063b3a52bb897c6fcf5d",
+          "sha1": "68e0ea577f25f0697c6b55e39af34bdff83c28d8",
+          "md5": "4606e9f3a9be5d33ddb771894d4bf6c1"
+        }
+      ]
+    }
+  ]
+}

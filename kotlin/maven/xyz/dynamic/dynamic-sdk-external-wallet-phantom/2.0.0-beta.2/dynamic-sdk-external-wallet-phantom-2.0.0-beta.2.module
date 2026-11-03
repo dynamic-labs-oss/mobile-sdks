@@ -1,0 +1,123 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "xyz.dynamic",
+    "module": "dynamic-sdk-external-wallet-phantom",
+    "version": "2.0.0-beta.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk-external-wallet",
+          "version": {
+            "requires": "2.0.0-beta.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-external-wallet-phantom-2.0.0-beta.2.aar",
+          "url": "dynamic-sdk-external-wallet-phantom-2.0.0-beta.2.aar",
+          "size": 20124,
+          "sha512": "d3941b56ff80d83cb4f64af9bd31ba2a2d4b41b59cfad33b5eefe40077e4683533c8eae4679c99f478c21dafe4d09716d46dab2a4be3c0f6932cd1277f33b9b0",
+          "sha256": "bc5d33d2d5dece674e5fac895cba86649ab6ebda4be5c7531f319d017c158c16",
+          "sha1": "7db42c5d22d557823cb4aa0a2192cd980309f274",
+          "md5": "484f5cad446c6e468a26efb6b6c549f3"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.goterl",
+          "module": "lazysodium-android",
+          "version": {
+            "requires": "5.2.0"
+          },
+          "excludes": [
+            {
+              "group": "net.java.dev.jna",
+              "module": "jna"
+            }
+          ]
+        },
+        {
+          "group": "net.java.dev.jna",
+          "module": "jna",
+          "version": {
+            "requires": "5.14.0"
+          },
+          "excludes": [
+            {
+              "group": "*",
+              "module": "*"
+            }
+          ],
+          "thirdPartyCompatibility": {
+            "artifactSelector": {
+              "name": "jna",
+              "type": "aar",
+              "extension": "aar"
+            }
+          }
+        },
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk-external-wallet",
+          "version": {
+            "requires": "2.0.0-beta.2"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-external-wallet-phantom-2.0.0-beta.2.aar",
+          "url": "dynamic-sdk-external-wallet-phantom-2.0.0-beta.2.aar",
+          "size": 20124,
+          "sha512": "d3941b56ff80d83cb4f64af9bd31ba2a2d4b41b59cfad33b5eefe40077e4683533c8eae4679c99f478c21dafe4d09716d46dab2a4be3c0f6932cd1277f33b9b0",
+          "sha256": "bc5d33d2d5dece674e5fac895cba86649ab6ebda4be5c7531f319d017c158c16",
+          "sha1": "7db42c5d22d557823cb4aa0a2192cd980309f274",
+          "md5": "484f5cad446c6e468a26efb6b6c549f3"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "xyz.dynamic",
+    "module": "dynamic-sdk-solana",
+    "version": "2.0.0-beta.2",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.2"
+          }
+        },
+        {
+          "group": "com.solanamobile",
+          "module": "web3-solana",
+          "version": {
+            "requires": "0.3.0-beta4"
+          }
+        },
+        {
+          "group": "com.solanamobile",
+          "module": "rpc-solana",
+          "version": {
+            "requires": "0.2.8"
+          }
+        },
+        {
+          "group": "com.solanamobile",
+          "module": "rpc-core",
+          "version": {
+            "requires": "0.2.8"
+          }
+        },
+        {
+          "group": "com.solanamobile",
+          "module": "rpc-okiodriver",
+          "version": {
+            "requires": "0.2.8"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-solana-2.0.0-beta.2.aar",
+          "url": "dynamic-sdk-solana-2.0.0-beta.2.aar",
+          "size": 41443,
+          "sha512": "94c4e7158ba014d0f76e32fd88a01d631f3cbe6e82296a95ef340730a144d2840b37f7822abf915de023bfb1850386dd140d337706c3849d65748f9235e868ba",
+          "sha256": "0ee937cab917e55d8183b89f1cc1c97b6929e2ea5e011084afb84190d108928f",
+          "sha1": "aaa576a5778db9543a3ed78e521017e5446d40de",
+          "md5": "55778e3f1e91489c41aaaebac49edba2"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.squareup.okhttp3",
+          "module": "okhttp",
+          "version": {
+            "requires": "4.12.0"
+          }
+        },
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.2"
+          }
+        },
+        {
+          "group": "com.solanamobile",
+          "module": "web3-solana",
+          "version": {
+            "requires": "0.3.0-beta4"
+          }
+        },
+        {
+          "group": "com.solanamobile",
+          "module": "rpc-solana",
+          "version": {
+            "requires": "0.2.8"
+          }
+        },
+        {
+          "group": "com.solanamobile",
+          "module": "rpc-core",
+          "version": {
+            "requires": "0.2.8"
+          }
+        },
+        {
+          "group": "com.solanamobile",
+          "module": "rpc-okiodriver",
+          "version": {
+            "requires": "0.2.8"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-solana-2.0.0-beta.2.aar",
+          "url": "dynamic-sdk-solana-2.0.0-beta.2.aar",
+          "size": 41443,
+          "sha512": "94c4e7158ba014d0f76e32fd88a01d631f3cbe6e82296a95ef340730a144d2840b37f7822abf915de023bfb1850386dd140d337706c3849d65748f9235e868ba",
+          "sha256": "0ee937cab917e55d8183b89f1cc1c97b6929e2ea5e011084afb84190d108928f",
+          "sha1": "aaa576a5778db9543a3ed78e521017e5446d40de",
+          "md5": "55778e3f1e91489c41aaaebac49edba2"
+        }
+      ]
+    }
+  ]
+}

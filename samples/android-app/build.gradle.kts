@@ -8,6 +8,8 @@ plugins {
     // The generated SDK core's models are @Serializable (kotlinx.serialization) —
     // this compiler plugin generates their KSerializer.
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.21" apply false
+    // Required by the Sui gRPC module included as a local project.
+    id("com.google.protobuf") version "0.10.0" apply false
 }
 
 allprojects {

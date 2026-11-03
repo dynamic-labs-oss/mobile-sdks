@@ -128,8 +128,8 @@ object Sdk {
     // Sui networks the demo supports. The first (devnet) is the initial
     // active network; switch at runtime via client.wallets.setActiveSuiNetwork(name).
     private val SUI_NETWORKS = listOf(
-        SuiNetwork("https://graphql.devnet.sui.io/graphql", "Devnet", "devnet"),
-        SuiNetwork("https://graphql.testnet.sui.io/graphql", "Testnet", "testnet"),
+        SuiNetwork("https://fullnode.devnet.sui.io:443", "Devnet", "devnet"),
+        SuiNetwork("https://fullnode.testnet.sui.io:443", "Testnet", "testnet"),
     )
 
     private val STELLAR_NETWORKS = listOf(
