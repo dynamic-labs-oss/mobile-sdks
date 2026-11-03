@@ -31,9 +31,9 @@ extension DynamicSdkCore.DynamicClient {
   @_Concurrency.MainActor func setBusinessAccountGovernance(businessAccountId: Swift.String, governance: [Swift.String : [DynamicSdkBusinessAccount.BusinessAccountGovernanceRequirement]], autoExecute: Swift.Bool?, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent?) async throws -> DynamicSdkBusinessAccount.BusinessAccountVersionResult
   @_Concurrency.MainActor func defineBusinessAccountRole(businessAccountId: Swift.String, role: Swift.String, inherits: Swift.String, autoExecute: Swift.Bool?, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent?) async throws -> DynamicSdkBusinessAccount.BusinessAccountVersionResult
   @_Concurrency.MainActor func deleteBusinessAccountRole(businessAccountId: Swift.String, role: Swift.String, autoExecute: Swift.Bool?, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent?) async throws -> DynamicSdkBusinessAccount.BusinessAccountVersionResult
-  @_Concurrency.MainActor func listBusinessAccountProposals(businessAccountId: Swift.String, status: Swift.String?) async throws -> [DynamicSdkBusinessAccount.BusinessAccountProposal]
-  @_Concurrency.MainActor func listBusinessAccountProposalsAwaitingMyApproval() async throws -> [DynamicSdkBusinessAccount.BusinessAccountProposal]
-  @_Concurrency.MainActor func getBusinessAccountProposal(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkBusinessAccount.BusinessAccountProposal
+  @_Concurrency.MainActor func listBusinessAccountProposals(businessAccountId: Swift.String, status: Swift.String?) async throws -> [DynamicSdkWaas.BusinessAccountProposal]
+  @_Concurrency.MainActor func listBusinessAccountProposalsAwaitingMyApproval() async throws -> [DynamicSdkWaas.BusinessAccountProposal]
+  @_Concurrency.MainActor func getBusinessAccountProposal(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkWaas.BusinessAccountProposal
   @_Concurrency.MainActor func signBusinessAccountIntent(intent: [Swift.String : DynamicSdkCore.DynamicJsonValue]) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
   @_Concurrency.MainActor func signAddBusinessAccountMemberIntent(businessAccountId: Swift.String, userId: Swift.String, role: Swift.String?, autoExecute: Swift.Bool?) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
   @_Concurrency.MainActor func signUpdateBusinessAccountMemberRoleIntent(businessAccountId: Swift.String, userId: Swift.String, role: Swift.String, autoExecute: Swift.Bool?) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
@@ -44,13 +44,10 @@ extension DynamicSdkCore.DynamicClient {
   @_Concurrency.MainActor func signDefineBusinessAccountRoleIntent(businessAccountId: Swift.String, role: Swift.String, inherits: Swift.String, autoExecute: Swift.Bool?) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
   @_Concurrency.MainActor func signDeleteBusinessAccountRoleIntent(businessAccountId: Swift.String, role: Swift.String, autoExecute: Swift.Bool?) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
   @_Concurrency.MainActor func signBusinessAccountApproval(intent: [Swift.String : DynamicSdkCore.DynamicJsonValue], approvedAt: Swift.String?) async throws -> DynamicSdkBusinessAccount.BusinessAccountApproval
-  @_Concurrency.MainActor func approveBusinessAccountProposal(businessAccountId: Swift.String, proposal: DynamicSdkBusinessAccount.BusinessAccountProposal) async throws -> DynamicSdkBusinessAccount.BusinessAccountProposal
+  @_Concurrency.MainActor func approveBusinessAccountProposal(businessAccountId: Swift.String, proposal: DynamicSdkWaas.BusinessAccountProposal) async throws -> DynamicSdkWaas.BusinessAccountProposal
   @_Concurrency.MainActor func executeBusinessAccountProposal(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkBusinessAccount.BusinessAccountVersionResult
-  @_Concurrency.MainActor func vetoBusinessAccountProposal(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkBusinessAccount.BusinessAccountProposal
-  @_Concurrency.MainActor func withdrawBusinessAccountProposalApproval(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkBusinessAccount.BusinessAccountProposal
-  @_Concurrency.MainActor func getAccountPolicyLayer(businessAccountId: Swift.String) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
-  @_Concurrency.MainActor func upsertAccountPolicyRule(businessAccountId: Swift.String, rule: DynamicSdkWaas.WaasPolicyRule) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
-  @_Concurrency.MainActor func removeAccountPolicyRule(businessAccountId: Swift.String, ruleId: Swift.String) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
+  @_Concurrency.MainActor func vetoBusinessAccountProposal(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkWaas.BusinessAccountProposal
+  @_Concurrency.MainActor func withdrawBusinessAccountProposalApproval(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkWaas.BusinessAccountProposal
 }
 @_hasMissingDesignatedInitializers @_Concurrency.MainActor final public class BusinessAccountClientImpl : DynamicSdkBusinessAccount.BusinessAccountClient, DynamicSdkCore.DynamicExtension {
   @_Concurrency.MainActor final public let name: Swift.String
@@ -71,9 +68,9 @@ extension DynamicSdkCore.DynamicClient {
   @_Concurrency.MainActor final public func setBusinessAccountGovernance(businessAccountId: Swift.String, governance: [Swift.String : [DynamicSdkBusinessAccount.BusinessAccountGovernanceRequirement]], autoExecute: Swift.Bool? = nil, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent? = nil) async throws -> DynamicSdkBusinessAccount.BusinessAccountVersionResult
   @_Concurrency.MainActor final public func defineBusinessAccountRole(businessAccountId: Swift.String, role: Swift.String, inherits: Swift.String, autoExecute: Swift.Bool? = nil, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent? = nil) async throws -> DynamicSdkBusinessAccount.BusinessAccountVersionResult
   @_Concurrency.MainActor final public func deleteBusinessAccountRole(businessAccountId: Swift.String, role: Swift.String, autoExecute: Swift.Bool? = nil, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent? = nil) async throws -> DynamicSdkBusinessAccount.BusinessAccountVersionResult
-  @_Concurrency.MainActor final public func listBusinessAccountProposals(businessAccountId: Swift.String, status: Swift.String? = nil) async throws -> [DynamicSdkBusinessAccount.BusinessAccountProposal]
-  @_Concurrency.MainActor final public func listBusinessAccountProposalsAwaitingMyApproval() async throws -> [DynamicSdkBusinessAccount.BusinessAccountProposal]
-  @_Concurrency.MainActor final public func getBusinessAccountProposal(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkBusinessAccount.BusinessAccountProposal
+  @_Concurrency.MainActor final public func listBusinessAccountProposals(businessAccountId: Swift.String, status: Swift.String? = nil) async throws -> [DynamicSdkWaas.BusinessAccountProposal]
+  @_Concurrency.MainActor final public func listBusinessAccountProposalsAwaitingMyApproval() async throws -> [DynamicSdkWaas.BusinessAccountProposal]
+  @_Concurrency.MainActor final public func getBusinessAccountProposal(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkWaas.BusinessAccountProposal
   @_Concurrency.MainActor final public func signBusinessAccountIntent(intent: [Swift.String : DynamicSdkCore.DynamicJsonValue]) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
   @_Concurrency.MainActor final public func signAddBusinessAccountMemberIntent(businessAccountId: Swift.String, userId: Swift.String, role: Swift.String? = nil, autoExecute: Swift.Bool? = nil) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
   @_Concurrency.MainActor final public func signUpdateBusinessAccountMemberRoleIntent(businessAccountId: Swift.String, userId: Swift.String, role: Swift.String, autoExecute: Swift.Bool? = nil) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
@@ -84,13 +81,10 @@ extension DynamicSdkCore.DynamicClient {
   @_Concurrency.MainActor final public func signDefineBusinessAccountRoleIntent(businessAccountId: Swift.String, role: Swift.String, inherits: Swift.String, autoExecute: Swift.Bool? = nil) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
   @_Concurrency.MainActor final public func signDeleteBusinessAccountRoleIntent(businessAccountId: Swift.String, role: Swift.String, autoExecute: Swift.Bool? = nil) async throws -> DynamicSdkWaas.SignedBusinessAccountIntent
   @_Concurrency.MainActor final public func signBusinessAccountApproval(intent: [Swift.String : DynamicSdkCore.DynamicJsonValue], approvedAt: Swift.String? = nil) async throws -> DynamicSdkBusinessAccount.BusinessAccountApproval
-  @_Concurrency.MainActor final public func approveBusinessAccountProposal(businessAccountId: Swift.String, proposal: DynamicSdkBusinessAccount.BusinessAccountProposal) async throws -> DynamicSdkBusinessAccount.BusinessAccountProposal
+  @_Concurrency.MainActor final public func approveBusinessAccountProposal(businessAccountId: Swift.String, proposal: DynamicSdkWaas.BusinessAccountProposal) async throws -> DynamicSdkWaas.BusinessAccountProposal
   @_Concurrency.MainActor final public func executeBusinessAccountProposal(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkBusinessAccount.BusinessAccountVersionResult
-  @_Concurrency.MainActor final public func vetoBusinessAccountProposal(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkBusinessAccount.BusinessAccountProposal
-  @_Concurrency.MainActor final public func withdrawBusinessAccountProposalApproval(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkBusinessAccount.BusinessAccountProposal
-  @_Concurrency.MainActor final public func getAccountPolicyLayer(businessAccountId: Swift.String) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
-  @_Concurrency.MainActor final public func upsertAccountPolicyRule(businessAccountId: Swift.String, rule: DynamicSdkWaas.WaasPolicyRule) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
-  @_Concurrency.MainActor final public func removeAccountPolicyRule(businessAccountId: Swift.String, ruleId: Swift.String) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
+  @_Concurrency.MainActor final public func vetoBusinessAccountProposal(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkWaas.BusinessAccountProposal
+  @_Concurrency.MainActor final public func withdrawBusinessAccountProposalApproval(businessAccountId: Swift.String, proposalId: Swift.String) async throws -> DynamicSdkWaas.BusinessAccountProposal
   @objc deinit
 }
 @_Concurrency.MainActor final public class BusinessAccountExtension : DynamicSdkCore.DynamicExtension {
@@ -116,14 +110,22 @@ public struct BusinessAccount : Swift.Codable, Swift.Sendable {
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
+public struct BusinessAccountRole : Swift.Codable, Swift.Sendable {
+  public let name: Swift.String
+  public let inherits: Swift.String
+  public init(name: Swift.String, inherits: Swift.String)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
 public struct BusinessAccountMember : Swift.Codable, Swift.Sendable {
   public let id: Swift.String
   public let businessAccountId: Swift.String
   public let userId: Swift.String
   public let role: Swift.String
+  public let customRole: DynamicSdkBusinessAccount.BusinessAccountRole?
   public let addedByUserId: Swift.String?
   public let createdAt: Swift.String?
-  public init(id: Swift.String, businessAccountId: Swift.String, userId: Swift.String, role: Swift.String, addedByUserId: Swift.String? = nil, createdAt: Swift.String? = nil)
+  public init(id: Swift.String, businessAccountId: Swift.String, userId: Swift.String, role: Swift.String, customRole: DynamicSdkBusinessAccount.BusinessAccountRole? = nil, addedByUserId: Swift.String? = nil, createdAt: Swift.String? = nil)
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
@@ -256,39 +258,6 @@ public struct BusinessAccountGovernanceRequirement : Swift.Codable, Swift.Sendab
 public struct BusinessAccountGovernanceResponse : Swift.Codable, Swift.Sendable {
   public let governance: [Swift.String : [DynamicSdkBusinessAccount.BusinessAccountGovernanceRequirement]]
   public init(governance: [Swift.String : [DynamicSdkBusinessAccount.BusinessAccountGovernanceRequirement]])
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct BusinessAccountProposalApprovalRecord : Swift.Codable, Swift.Sendable {
-  public let approvedAt: Swift.String
-  public let approverUserId: Swift.String
-  public let revokedAt: Swift.String?
-  public init(approvedAt: Swift.String, approverUserId: Swift.String, revokedAt: Swift.String? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct BusinessAccountProposalSubject : Swift.Codable, Swift.Sendable {
-  public let userId: Swift.String
-  public let email: Swift.String?
-  public init(userId: Swift.String, email: Swift.String? = nil)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct BusinessAccountProposal : Swift.Codable, Swift.Sendable {
-  public let id: Swift.String
-  public let businessAccountId: Swift.String
-  public let actionType: Swift.String
-  public let status: Swift.String
-  public let initiatorUserId: Swift.String
-  public let intent: [Swift.String : DynamicSdkCore.DynamicJsonValue]
-  public let completeBy: Swift.String
-  public let createdAt: Swift.String
-  public let consumedAt: Swift.String?
-  public let autoExecute: Swift.Bool?
-  public let approvals: [DynamicSdkBusinessAccount.BusinessAccountProposalApprovalRecord]
-  public let subjects: [DynamicSdkBusinessAccount.BusinessAccountProposalSubject]?
-  public let approvalRequirements: [DynamicSdkWaas.BusinessAccountApprovalRequirement]?
-  public init(id: Swift.String, businessAccountId: Swift.String, actionType: Swift.String, status: Swift.String, initiatorUserId: Swift.String, intent: [Swift.String : DynamicSdkCore.DynamicJsonValue], completeBy: Swift.String, createdAt: Swift.String, consumedAt: Swift.String? = nil, autoExecute: Swift.Bool? = nil, approvals: [DynamicSdkBusinessAccount.BusinessAccountProposalApprovalRecord], subjects: [DynamicSdkBusinessAccount.BusinessAccountProposalSubject]? = nil, approvalRequirements: [DynamicSdkWaas.BusinessAccountApprovalRequirement]? = nil)
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }

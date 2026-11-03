@@ -11,16 +11,8 @@ import Swift
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
-public enum BtcFeePriority {
-  case low, medium, high
-  public static func == (a: DynamicSdkBtc.BtcFeePriority, b: DynamicSdkBtc.BtcFeePriority) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
-  public var hashValue: Swift.Int {
-    get
-  }
-}
 extension DynamicSdkBtc.BtcClient {
-  @_Concurrency.MainActor public func sendBitcoin(fromAddress: Swift.String, recipientAddress: Swift.String, amountInSatoshis: Swift.Int64, priority: DynamicSdkBtc.BtcFeePriority = .medium, network: DynamicSdkCore.BtcNetwork? = nil) async throws -> Swift.String
+  @_Concurrency.MainActor public func sendBitcoin(fromAddress: Swift.String, recipientAddress: Swift.String, amountInSatoshis: Swift.Int64, priority: DynamicSdkCore.BtcFeePriority = .medium, network: DynamicSdkCore.BtcNetwork? = nil) async throws -> Swift.String
 }
 open class EsploraBtcService : DynamicSdkBtc.BtcService, @unchecked Swift.Sendable {
   public init(session: Foundation.URLSession = .shared)
@@ -29,6 +21,7 @@ open class EsploraBtcService : DynamicSdkBtc.BtcService, @unchecked Swift.Sendab
   public func getUtxos(address: Swift.String, network: DynamicSdkCore.BtcNetwork) async throws -> [DynamicSdkCore.BtcUtxo]
   public func getFeeEstimates(network: DynamicSdkCore.BtcNetwork) async throws -> [DynamicSdkCore.BtcFeeEstimate]
   public func broadcastTransaction(signedTransactionHex: Swift.String, network: DynamicSdkCore.BtcNetwork) async throws -> Swift.String
+  public func buildUnsignedPsbt(accountAddress: Swift.String, recipientAddress: Swift.String, amountInSatoshis: Swift.Int64, publicKeyHex: Swift.String, priority: DynamicSdkCore.BtcFeePriority?, network: DynamicSdkCore.BtcNetwork, utxos: [DynamicSdkCore.BtcUtxo], feeEstimates: [DynamicSdkCore.BtcFeeEstimate]) async throws -> Swift.String
   @objc deinit
 }
 @_inheritsConvenienceInitializers final public class MempoolBtcService : DynamicSdkBtc.EsploraBtcService, @unchecked Swift.Sendable {
@@ -48,6 +41,7 @@ extension DynamicSdkCore.DynamicClient {
 @_Concurrency.MainActor public protocol BtcClient {
   @_Concurrency.MainActor func configureNetworks(networks: [DynamicSdkCore.BtcNetwork]) throws
   @_Concurrency.MainActor func publicKeyForAddress(address: Swift.String) throws -> Swift.String
+  @_Concurrency.MainActor func buildPsbt(fromAddress: Swift.String, recipientAddress: Swift.String, amountInSatoshis: Swift.Int64, priority: DynamicSdkCore.BtcFeePriority?, network: DynamicSdkCore.BtcNetwork?) async throws -> Swift.String
   @_Concurrency.MainActor func signPsbt(fromAddress: Swift.String, unsignedPsbt: Swift.String) async throws -> Swift.String
   @_Concurrency.MainActor func availableNetworks() throws -> [DynamicSdkCore.BtcNetwork]
   @_Concurrency.MainActor func getBalance(address: Swift.String, network: DynamicSdkCore.BtcNetwork?) async throws -> Swift.String
@@ -60,6 +54,7 @@ extension DynamicSdkCore.DynamicClient {
   @_Concurrency.MainActor final public func install(client: DynamicSdkCore.DynamicClient)
   @_Concurrency.MainActor final public func configureNetworks(networks: [DynamicSdkCore.BtcNetwork]) throws
   @_Concurrency.MainActor final public func publicKeyForAddress(address: Swift.String) throws -> Swift.String
+  @_Concurrency.MainActor final public func buildPsbt(fromAddress: Swift.String, recipientAddress: Swift.String, amountInSatoshis: Swift.Int64, priority: DynamicSdkCore.BtcFeePriority? = nil, network: DynamicSdkCore.BtcNetwork? = nil) async throws -> Swift.String
   @_Concurrency.MainActor final public func signPsbt(fromAddress: Swift.String, unsignedPsbt: Swift.String) async throws -> Swift.String
   @_Concurrency.MainActor final public func availableNetworks() throws -> [DynamicSdkCore.BtcNetwork]
   @_Concurrency.MainActor final public func getBalance(address: Swift.String, network: DynamicSdkCore.BtcNetwork? = nil) async throws -> Swift.String
@@ -84,7 +79,6 @@ public protocol BtcService : Swift.Sendable {
   func getBalance(address: Swift.String, network: DynamicSdkCore.BtcNetwork) async throws -> Swift.String
   func getUtxos(address: Swift.String, network: DynamicSdkCore.BtcNetwork) async throws -> [DynamicSdkCore.BtcUtxo]
   func getFeeEstimates(network: DynamicSdkCore.BtcNetwork) async throws -> [DynamicSdkCore.BtcFeeEstimate]
+  func buildUnsignedPsbt(accountAddress: Swift.String, recipientAddress: Swift.String, amountInSatoshis: Swift.Int64, publicKeyHex: Swift.String, priority: DynamicSdkCore.BtcFeePriority?, network: DynamicSdkCore.BtcNetwork, utxos: [DynamicSdkCore.BtcUtxo], feeEstimates: [DynamicSdkCore.BtcFeeEstimate]) async throws -> Swift.String
   func broadcastTransaction(signedTransactionHex: Swift.String, network: DynamicSdkCore.BtcNetwork) async throws -> Swift.String
 }
-extension DynamicSdkBtc.BtcFeePriority : Swift.Equatable {}
-extension DynamicSdkBtc.BtcFeePriority : Swift.Hashable {}
