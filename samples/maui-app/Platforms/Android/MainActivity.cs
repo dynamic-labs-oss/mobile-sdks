@@ -2,7 +2,7 @@ using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
-using Dynamic.Sdk.Maui;
+using Dynamic.Sdk.Mobile;
 
 namespace DynamicMauiDemo;
 
@@ -51,6 +51,6 @@ public class MainActivity : MauiAppCompatActivity
         var uri = intent.Data?.ToString();
         if (uri is not null && App.HandleWalletRedirect(uri)) return;
         // Forward the OAuth callback into the shared native browser.
-        MauiOAuthBrowser.Current?.OnNewIntent(intent);
+        MobileOAuthBrowser.Current?.OnNewIntent(intent);
     }
 }

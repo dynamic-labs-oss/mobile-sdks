@@ -1,6 +1,6 @@
 using System.Linq;
 using Dynamic.Sdk;
-using Dynamic.Sdk.Maui;
+using Dynamic.Sdk.Mobile;
 using Dynamic.Sdk.Evm;
 using Dynamic.Sdk.Solana;
 using Dynamic.Sdk.Btc;
@@ -13,7 +13,7 @@ namespace DynamicMauiDemo;
 public class App : Application
 {
     private DynamicClient _client;
-    public static MauiCaptchaWidget Captcha { get; } = new();
+    public static MobileCaptchaWidget Captcha { get; } = new();
 
     /// <summary>
     /// A wallet's deep-link answer comes back to the app itself, and only the
@@ -101,7 +101,7 @@ public class App : Application
                 // is its own package because Phantom brings a NaCl
                 // implementation and Coinbase brings the shared native
                 // interop bridge — see Dynamic.Sdk.ExternalWallet.Phantom /
-                // Dynamic.Sdk.MAUI.ExternalWallet.Coinbase.
+                // Dynamic.Sdk.Mobile.ExternalWallet.Coinbase.
                 .UseExternalWallet(
                     solanaChains: DemoConfig.SolanaNetworks
                         .Select(network => $"solana:{network.GenesisHash}")
