@@ -1,0 +1,104 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "xyz.dynamic",
+    "module": "dynamic-sdk-export-private-key",
+    "version": "2.0.0-beta.3",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk-internal-waas-engine",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-export-private-key-2.0.0-beta.3.aar",
+          "url": "dynamic-sdk-export-private-key-2.0.0-beta.3.aar",
+          "size": 32662,
+          "sha512": "d8012531d117cf1e73c5cb1d8fbfe46087653999ee97d1a6f1fe7995d17dc2c251fbb273407f7889281b75d52bd524ff392f26c4a151c5095a90d0f09ae3b302",
+          "sha256": "4f92a60716632b53b28fd7ef4cd709d3872a106391872d6c45dcbcfc0db3b7be",
+          "sha1": "d459bd0dbd486ba2506f9e551ae63ac2df0db3c6",
+          "md5": "5809c74fa41b7fa4785e09e68b0c4665"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk-internal-waas-engine",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-export-private-key-2.0.0-beta.3.aar",
+          "url": "dynamic-sdk-export-private-key-2.0.0-beta.3.aar",
+          "size": 32662,
+          "sha512": "d8012531d117cf1e73c5cb1d8fbfe46087653999ee97d1a6f1fe7995d17dc2c251fbb273407f7889281b75d52bd524ff392f26c4a151c5095a90d0f09ae3b302",
+          "sha256": "4f92a60716632b53b28fd7ef4cd709d3872a106391872d6c45dcbcfc0db3b7be",
+          "sha1": "d459bd0dbd486ba2506f9e551ae63ac2df0db3c6",
+          "md5": "5809c74fa41b7fa4785e09e68b0c4665"
+        }
+      ]
+    }
+  ]
+}

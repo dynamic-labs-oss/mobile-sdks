@@ -1,0 +1,132 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "xyz.dynamic",
+    "module": "dynamic-sdk-sui",
+    "version": "2.0.0-beta.3",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-sui-2.0.0-beta.3.aar",
+          "url": "dynamic-sdk-sui-2.0.0-beta.3.aar",
+          "size": 1587442,
+          "sha512": "c8d7099ef00f604e89c466da638dc5654e279c6ee98f1a15419c8e97e27c1c0cd37e40af9d9f73dbc86f875bb7e116d33f22910e889878da4cd59a900fbd7041",
+          "sha256": "ff99da6541e87d73fd60546a9de1d59ca627530e31af189ae489663b092c9187",
+          "sha1": "99bb85443f2f292d980b5aa85d9fc5963d45cf84",
+          "md5": "85bef60f38c09bdd2a2b5e357203a1a6"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "com.google.protobuf",
+          "module": "protobuf-javalite",
+          "version": {
+            "requires": "4.35.1"
+          }
+        },
+        {
+          "group": "io.grpc",
+          "module": "grpc-okhttp",
+          "version": {
+            "requires": "1.76.0"
+          }
+        },
+        {
+          "group": "io.grpc",
+          "module": "grpc-protobuf-lite",
+          "version": {
+            "requires": "1.76.0"
+          }
+        },
+        {
+          "group": "io.grpc",
+          "module": "grpc-stub",
+          "version": {
+            "requires": "1.76.0"
+          }
+        },
+        {
+          "group": "io.grpc",
+          "module": "grpc-kotlin-stub",
+          "version": {
+            "requires": "1.4.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlinx",
+          "module": "kotlinx-coroutines-core",
+          "version": {
+            "requires": "1.8.1"
+          }
+        },
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-sui-2.0.0-beta.3.aar",
+          "url": "dynamic-sdk-sui-2.0.0-beta.3.aar",
+          "size": 1587442,
+          "sha512": "c8d7099ef00f604e89c466da638dc5654e279c6ee98f1a15419c8e97e27c1c0cd37e40af9d9f73dbc86f875bb7e116d33f22910e889878da4cd59a900fbd7041",
+          "sha256": "ff99da6541e87d73fd60546a9de1d59ca627530e31af189ae489663b092c9187",
+          "sha1": "99bb85443f2f292d980b5aa85d9fc5963d45cf84",
+          "md5": "85bef60f38c09bdd2a2b5e357203a1a6"
+        }
+      ]
+    }
+  ]
+}

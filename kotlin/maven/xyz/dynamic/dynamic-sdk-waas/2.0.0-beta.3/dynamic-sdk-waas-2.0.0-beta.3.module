@@ -1,0 +1,104 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "xyz.dynamic",
+    "module": "dynamic-sdk-waas",
+    "version": "2.0.0-beta.3",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk-internal-waas-engine",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-waas-2.0.0-beta.3.aar",
+          "url": "dynamic-sdk-waas-2.0.0-beta.3.aar",
+          "size": 551437,
+          "sha512": "a29101df1b8f200c7aeeb1a2880990b11caa768c5c8a8ac749ee2e70ebdd82de584467f21ee5c2221338c01b6c4cb135cabf567f50f0622ca089303f4caa832a",
+          "sha256": "24d0801a5d29cb043f69f37c4415555093c6d7f9d3e97677fa5bfdbdbe06c3f8",
+          "sha1": "dd012cd6d6b854da9495b2512bbef1ac996adb0f",
+          "md5": "3935ce18f664f57e85cff50b674ac5a8"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk-internal-waas-engine",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-waas-2.0.0-beta.3.aar",
+          "url": "dynamic-sdk-waas-2.0.0-beta.3.aar",
+          "size": 551437,
+          "sha512": "a29101df1b8f200c7aeeb1a2880990b11caa768c5c8a8ac749ee2e70ebdd82de584467f21ee5c2221338c01b6c4cb135cabf567f50f0622ca089303f4caa832a",
+          "sha256": "24d0801a5d29cb043f69f37c4415555093c6d7f9d3e97677fa5bfdbdbe06c3f8",
+          "sha1": "dd012cd6d6b854da9495b2512bbef1ac996adb0f",
+          "md5": "3935ce18f664f57e85cff50b674ac5a8"
+        }
+      ]
+    }
+  ]
+}

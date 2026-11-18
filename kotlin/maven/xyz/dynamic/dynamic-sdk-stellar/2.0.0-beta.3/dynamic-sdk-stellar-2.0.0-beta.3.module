@@ -1,0 +1,104 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "xyz.dynamic",
+    "module": "dynamic-sdk-stellar",
+    "version": "2.0.0-beta.3",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "network.lightsail",
+          "module": "stellar-sdk",
+          "version": {
+            "requires": "4.0.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-stellar-2.0.0-beta.3.aar",
+          "url": "dynamic-sdk-stellar-2.0.0-beta.3.aar",
+          "size": 21903,
+          "sha512": "c19e51d3562e1563c5221df1aedea81f2ba10c9f4177ad158ce1bc048f4ec0c091c11f3b9c2795e6938a96d087d94ca5c31d3df25d567752bfbb5a66e7b1be55",
+          "sha256": "4e887ab701573e6e3f5173d067d31233c8bf3496b410bd35b5075791092e113a",
+          "sha1": "0de5c3e4cd5a8aa2113bfe98c889bb508414441f",
+          "md5": "1b48f72a40c969106cf771b8449bd248"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "network.lightsail",
+          "module": "stellar-sdk",
+          "version": {
+            "requires": "4.0.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-stellar-2.0.0-beta.3.aar",
+          "url": "dynamic-sdk-stellar-2.0.0-beta.3.aar",
+          "size": 21903,
+          "sha512": "c19e51d3562e1563c5221df1aedea81f2ba10c9f4177ad158ce1bc048f4ec0c091c11f3b9c2795e6938a96d087d94ca5c31d3df25d567752bfbb5a66e7b1be55",
+          "sha256": "4e887ab701573e6e3f5173d067d31233c8bf3496b410bd35b5075791092e113a",
+          "sha1": "0de5c3e4cd5a8aa2113bfe98c889bb508414441f",
+          "md5": "1b48f72a40c969106cf771b8449bd248"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "xyz.dynamic",
+    "module": "dynamic-sdk-business-account",
+    "version": "2.0.0-beta.3",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk-waas",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-business-account-2.0.0-beta.3.aar",
+          "url": "dynamic-sdk-business-account-2.0.0-beta.3.aar",
+          "size": 268045,
+          "sha512": "adbd2402568e8cfcfe26edf9c128f9f8dde5b81b05716ee042343726b882fc386028c595b3965531229463122d903bd3b109acaedcc99ca314cfc8d0267c1273",
+          "sha256": "27ad340029b544b9b7a8ddd04f38848bb62d4042dd52fc878802946dbea93e09",
+          "sha1": "819f7028df016b1e0a690db698e255833933f5a3",
+          "md5": "4ba9982c87f095ca316398d608565cc6"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk-waas",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-business-account-2.0.0-beta.3.aar",
+          "url": "dynamic-sdk-business-account-2.0.0-beta.3.aar",
+          "size": 268045,
+          "sha512": "adbd2402568e8cfcfe26edf9c128f9f8dde5b81b05716ee042343726b882fc386028c595b3965531229463122d903bd3b109acaedcc99ca314cfc8d0267c1273",
+          "sha256": "27ad340029b544b9b7a8ddd04f38848bb62d4042dd52fc878802946dbea93e09",
+          "sha1": "819f7028df016b1e0a690db698e255833933f5a3",
+          "md5": "4ba9982c87f095ca316398d608565cc6"
+        }
+      ]
+    }
+  ]
+}
