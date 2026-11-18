@@ -87,7 +87,7 @@ public enum DynamicWaasLockPolicy : Swift.Equatable, Swift.Sendable {
   }
 }
 @_Concurrency.MainActor final public class DynamicWaasEngine {
-  @_Concurrency.MainActor public init(storage: DynamicSdkCore.DynamicSecureStorage, lockPolicy: DynamicSdkExportPrivateKey.DynamicWaasLockPolicy = .none, signedSessionIdProvider: (() async -> Swift.String?)? = nil)
+  @_Concurrency.MainActor public init(storage: DynamicSdkCore.DynamicSecureStorage, lockPolicy: DynamicSdkExportPrivateKey.DynamicWaasLockPolicy = .none, signedSessionIdProvider: (() async -> Swift.String?)? = nil, onUnauthorized: ((Swift.String) -> Swift.Void)? = nil)
   @_Concurrency.MainActor final public func initialize(environmentId: Swift.String, chainName: Swift.String, authToken: Swift.String, apiBaseUrl: Swift.String, hostOrigin: Swift.String?) async throws
   @_Concurrency.MainActor final public func createWallet(payloadJson: Swift.String) async throws -> Swift.String
   @_Concurrency.MainActor final public func importPrivateKey(payloadJson: Swift.String) async throws -> Swift.String
