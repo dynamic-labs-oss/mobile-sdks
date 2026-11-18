@@ -25,6 +25,8 @@ import _SwiftConcurrencyShims
   @_Concurrency.MainActor final public func isUserMissingMfaAuth() throws -> Swift.Bool
   @_Concurrency.MainActor final public func isMfaRequiredForAction(action: Swift.String) async throws -> Swift.Bool
   @_Concurrency.MainActor final public func consumeMfaToken() -> Swift.String?
+  @_Concurrency.MainActor final public func expireSession(expiresAtMs: Swift.Int64) async throws
+  @_Concurrency.MainActor final public func handleUnauthorizedSession(sessionId: Swift.String) async throws
   @_Concurrency.MainActor final public func refreshAuth() async throws -> DynamicSdkCore.VerifyResponse
   @_Concurrency.MainActor final public func deleteUser() async throws
   @_Concurrency.MainActor final public func mergeUserAccounts(conflictResolutions: [DynamicSdkCore.MergeUserConflictResolution]? = nil) async throws -> DynamicSdkCore.SdkUser
@@ -451,6 +453,7 @@ public struct WaasWalletProperties : Swift.Codable, Swift.Sendable {
 }
 public struct VerifiedCredential : Swift.Codable, Swift.Sendable {
   public let id: Swift.String
+  public let publicIdentifier: Swift.String?
   public let oauthProvider: Swift.String?
   public let oauthUsername: Swift.String?
   public let oauthDisplayName: Swift.String?
@@ -465,7 +468,7 @@ public struct VerifiedCredential : Swift.Codable, Swift.Sendable {
   public let walletAdditionalAddresses: [DynamicSdkCore.WalletAdditionalAddress]?
   public let walletProperties: DynamicSdkCore.WaasWalletProperties?
   public let lastSelectedAt: Swift.String?
-  public init(id: Swift.String, oauthProvider: Swift.String? = nil, oauthUsername: Swift.String? = nil, oauthDisplayName: Swift.String? = nil, oauthAccountId: Swift.String? = nil, oauthEmails: [Swift.String]? = nil, oauthAccountPhotos: [Swift.String]? = nil, address: Swift.String? = nil, chain: Swift.String? = nil, walletName: Swift.String? = nil, walletProvider: Swift.String? = nil, format: Swift.String? = nil, walletAdditionalAddresses: [DynamicSdkCore.WalletAdditionalAddress]? = nil, walletProperties: DynamicSdkCore.WaasWalletProperties? = nil, lastSelectedAt: Swift.String? = nil)
+  public init(id: Swift.String, publicIdentifier: Swift.String? = nil, oauthProvider: Swift.String? = nil, oauthUsername: Swift.String? = nil, oauthDisplayName: Swift.String? = nil, oauthAccountId: Swift.String? = nil, oauthEmails: [Swift.String]? = nil, oauthAccountPhotos: [Swift.String]? = nil, address: Swift.String? = nil, chain: Swift.String? = nil, walletName: Swift.String? = nil, walletProvider: Swift.String? = nil, format: Swift.String? = nil, walletAdditionalAddresses: [DynamicSdkCore.WalletAdditionalAddress]? = nil, walletProperties: DynamicSdkCore.WaasWalletProperties? = nil, lastSelectedAt: Swift.String? = nil)
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
