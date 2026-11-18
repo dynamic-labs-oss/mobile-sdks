@@ -21,6 +21,7 @@ extension DynamicSdkCore.DynamicClient {
   @_Concurrency.MainActor func upsertAccountPolicyRule(businessAccountId: Swift.String, rule: DynamicSdkWaas.WaasPolicyRule) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
   @_Concurrency.MainActor func removeAccountPolicyRule(businessAccountId: Swift.String, ruleId: Swift.String) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
   @_Concurrency.MainActor func batchAccountPolicyRules(businessAccountId: Swift.String, operations: [DynamicSdkPolicyEngine.PolicyLayerRuleOperation]) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
+  @_Concurrency.MainActor func updateAccountPolicyLayer(businessAccountId: Swift.String, request: DynamicSdkPolicyEngine.BusinessAccountPolicyLayerEdit, layer: DynamicSdkWaas.WaasPolicyLayerResponse?, proposalId: Swift.String?, autoExecute: Swift.Bool?, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent?) async throws -> DynamicSdkPolicyEngine.BusinessAccountPolicyLayerUpdateResult
   @_Concurrency.MainActor func getWalletPolicyLayer(chain: Swift.String, accountAddress: Swift.String) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
   @_Concurrency.MainActor func upsertWalletPolicyRule(chain: Swift.String, accountAddress: Swift.String, rule: DynamicSdkWaas.WaasPolicyRule) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
   @_Concurrency.MainActor func removeWalletPolicyRule(chain: Swift.String, accountAddress: Swift.String, ruleId: Swift.String) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
@@ -39,6 +40,7 @@ extension DynamicSdkCore.DynamicClient {
   @_Concurrency.MainActor final public func upsertAccountPolicyRule(businessAccountId: Swift.String, rule: DynamicSdkWaas.WaasPolicyRule) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
   @_Concurrency.MainActor final public func removeAccountPolicyRule(businessAccountId: Swift.String, ruleId: Swift.String) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
   @_Concurrency.MainActor final public func batchAccountPolicyRules(businessAccountId: Swift.String, operations: [DynamicSdkPolicyEngine.PolicyLayerRuleOperation]) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
+  @_Concurrency.MainActor final public func updateAccountPolicyLayer(businessAccountId: Swift.String, request: DynamicSdkPolicyEngine.BusinessAccountPolicyLayerEdit, layer: DynamicSdkWaas.WaasPolicyLayerResponse? = nil, proposalId: Swift.String? = nil, autoExecute: Swift.Bool? = nil, signedIntent: DynamicSdkWaas.SignedBusinessAccountIntent? = nil) async throws -> DynamicSdkPolicyEngine.BusinessAccountPolicyLayerUpdateResult
   @_Concurrency.MainActor final public func getWalletPolicyLayer(chain: Swift.String, accountAddress: Swift.String) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
   @_Concurrency.MainActor final public func upsertWalletPolicyRule(chain: Swift.String, accountAddress: Swift.String, rule: DynamicSdkWaas.WaasPolicyRule) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
   @_Concurrency.MainActor final public func removeWalletPolicyRule(chain: Swift.String, accountAddress: Swift.String, ruleId: Swift.String) async throws -> DynamicSdkWaas.WaasPolicyLayerResponse
@@ -79,6 +81,17 @@ public enum PolicyRuleOperation : Swift.String, Swift.Codable, Swift.Sendable {
     get
   }
 }
+public enum PolicyLayerUpdateOperation : Swift.String, Swift.Codable, Swift.Sendable {
+  case upsert
+  case remove
+  case batch
+  case replace
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
 public struct PolicyRuleInput : Swift.Codable, Swift.Sendable {
   public let ruleId: Swift.String?
   public let name: Swift.String
@@ -113,9 +126,35 @@ public struct PolicyLayerRuleOperation : Swift.Codable, Swift.Sendable {
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
+public struct BusinessAccountPolicyLayerEdit : Swift.Codable, Swift.Sendable {
+  public let op: DynamicSdkPolicyEngine.PolicyLayerUpdateOperation
+  public let rule: DynamicSdkWaas.WaasPolicyRule?
+  public let ruleId: Swift.String?
+  public let operations: [DynamicSdkPolicyEngine.PolicyLayerRuleOperation]?
+  public let rules: [DynamicSdkWaas.WaasPolicyRule]?
+  public init(op: DynamicSdkPolicyEngine.PolicyLayerUpdateOperation, rule: DynamicSdkWaas.WaasPolicyRule? = nil, ruleId: Swift.String? = nil, operations: [DynamicSdkPolicyEngine.PolicyLayerRuleOperation]? = nil, rules: [DynamicSdkWaas.WaasPolicyRule]? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct BusinessAccountPolicyLayerActionRequired : Swift.Codable, Swift.Sendable {
+  public let reason: Swift.String
+  public let intent: [Swift.String : DynamicSdkCore.DynamicJsonValue]
+  public let proposalId: Swift.String
+  public let approvalRequirements: [DynamicSdkWaas.BusinessAccountApprovalRequirement]
+  public init(reason: Swift.String, intent: [Swift.String : DynamicSdkCore.DynamicJsonValue], proposalId: Swift.String, approvalRequirements: [DynamicSdkWaas.BusinessAccountApprovalRequirement])
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public enum BusinessAccountPolicyLayerUpdateResult : Swift.Sendable {
+  case layer(DynamicSdkWaas.WaasPolicyLayerResponse)
+  case actionRequired(DynamicSdkPolicyEngine.BusinessAccountPolicyLayerActionRequired)
+}
 extension DynamicSdkPolicyEngine.PolicyScopeTarget : Swift.Equatable {}
 extension DynamicSdkPolicyEngine.PolicyScopeTarget : Swift.Hashable {}
 extension DynamicSdkPolicyEngine.PolicyScopeTarget : Swift.RawRepresentable {}
 extension DynamicSdkPolicyEngine.PolicyRuleOperation : Swift.Equatable {}
 extension DynamicSdkPolicyEngine.PolicyRuleOperation : Swift.Hashable {}
 extension DynamicSdkPolicyEngine.PolicyRuleOperation : Swift.RawRepresentable {}
+extension DynamicSdkPolicyEngine.PolicyLayerUpdateOperation : Swift.Equatable {}
+extension DynamicSdkPolicyEngine.PolicyLayerUpdateOperation : Swift.Hashable {}
+extension DynamicSdkPolicyEngine.PolicyLayerUpdateOperation : Swift.RawRepresentable {}

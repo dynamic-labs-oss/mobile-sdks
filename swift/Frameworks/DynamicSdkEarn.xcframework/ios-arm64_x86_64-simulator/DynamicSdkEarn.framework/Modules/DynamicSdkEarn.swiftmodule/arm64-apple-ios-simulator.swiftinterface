@@ -12,7 +12,7 @@ import _StringProcessing
 import _SwiftConcurrencyShims
 final public class EvmEarnExecutionService : DynamicSdkEarn.EarnExecutionService, @unchecked Swift.Sendable {
   @_Concurrency.MainActor public init(client: DynamicSdkCore.DynamicClient)
-  @_Concurrency.MainActor final public func execute(payload: DynamicSdkEarn.YieldSigningPayload, ownerAddress: Swift.String, sponsored: Swift.Bool?) async throws -> Swift.String
+  @_Concurrency.MainActor final public func execute(payload: DynamicSdkEarn.YieldSigningPayload, ownerAddress: Swift.String, sponsored: Swift.Bool?, onStepChange: ((DynamicSdkEarn.YieldExecutionStep) -> Swift.Void)?, onTransactionStepChange: ((DynamicSdkEarn.YieldTransactionProgress) -> Swift.Void)?) async throws -> Swift.String
   @objc deinit
 }
 extension DynamicSdkCore.DynamicClient {
@@ -31,9 +31,9 @@ extension DynamicSdkCore.DynamicClient {
   @_Concurrency.MainActor func getPerformance(vaultId: Swift.String, ownerAddress: Swift.String) async throws -> DynamicSdkEarn.YieldVaultPositionPerformance
   @_Concurrency.MainActor func getEarnings(ownerAddress: Swift.String, chainId: Swift.String) async throws -> DynamicSdkEarn.YieldEarnings
   @_Concurrency.MainActor func getRewards(vaultId: Swift.String, ownerAddress: Swift.String) async throws -> [DynamicSdkEarn.YieldVaultReward]
-  @_Concurrency.MainActor func deposit(vaultId: Swift.String, ownerAddress: Swift.String, amount: Swift.String, receiverAddress: Swift.String?, sponsored: Swift.Bool?) async throws -> DynamicSdkEarn.YieldTransactionResult
-  @_Concurrency.MainActor func withdraw(vaultId: Swift.String, ownerAddress: Swift.String, amount: Swift.String, receiverAddress: Swift.String?, sponsored: Swift.Bool?) async throws -> DynamicSdkEarn.YieldTransactionResult
-  @_Concurrency.MainActor func claimRewards(vaultId: Swift.String, ownerAddress: Swift.String, sponsored: Swift.Bool?) async throws -> DynamicSdkEarn.YieldTransactionResult
+  @_Concurrency.MainActor func deposit(vaultId: Swift.String, ownerAddress: Swift.String, amount: Swift.String, receiverAddress: Swift.String?, sponsored: Swift.Bool?, onStepChange: ((DynamicSdkEarn.YieldExecutionStep) -> Swift.Void)?, onTransactionStepChange: ((DynamicSdkEarn.YieldTransactionProgress) -> Swift.Void)?) async throws -> DynamicSdkEarn.YieldTransactionResult
+  @_Concurrency.MainActor func withdraw(vaultId: Swift.String, ownerAddress: Swift.String, amount: Swift.String, receiverAddress: Swift.String?, sponsored: Swift.Bool?, onStepChange: ((DynamicSdkEarn.YieldExecutionStep) -> Swift.Void)?, onTransactionStepChange: ((DynamicSdkEarn.YieldTransactionProgress) -> Swift.Void)?) async throws -> DynamicSdkEarn.YieldTransactionResult
+  @_Concurrency.MainActor func claimRewards(vaultId: Swift.String, ownerAddress: Swift.String, sponsored: Swift.Bool?, onStepChange: ((DynamicSdkEarn.YieldExecutionStep) -> Swift.Void)?, onTransactionStepChange: ((DynamicSdkEarn.YieldTransactionProgress) -> Swift.Void)?) async throws -> DynamicSdkEarn.YieldTransactionResult
 }
 @_hasMissingDesignatedInitializers @_Concurrency.MainActor final public class EarnClientImpl : DynamicSdkEarn.EarnClient, DynamicSdkCore.DynamicExtension {
   @_Concurrency.MainActor final public let name: Swift.String
@@ -45,9 +45,9 @@ extension DynamicSdkCore.DynamicClient {
   @_Concurrency.MainActor final public func getPerformance(vaultId: Swift.String, ownerAddress: Swift.String) async throws -> DynamicSdkEarn.YieldVaultPositionPerformance
   @_Concurrency.MainActor final public func getEarnings(ownerAddress: Swift.String, chainId: Swift.String) async throws -> DynamicSdkEarn.YieldEarnings
   @_Concurrency.MainActor final public func getRewards(vaultId: Swift.String, ownerAddress: Swift.String) async throws -> [DynamicSdkEarn.YieldVaultReward]
-  @_Concurrency.MainActor final public func deposit(vaultId: Swift.String, ownerAddress: Swift.String, amount: Swift.String, receiverAddress: Swift.String? = nil, sponsored: Swift.Bool? = nil) async throws -> DynamicSdkEarn.YieldTransactionResult
-  @_Concurrency.MainActor final public func withdraw(vaultId: Swift.String, ownerAddress: Swift.String, amount: Swift.String, receiverAddress: Swift.String? = nil, sponsored: Swift.Bool? = nil) async throws -> DynamicSdkEarn.YieldTransactionResult
-  @_Concurrency.MainActor final public func claimRewards(vaultId: Swift.String, ownerAddress: Swift.String, sponsored: Swift.Bool? = nil) async throws -> DynamicSdkEarn.YieldTransactionResult
+  @_Concurrency.MainActor final public func deposit(vaultId: Swift.String, ownerAddress: Swift.String, amount: Swift.String, receiverAddress: Swift.String? = nil, sponsored: Swift.Bool? = nil, onStepChange: ((DynamicSdkEarn.YieldExecutionStep) -> Swift.Void)? = nil, onTransactionStepChange: ((DynamicSdkEarn.YieldTransactionProgress) -> Swift.Void)? = nil) async throws -> DynamicSdkEarn.YieldTransactionResult
+  @_Concurrency.MainActor final public func withdraw(vaultId: Swift.String, ownerAddress: Swift.String, amount: Swift.String, receiverAddress: Swift.String? = nil, sponsored: Swift.Bool? = nil, onStepChange: ((DynamicSdkEarn.YieldExecutionStep) -> Swift.Void)? = nil, onTransactionStepChange: ((DynamicSdkEarn.YieldTransactionProgress) -> Swift.Void)? = nil) async throws -> DynamicSdkEarn.YieldTransactionResult
+  @_Concurrency.MainActor final public func claimRewards(vaultId: Swift.String, ownerAddress: Swift.String, sponsored: Swift.Bool? = nil, onStepChange: ((DynamicSdkEarn.YieldExecutionStep) -> Swift.Void)? = nil, onTransactionStepChange: ((DynamicSdkEarn.YieldTransactionProgress) -> Swift.Void)? = nil) async throws -> DynamicSdkEarn.YieldTransactionResult
   @objc deinit
 }
 @_Concurrency.MainActor final public class EarnExtension : DynamicSdkCore.DynamicExtension {
@@ -61,15 +61,26 @@ extension DynamicSdkCore.DynamicClient {
     get throws
   }
 }
+public enum YieldExecutionStep : Swift.String, Swift.Codable, Swift.Sendable {
+  case approval
+  case transaction
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
 public struct YieldVaultSummary : Swift.Codable, Swift.Sendable {
   public let vaultId: Swift.String
   public let curator: Swift.String
   public let assetSymbol: Swift.String
   public let assetAddress: Swift.String
   public let chainId: Swift.Int64
+  public let chainName: Swift.String?
+  public let provider: Swift.String?
   public let netApy: Swift.Double?
   public let tvlUsd: Swift.Double?
-  public init(vaultId: Swift.String, curator: Swift.String, assetSymbol: Swift.String, assetAddress: Swift.String, chainId: Swift.Int64, netApy: Swift.Double? = nil, tvlUsd: Swift.Double? = nil)
+  public init(vaultId: Swift.String, curator: Swift.String, assetSymbol: Swift.String, assetAddress: Swift.String, chainId: Swift.Int64, chainName: Swift.String? = nil, provider: Swift.String? = nil, netApy: Swift.Double? = nil, tvlUsd: Swift.Double? = nil)
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
@@ -85,6 +96,8 @@ public struct YieldVaultDetails : Swift.Codable, Swift.Sendable {
   public let assetSymbol: Swift.String
   public let assetAddress: Swift.String
   public let chainId: Swift.Int64
+  public let chainName: Swift.String?
+  public let provider: Swift.String?
   public let netApy: Swift.Double?
   public let tvlUsd: Swift.Double?
   public let assetDecimals: Swift.Int
@@ -92,7 +105,7 @@ public struct YieldVaultDetails : Swift.Codable, Swift.Sendable {
   public let isFeeWrapper: Swift.Bool
   public let netApyExcludingRewards: Swift.Double?
   public let tvlRaw: Swift.String?
-  public init(vaultId: Swift.String, curator: Swift.String, assetSymbol: Swift.String, assetAddress: Swift.String, chainId: Swift.Int64, netApy: Swift.Double? = nil, tvlUsd: Swift.Double? = nil, assetDecimals: Swift.Int, contractAddress: Swift.String, isFeeWrapper: Swift.Bool, netApyExcludingRewards: Swift.Double? = nil, tvlRaw: Swift.String? = nil)
+  public init(vaultId: Swift.String, curator: Swift.String, assetSymbol: Swift.String, assetAddress: Swift.String, chainId: Swift.Int64, chainName: Swift.String? = nil, provider: Swift.String? = nil, netApy: Swift.Double? = nil, tvlUsd: Swift.Double? = nil, assetDecimals: Swift.Int, contractAddress: Swift.String, isFeeWrapper: Swift.Bool, netApyExcludingRewards: Swift.Double? = nil, tvlRaw: Swift.String? = nil)
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
@@ -172,12 +185,22 @@ public struct YieldEvmApproval : Swift.Codable, Swift.Sendable {
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
+public struct YieldTransactionStep : Swift.Codable, Swift.Sendable {
+  public let ordinal: Swift.Int
+  public let payload: Swift.String
+  public let label: Swift.String?
+  public let expiryBlockHeight: Swift.Int64?
+  public init(ordinal: Swift.Int, payload: Swift.String, label: Swift.String? = nil, expiryBlockHeight: Swift.Int64? = nil)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
 public struct YieldSigningPayload : Swift.Codable, Swift.Sendable {
   public let chainId: Swift.String
   public let chainName: Swift.String
   public let evmTransaction: DynamicSdkEarn.YieldEvmTransaction?
   public let evmApproval: DynamicSdkEarn.YieldEvmApproval?
-  public init(chainId: Swift.String, chainName: Swift.String, evmTransaction: DynamicSdkEarn.YieldEvmTransaction? = nil, evmApproval: DynamicSdkEarn.YieldEvmApproval? = nil)
+  public let transactions: [DynamicSdkEarn.YieldTransactionStep]?
+  public init(chainId: Swift.String, chainName: Swift.String, evmTransaction: DynamicSdkEarn.YieldEvmTransaction? = nil, evmApproval: DynamicSdkEarn.YieldEvmApproval? = nil, transactions: [DynamicSdkEarn.YieldTransactionStep]? = nil)
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
@@ -185,6 +208,14 @@ public struct YieldVaultActionResponse : Swift.Codable, Swift.Sendable {
   public let vaultId: Swift.String
   public let signingPayload: DynamicSdkEarn.YieldSigningPayload
   public init(vaultId: Swift.String, signingPayload: DynamicSdkEarn.YieldSigningPayload)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct YieldTransactionProgress : Swift.Codable, Swift.Sendable {
+  public let ordinal: Swift.Int
+  public let total: Swift.Int
+  public let label: Swift.String?
+  public init(ordinal: Swift.Int, total: Swift.Int, label: Swift.String? = nil)
   public func encode(to encoder: any Swift.Encoder) throws
   public init(from decoder: any Swift.Decoder) throws
 }
@@ -209,5 +240,8 @@ public struct YieldVaultClaimRequest : Swift.Codable, Swift.Sendable {
   public init(from decoder: any Swift.Decoder) throws
 }
 public protocol EarnExecutionService : Swift.Sendable {
-  func execute(payload: DynamicSdkEarn.YieldSigningPayload, ownerAddress: Swift.String, sponsored: Swift.Bool?) async throws -> Swift.String
+  func execute(payload: DynamicSdkEarn.YieldSigningPayload, ownerAddress: Swift.String, sponsored: Swift.Bool?, onStepChange: ((DynamicSdkEarn.YieldExecutionStep) -> Swift.Void)?, onTransactionStepChange: ((DynamicSdkEarn.YieldTransactionProgress) -> Swift.Void)?) async throws -> Swift.String
 }
+extension DynamicSdkEarn.YieldExecutionStep : Swift.Equatable {}
+extension DynamicSdkEarn.YieldExecutionStep : Swift.Hashable {}
+extension DynamicSdkEarn.YieldExecutionStep : Swift.RawRepresentable {}

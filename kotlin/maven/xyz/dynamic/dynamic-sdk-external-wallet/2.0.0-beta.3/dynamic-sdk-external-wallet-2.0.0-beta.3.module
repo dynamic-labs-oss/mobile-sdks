@@ -1,0 +1,125 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "xyz.dynamic",
+    "module": "dynamic-sdk-external-wallet",
+    "version": "2.0.0-beta.3",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "com.reown",
+          "module": "sign",
+          "version": {
+            "requires": "1.4.1"
+          }
+        },
+        {
+          "group": "com.reown",
+          "module": "android-core",
+          "version": {
+            "requires": "1.4.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-external-wallet-2.0.0-beta.3.aar",
+          "url": "dynamic-sdk-external-wallet-2.0.0-beta.3.aar",
+          "size": 213340,
+          "sha512": "8a71742d7a486f7ca597af828d1d0ad9682beed6e6a17765a7ae655a245d6eb52f96afd76088d3337cc18c19e6265775b5d6c64b5522a5f6eadab08e2e99beae",
+          "sha256": "7e23ba060098fb6ed568a26b487e6a8529b204bf2ce4732a894fa4c8566215c2",
+          "sha1": "9419ab72adde97f4a92fef63ee7ec85231b8a40d",
+          "md5": "bacbbea8613cc2e79d4c14bb4973c2db"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.web3j",
+          "module": "crypto",
+          "version": {
+            "requires": "4.9.8-hotfix"
+          }
+        },
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "com.reown",
+          "module": "sign",
+          "version": {
+            "requires": "1.4.1"
+          }
+        },
+        {
+          "group": "com.reown",
+          "module": "android-core",
+          "version": {
+            "requires": "1.4.1"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-external-wallet-2.0.0-beta.3.aar",
+          "url": "dynamic-sdk-external-wallet-2.0.0-beta.3.aar",
+          "size": 213340,
+          "sha512": "8a71742d7a486f7ca597af828d1d0ad9682beed6e6a17765a7ae655a245d6eb52f96afd76088d3337cc18c19e6265775b5d6c64b5522a5f6eadab08e2e99beae",
+          "sha256": "7e23ba060098fb6ed568a26b487e6a8529b204bf2ce4732a894fa4c8566215c2",
+          "sha1": "9419ab72adde97f4a92fef63ee7ec85231b8a40d",
+          "md5": "bacbbea8613cc2e79d4c14bb4973c2db"
+        }
+      ]
+    }
+  ]
+}

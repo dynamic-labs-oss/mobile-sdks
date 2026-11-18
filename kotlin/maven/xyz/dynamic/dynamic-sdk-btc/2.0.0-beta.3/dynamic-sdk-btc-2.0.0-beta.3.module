@@ -1,0 +1,118 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "xyz.dynamic",
+    "module": "dynamic-sdk-btc",
+    "version": "2.0.0-beta.3",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "fr.acinq.bitcoin",
+          "module": "bitcoin-kmp-jvm",
+          "version": {
+            "requires": "0.20.0"
+          }
+        },
+        {
+          "group": "fr.acinq.secp256k1",
+          "module": "secp256k1-kmp-jni-android",
+          "version": {
+            "requires": "0.15.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-btc-2.0.0-beta.3.aar",
+          "url": "dynamic-sdk-btc-2.0.0-beta.3.aar",
+          "size": 74244,
+          "sha512": "9a9169a696b7304a8e89e36e7a6d0b60d5a742a1e92023dad0f34ddf60ff709b804617f5110f137b0bcdbaf8a524cc1a91a69ba9033e38b93d6de24700a5f68b",
+          "sha256": "0071cea797af7dabfce80f1e1600abe4d415ef31efe65165963d1c05d2b286b6",
+          "sha1": "75b626e7a348dc2f5a0d7f39ea623a53ea6f4317",
+          "md5": "827ddd21cfa9c0eec5e71daf376e3ba9"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "fr.acinq.bitcoin",
+          "module": "bitcoin-kmp-jvm",
+          "version": {
+            "requires": "0.20.0"
+          }
+        },
+        {
+          "group": "fr.acinq.secp256k1",
+          "module": "secp256k1-kmp-jni-android",
+          "version": {
+            "requires": "0.15.0"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-btc-2.0.0-beta.3.aar",
+          "url": "dynamic-sdk-btc-2.0.0-beta.3.aar",
+          "size": 74244,
+          "sha512": "9a9169a696b7304a8e89e36e7a6d0b60d5a742a1e92023dad0f34ddf60ff709b804617f5110f137b0bcdbaf8a524cc1a91a69ba9033e38b93d6de24700a5f68b",
+          "sha256": "0071cea797af7dabfce80f1e1600abe4d415ef31efe65165963d1c05d2b286b6",
+          "sha1": "75b626e7a348dc2f5a0d7f39ea623a53ea6f4317",
+          "md5": "827ddd21cfa9c0eec5e71daf376e3ba9"
+        }
+      ]
+    }
+  ]
+}

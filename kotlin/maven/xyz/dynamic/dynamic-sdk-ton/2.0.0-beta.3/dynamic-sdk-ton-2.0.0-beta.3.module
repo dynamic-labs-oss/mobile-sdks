@@ -1,0 +1,104 @@
+{
+  "formatVersion": "1.1",
+  "component": {
+    "group": "xyz.dynamic",
+    "module": "dynamic-sdk-ton",
+    "version": "2.0.0-beta.3",
+    "attributes": {
+      "org.gradle.status": "release"
+    }
+  },
+  "createdBy": {
+    "gradle": {
+      "version": "8.10.2"
+    }
+  },
+  "variants": [
+    {
+      "name": "releaseVariantReleaseApiPublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-api"
+      },
+      "dependencies": [
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-ton-2.0.0-beta.3.aar",
+          "url": "dynamic-sdk-ton-2.0.0-beta.3.aar",
+          "size": 63845,
+          "sha512": "8115f70f30db66d45e3295555f80bd10e6967fb8afed2325bfe6e3f706ac35d9bdd3a3fd54b64281f83ccea7f6f71bf606ce67ed85e11eb5a60459d84ee1ed27",
+          "sha256": "44b1d87c534fa4f855371ee8cbfb0586b96ccfa7fb9189c4e469a221415c1176",
+          "sha1": "31a6109aa089d5fd769726305325df8451c33133",
+          "md5": "3a283e201e2be09aac83c0e9c5b146f5"
+        }
+      ]
+    },
+    {
+      "name": "releaseVariantReleaseRuntimePublication",
+      "attributes": {
+        "org.gradle.category": "library",
+        "org.gradle.dependency.bundling": "external",
+        "org.gradle.libraryelements": "aar",
+        "org.gradle.usage": "java-runtime"
+      },
+      "dependencies": [
+        {
+          "group": "org.ton",
+          "module": "ton-kotlin-block-tlb",
+          "version": {
+            "requires": "0.4.3"
+          }
+        },
+        {
+          "group": "org.ton",
+          "module": "ton-kotlin-tvm",
+          "version": {
+            "requires": "0.4.3"
+          }
+        },
+        {
+          "group": "xyz.dynamic",
+          "module": "dynamic-sdk",
+          "version": {
+            "requires": "2.0.0-beta.3"
+          }
+        },
+        {
+          "group": "org.jetbrains.kotlin",
+          "module": "kotlin-stdlib",
+          "version": {
+            "requires": "2.0.21"
+          }
+        }
+      ],
+      "files": [
+        {
+          "name": "dynamic-sdk-ton-2.0.0-beta.3.aar",
+          "url": "dynamic-sdk-ton-2.0.0-beta.3.aar",
+          "size": 63845,
+          "sha512": "8115f70f30db66d45e3295555f80bd10e6967fb8afed2325bfe6e3f706ac35d9bdd3a3fd54b64281f83ccea7f6f71bf606ce67ed85e11eb5a60459d84ee1ed27",
+          "sha256": "44b1d87c534fa4f855371ee8cbfb0586b96ccfa7fb9189c4e469a221415c1176",
+          "sha1": "31a6109aa089d5fd769726305325df8451c33133",
+          "md5": "3a283e201e2be09aac83c0e9c5b146f5"
+        }
+      ]
+    }
+  ]
+}

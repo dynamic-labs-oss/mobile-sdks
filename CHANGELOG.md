@@ -1,5 +1,27 @@
 # Changelog
 
+## 2.0.0-beta.3
+
+### Features
+
+- **policy-engine:** add governed policy layer update ([#310](https://github.com/dynamic-labs/mobile-sdks/pull/310))
+- **earn:** add Solana transaction steps and vault chain to Earn models ([#325](https://github.com/dynamic-labs/mobile-sdks/pull/325))
+- **earn:** report step progress on deposit, withdraw and claim ([#327](https://github.com/dynamic-labs/mobile-sdks/pull/327))
+
+### Fixes
+
+- **release:** install Flutter/Android SDKs, allow manual dispatch, create release on OSS ([#309](https://github.com/dynamic-labs/mobile-sdks/pull/309))
+- **auth:** expose verified credential public identifier ([#311](https://github.com/dynamic-labs/mobile-sdks/pull/311))
+- **waas:** normalize SVM hex before signing ([#312](https://github.com/dynamic-labs/mobile-sdks/pull/312))
+- **waas:** derive SVM public key from created wallet address ([#313](https://github.com/dynamic-labs/mobile-sdks/pull/313))
+- **auth:** refresh active sessions before expiry ([#314](https://github.com/dynamic-labs/mobile-sdks/pull/314))
+- **waas:** clear unauthorized sessions across platform adapters ([#315](https://github.com/dynamic-labs/mobile-sdks/pull/315))
+- **android:** map malformed passkey response JSON to DynamicPasskeyException.Failed ([#318](https://github.com/dynamic-labs/mobile-sdks/pull/318))
+- **ios:** reject overlapping passkey ceremonies and a missing rpId ([#319](https://github.com/dynamic-labs/mobile-sdks/pull/319))
+- **ios:** enforce allowCredentials on passkey assertions below iOS 17.4 ([#320](https://github.com/dynamic-labs/mobile-sdks/pull/320))
+- **android:** keep passkey provider on runtime classpath ([#322](https://github.com/dynamic-labs/mobile-sdks/pull/322))
+- preserve native SDK errors and signing payloads ([#337](https://github.com/dynamic-labs/mobile-sdks/pull/337))
+
 ## 2.0.0-beta.2
 
 ### Features
